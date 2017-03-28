@@ -1,0 +1,18 @@
+users{
+	username: String
+	password
+	email
+	cars{
+	[	{
+			mark
+			model
+			picture/color
+			date
+			name
+			services[{
+			}]
+				
+		}]
+	}
+	
+}

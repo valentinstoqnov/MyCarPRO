@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/ac8e06a035dee434799dad42481204b3cafcdc71/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7b92fe85250b14aa63c1ff983c5926a361baac1c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/7d1085ca78f975a05a0fc94f7de64bcb14dc36c4/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d2e52aa73521ccb7e6dfb4905f5dc599b0825691/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/43300fffc1a63ac04f222ae1bf378fb8feec725b/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fb79394585c91f9d45f6e0941f7b874dd260d7ff/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/2fafba54b883884bfd54a1e9bb7bb527270b69f6/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c7b78408df25eaee418ab036947dfadaf50e58f1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7807eb7e6c68655d20be5921bea88e6438ff643c">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_5be128ba07b7c96811ccd510e3e8a26767a6ca34/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/ab36fe3cf28e817d726511520c63aa79411f2014/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e51c2f662bb72419632af5192553c37e33890a99">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_83b0472663173253092e6947f6c25b24c94b8247/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/0eab221188731acb13e1abf82fb9c8d18f1656fd/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="19f281a785ca0eb5f6799fc7bf7ca199a9ca1e8b">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6c5ac38b35932b638d2b95e5b6c17b18e3672951/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/78d420adfc2e030eb734a8d0ff4cd081fe016101/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1629bb13c8f7920ca16860d193697ed3d4fbd127/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/214245126f5951e2884bd25f5c397def6b8fd8b1/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2ba2ce20567418361ed273f5d92a4db0cba8223d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-annotations/8.5.1/bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc/butterknife-annotations-8.5.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/butterknife-annotations-8.5.1_8f8ea64758b38b855339a671eb567788a222de23/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.2.0_49821dab6e8d805e8d9604501dcd33a03b39b9b9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_5f434cdcb0d61525d76a7334f0f315f4c56ec02d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/715d1055b2f13a96b2a6df37dad495ffb47bdc0e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ea6a989b83d19b1b461281e0475a6cd6514897f8">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_02e6382d1ad63400fd89d7c764bf93317fa1fc7c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/ebb0ad416249a83d07765cb1ae25a50b10422d3b/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_75bf4c6b5d5579be535b9a05654f59f9f918fb7f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/4104ca48c447b716b0458184cc46909d989885fa/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e6f33b464155edc5ae0ad0a043662554d6c4273c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/74841ec17a8750eebd66f810362a2346c24e7b25/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0dc1cf9a278b8047a15311bbd07fbfb6e445b3dc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/valentin/.android/build-cache/aaa8aa9bd2a147be919c410015d957a37924c711/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
+        <dex dex="/home/valentin/AndroidStudioProjects/MyCarPRO/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2e1413f0adb03478e06e822b8ccde456e73d8aa1/classes.dex" />
+    </item>
+
+</items>
