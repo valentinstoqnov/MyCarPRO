@@ -11,7 +11,7 @@ module.exports = function() {
             }
 
             if (user && user.authenticate(password)) {
-                return done(null, user);
+                    return done(null, user);
             }
             else {
                 return done(null, false);

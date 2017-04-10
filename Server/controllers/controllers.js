@@ -3,5 +3,5 @@ var UserController = require('./UserController'),
 
 module.exports = {
     users: UserController,
-    rooms: CarsController
+    cars: CarsController
 };

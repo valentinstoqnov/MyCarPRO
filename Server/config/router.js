@@ -9,6 +9,6 @@ module.exports = function functionName(app) {
     app.post('/users/register', controllers.users.postRegister);
     app.post('/users/login', auth.login);
 
-    app.get('/cars/get', controllers.rooms.get);
-    app.post('/cars/create', controllers.rooms.create);
+    app.get('/cars/get', controllers.cars.getCars);
+    app.post('/cars/create', controllers.cars.create);
 };
