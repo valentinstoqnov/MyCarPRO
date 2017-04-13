@@ -38,7 +38,7 @@
         <activity
             android:name=".addedit.insurance.AddEditInsuranceActivity"
             android:label="@string/title_activity_add_edit_insurance"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

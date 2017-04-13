@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,84 +7,121 @@
     tools:context="elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceFragment"
     tools:showIn="@layout/activity_add_edit_insurance">
 
-
-    <Button
-        android:drawableTint="@color/colorTextIcons"
-        android:textColor="@color/colorTextIcons"
-        android:background="@color/colorPrimary"
-        android:drawableTop="@drawable/ic_event"
-        android:text="@string/date"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintRight_toLeftOf="@+id/btn_add_insurance_expiration_date"
-        android:id="@+id/btn_add_insurance_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:drawableTint="@color/colorTextIcons"
-        android:textColor="@color/colorTextIcons"
-        android:background="@color/colorPrimary"
-        android:drawableTop="@drawable/ic_event"
-        android:text="@string/expiration_date"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        app:layout_constraintLeft_toRightOf="@id/btn_add_insurance_date"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/btn_add_insurance_expiration_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-
-    <android.support.design.widget.TextInputLayout
-        app:layout_constraintTop_toBottomOf="@id/btn_add_insurance_date"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        android:id="@+id/til_add_insurance_company_name"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="0dp"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <AutoCompleteTextView
-            android:drawablePadding="16dp"
-            android:drawableLeft="@drawable/ic_label_outline"
-            android:textSize="30sp"
-            android:hint="@string/company_name"
-            android:layout_width="match_parent"
+        <Button
+            android:padding="16dp"
+            android:drawableTint="@color/colorPrimary"
+            android:textColor="@color/colorPrimary"
+            android:drawableTop="@drawable/ic_event"
+            android:text="@string/date"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_add_insurance_expiration_date"
+            android:id="@+id/btn_add_insurance_date"
+            android:layout_width="0dp"
             android:layout_height="wrap_content" />
-    </android.support.design.widget.TextInputLayout>
 
-
-    <android.support.design.widget.TextInputLayout
-        app:layout_constraintTop_toBottomOf="@+id/til_add_insurance_company_name"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/til_add_insurance_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.TextInputEditText
-            android:drawablePadding="16dp"
-            android:drawableLeft="@drawable/ic_money"
-            android:hint="@string/price"
-            android:layout_width="match_parent"
+        <Button
+            android:padding="16dp"
+            android:drawableTint="@color/colorPrimary"
+            android:textColor="@color/colorPrimary"
+            android:drawableTop="@drawable/ic_event"
+            android:text="@string/expiration_date"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            app:layout_constraintLeft_toRightOf="@+id/btn_add_insurance_date"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/btn_add_insurance_expiration_date"
+            android:layout_width="0dp"
             android:layout_height="wrap_content" />
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        app:layout_constraintTop_toBottomOf="@id/til_add_insurance_price"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
+        <View
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_insurance_date"
+            android:background="@color/colorPrimary"
+            android:layout_width="368dp"
+            android:layout_height="1dp"
+            tools:layout_editor_absoluteX="8dp" />
 
-        <android.support.design.widget.TextInputEditText
-            android:drawablePadding="16dp"
-            android:drawableLeft="@drawable/ic_note"
-            android:hint="@string/other_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.design.widget.TextInputLayout>
-</android.support.constraint.ConstraintLayout>
+        <android.support.design.widget.TextInputLayout
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_insurance_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.1"
+            android:id="@+id/til_add_insurance_company_name"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:maxLines="1"
+                android:maxLength="32"
+                android:inputType="textAutoComplete|textCapWords"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_label_outline"
+                android:textSize="30sp"
+                android:hint="@string/company_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            app:layout_constraintTop_toBottomOf="@+id/til_add_insurance_company_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/til_add_insurance_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:maxLines="1"
+                android:maxLength="4"
+                android:inputType="numberDecimal"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_money"
+                android:hint="@string/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            app:layout_constraintTop_toBottomOf="@+id/til_add_insurance_price"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/til_add_insurance_odometer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:maxLines="1"
+                android:maxLength="7"
+                android:inputType="numberSigned"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_odometer"
+                android:hint="@string/odometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            app:layout_constraintTop_toBottomOf="@+id/til_add_insurance_odometer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:maxLength="1024"
+                android:inputType="textMultiLine"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_note"
+                android:hint="@string/other_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

@@ -1,13 +1,15 @@
 package elsys.mycar.mycarpro.addedit.insurance;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.github.clans.fab.FloatingActionButton;
+
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.util.ActivityUtils;
 
 public class AddEditInsuranceActivity extends AppCompatActivity {
 
@@ -26,6 +28,8 @@ public class AddEditInsuranceActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), new AddEditInsuranceFragment(), R.id.frame_layout_add_insurance);
     }
 
 }

@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceFragment;
+import elsys.mycar.mycarpro.util.ActivityUtils;
 
 public class AddEditRefuelingActivity extends AppCompatActivity {
 
@@ -26,6 +28,9 @@ public class AddEditRefuelingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), new AddEditRefuelingFragment(), R.id.frame_layout_add_refueling);
     }
 
 }
