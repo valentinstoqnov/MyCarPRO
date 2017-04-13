@@ -20,8 +20,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".addedit.AddEditVehicleActivity"
+            android:name=".addedit.vehicle.AddEditVehicleActivity"
             android:label="@string/title_activity_add_edit_vehicle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".detail.DetailVehicleActivity"
+            android:label="@string/title_activity_detail_vehicle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addedit.service.AddEditServiceActivity"
+            android:label="@string/title_activity_add_edit_service"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addedit.refueling.AddEditRefuelingActivity"
+            android:label="@string/title_activity_add_edit_refueling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addedit.insurance.AddEditInsuranceActivity"
+            android:label="@string/title_activity_add_edit_insurance"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingFragment"
+    tools:showIn="@layout/activity_add_edit_refueling">
+
+    <Button
+        android:drawableTint="@color/colorTextIcons"
+        android:textColor="@color/colorTextIcons"
+        android:background="@color/colorPrimary"
+        android:drawableTop="@drawable/ic_event"
+        android:text="@string/date"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btn_add_refueling_time"
+        android:id="@+id/btn_add_refueling_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:drawableTint="@color/colorTextIcons"
+        android:textColor="@color/colorTextIcons"
+        android:background="@color/colorPrimary"
+        android:drawableTop="@drawable/ic_time"
+        android:text="@string/time"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        app:layout_constraintLeft_toRightOf="@+id/btn_add_refueling_date"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/btn_add_refueling_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@+id/btn_add_refueling_date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        android:id="@+id/til_add_refueling_company_name"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
+            android:drawablePadding="16dp"
+            android:drawableLeft="@drawable/ic_label_outline"
+            android:textSize="30sp"
+            android:hint="@string/company_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Switch
+        android:id="@+id/switch_add_refueling"
+        android:text="Full fuel tank"
+        android:textAllCaps="true"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/til_add_refueling_quantity"
+        app:layout_constraintTop_toBottomOf="@+id/til_add_refueling_company_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@+id/til_add_refueling_company_name"
+        app:layout_constraintLeft_toRightOf="@+id/switch_add_refueling"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/til_add_refueling_quantity"
+        android:layout_marginLeft="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:hint="@string/quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@+id/til_add_refueling_quantity"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/til_add_refueling_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:drawablePadding="16dp"
+            android:drawableLeft="@drawable/ic_money"
+            android:hint="@string/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@+id/til_add_refueling_price"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/til_add_refueling_odometer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:drawablePadding="16dp"
+            android:drawableLeft="@drawable/ic_odometer"
+            android:hint="@string/odometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@+id/til_add_refueling_odometer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:drawablePadding="16dp"
+            android:drawableLeft="@drawable/ic_note"
+            android:hint="@string/other_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+</android.support.constraint.ConstraintLayout>

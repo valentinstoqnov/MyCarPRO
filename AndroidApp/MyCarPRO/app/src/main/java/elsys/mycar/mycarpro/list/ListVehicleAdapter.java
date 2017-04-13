@@ -1,15 +1,16 @@
 package elsys.mycar.mycarpro.list;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,12 +19,37 @@ import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.model.Vehicle;
 import elsys.mycar.mycarpro.util.DateUtils;
 
-public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.ViewHolder>{
+public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.ViewHolder> implements ListVehicleContract.Adapter{
 
     private List<Vehicle> mVehicles;
+    private OnCardActionListener mListener;
 
-    public void setVehicle(List<Vehicle> mVehicle) {
-        this.mVehicles = mVehicle;
+    public ListVehicleAdapter(OnCardActionListener mListener) {
+        this.mVehicles = new ArrayList<>();
+        this.mListener = mListener;
+    }
+
+    @Override
+    public void addVehicles(List<Vehicle> vehicles) {
+        mVehicles.addAll(vehicles);
+        this.notifyDataSetChanged();
+    }
+
+    @Override
+    public void addVehicle(Vehicle vehicle) {
+        mVehicles.add(vehicle);
+        this.notifyItemInserted(mVehicles.size());
+    }
+
+    @Override
+    public void removeVehicle(int position) {
+        Log.d("ADAPTER REMOVE POS =", " " + position);
+        Log.d("DATASET SIZE", "BEFORE DELETION = " + mVehicles.size());
+        mVehicles.remove(position);
+        Log.d("DATASET SIZE", "AFRER DELETION = " + mVehicles.size());
+        //this.notifyItemRemoved(position);
+        //this.notifyDataSetChanged();
+        Log.d("DATASET SIZE", "AFTER NOTIFY DELETION = " + mVehicles.size());
     }
 
     @Override
@@ -35,11 +61,9 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Picasso.with(holder.imgPhoto.getContext())
-                .load("http://i.imgur.com/DvpvklR.png")
-                .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                .into(holder.imgPhoto);
-        holder.setContent(mVehicles.get(position));
+        Vehicle vehicle = mVehicles.get(position);
+        holder.setContent(vehicle);
+        setCardActionClickListeners(holder, vehicle.getId(), position);
     }
 
     @Override
@@ -47,9 +71,25 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
         return mVehicles.size();
     }
 
+    private void setCardActionClickListeners(final ViewHolder holder, final String vehicleId, final int position) {
+        holder.btnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onViewClick(vehicleId);
+            }
+        });
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onDeleteClick(vehicleId, position);
+            }
+        });
+    }
+    
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-      /*  @BindView(R.id.img_view_card_vehicle_photo) */ImageView imgPhoto;
+        @BindView(R.id.img_view_card_vehicle_photo) ImageView imgPhoto;
         @BindView(R.id.tv_card_vehicle_name) TextView tvName;
         @BindView(R.id.tv_card_vehicle_make_and_model) TextView tvMakeModel;
         @BindView(R.id.tv_card_vehicle_day) TextView tvDay;
@@ -61,16 +101,16 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imgPhoto = (ImageView) itemView.findViewById(R.id.img_view_card_vehicle_photo);
             ButterKnife.bind(this, itemView);
         }
 
         public void setContent(Vehicle vehicle) {
 
             //TODO: wait api photo support
-            /*Picasso.with(imgPhoto.getContext())
-                    .load("http://i.imgur.com/DvpvklR.png")
-                    .into(imgPhoto);*/
+            Picasso p = Picasso.with(imgPhoto.getContext());
+                    p.setLoggingEnabled(true);
+                    p.setIndicatorsEnabled(true);
+                    p.load("http://i.imgur.com/DvpvklR.png").into(imgPhoto);
 
             tvName.setText(vehicle.getName());
 
@@ -90,5 +130,12 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
             String year = DateUtils.getTextDayFromTextYear(date);
             tvYear.setText(year);
         }
+    }
+
+    interface OnCardActionListener {
+
+        void onViewClick(String vehicleId);
+
+        void onDeleteClick(String id, int position);
     }
 }

@@ -37,6 +37,39 @@ public class Vehicle {
         this.note = note;
     }
 
+    public Vehicle(String id, String name, String make, String model, String manufactureDate, int horsePower, int odometer, String note) {
+        this.id = id;
+        this.name = name;
+        this.make = make;
+        this.model = model;
+        this.manufactureDate = manufactureDate;
+        this.horsePower = horsePower;
+        this.odometer = odometer;
+        this.note = note;
+    }
+
+    public Vehicle(String id, String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, String note) {
+        this.id = id;
+        this.name = name;
+        this.make = make;
+        this.model = model;
+        this.manufactureDate = manufactureDate;
+        this.horsePower = horsePower;
+        this.odometer = odometer;
+        this.fuelType = fuelType;
+        this.fuelTankCapacity = fuelTankCapacity;
+        this.fuelConsumption = fuelConsumption;
+        this.note = note;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

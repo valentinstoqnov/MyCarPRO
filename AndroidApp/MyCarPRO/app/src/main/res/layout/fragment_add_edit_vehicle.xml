@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
-    tools:context="elsys.mycar.mycarpro.addedit.AddEditVehicleFragment"
+    tools:context="elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleFragment"
     tools:showIn="@layout/activity_add_edit_vehicle">
 
     <android.support.constraint.ConstraintLayout

@@ -8,7 +8,7 @@
 
     <color name="colorPrimary">#F44336</color>
     <color name="colorPrimaryDark">#B71C1C</color>
-    <color name="colorAccent">#FF5722</color>
+    <color name="colorAccent">#F44336</color>
 
     <color name="colorFacebookBlue">#3b5998</color>
 </resources>

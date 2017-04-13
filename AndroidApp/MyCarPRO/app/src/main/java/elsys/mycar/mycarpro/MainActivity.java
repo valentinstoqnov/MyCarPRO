@@ -3,7 +3,6 @@ package elsys.mycar.mycarpro;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,8 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import elsys.mycar.mycarpro.addedit.AddEditVehicleActivity;
+import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
+import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.list.ListVehicleFragment;
+import elsys.mycar.mycarpro.list.ListVehiclePresenter;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity
@@ -91,7 +92,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_vehicles) {
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), ListVehicleFragment.newInstance(), R.id.frame_layout_main_content);
+            ListVehicleFragment listVehicleFragment = ListVehicleFragment.newInstance();
+            ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
+            listVehicleFragment.setPresenter(listVehiclePresenter);
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), listVehicleFragment, R.id.frame_layout_main_content);
         } else if (id == R.id.nav_send) {
 
         }

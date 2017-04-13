@@ -8,5 +8,7 @@ public interface VehicleRepository {
 
     void save(Vehicle vehicle);
 
+    void delete(String id);
+
     List<Vehicle> getAll();
 }
