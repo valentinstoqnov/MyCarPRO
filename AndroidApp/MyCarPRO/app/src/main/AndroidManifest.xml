@@ -22,7 +22,7 @@
         <activity
             android:name=".addedit.vehicle.AddEditVehicleActivity"
             android:label="@string/title_activity_add_edit_vehicle"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppThemeVehicle" />
         <activity
             android:name=".detail.DetailVehicleActivity"
             android:label="@string/title_activity_detail_vehicle"

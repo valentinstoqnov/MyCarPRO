@@ -7,10 +7,16 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+
+import java.util.ArrayList;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottom_bar_main) BottomBar bottomBar;
     @BindView(R.id.fab_main) FloatingActionButton fab;
     @BindView(R.id.fab_menu_main) FloatingActionMenu fabMenu;
+    @BindView(R.id.spn_main_vehicles) Spinner spinner;
     @BindColor(R.color.colorDarkVehicleTabSelected) int vehicleDarkTabColor;
     @BindColor(R.color.colorDarkActivitiesTabSelected) int activitiesDarkTabColor;
     @BindColor(R.color.colorDarkStatisticsTabSelected) int statisticsDarkTabColor;
@@ -43,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
         setUpBottomBar();
-
+        setUpSpinner();
     }
 
     @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
@@ -69,6 +76,17 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, aClass);
             startActivity(intent);
         }
+    }
+
+    private void setUpSpinner() {
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
+                R.layout.vehicles_spinner_item_activities,
+                new ArrayList<String>() {{
+                    add("SADASD ASDSA");
+                    add("NOOOOO");
+                    add("SUUUU");
+                }});
+        spinner.setAdapter(mAdapter);
     }
 
     private void setUpBottomBar() {
@@ -104,23 +122,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onVehiclesTabSelected() {
-        setFabVisible();
         ListVehicleFragment listVehicleFragment = ListVehicleFragment.newInstance();
         ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
         listVehicleFragment.setPresenter(listVehiclePresenter);
+        spinner.setVisibility(View.GONE);
+        setFabVisible();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), listVehicleFragment, R.id.frame_layout_main_content);
     }
 
     private void onActivitiesTabSelected() {
         setFabMenuVisible();
+        spinner.setVisibility(View.VISIBLE);
     }
 
     private void onStatisticsTabSelected() {
         hideFabs();
+        spinner.setVisibility(View.VISIBLE);
     }
 
     private void onProfileTabSelected() {
         hideFabs();
+        spinner.setVisibility(View.GONE);
     }
 
     private void setFabVisible() {
@@ -129,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setFabMenuVisible() {
+        spinner.setVisibility(View.VISIBLE);
         fab.hide(false);
         fabMenu.showMenu(true);
     }
@@ -140,9 +163,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setBarsColor(int statusBarColor, int actionBarColor) {
         getWindow().setStatusBarColor(statusBarColor);
+        ColorDrawable colorDrawable = new ColorDrawable(actionBarColor);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(actionBarColor));
+            actionBar.setBackgroundDrawable(colorDrawable);
         }
+        spinner.setPopupBackgroundDrawable(colorDrawable);
     }
 }

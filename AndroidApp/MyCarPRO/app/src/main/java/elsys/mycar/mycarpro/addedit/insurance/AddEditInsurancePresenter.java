@@ -8,6 +8,7 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
 
     @Override
     public void start() {
+
     }
 
     @Override
