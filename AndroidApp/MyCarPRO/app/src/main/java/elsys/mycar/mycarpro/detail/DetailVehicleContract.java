@@ -9,6 +9,8 @@ public interface DetailVehicleContract {
 
     interface View extends BaseView<Presenter> {
 
+        void showNoSuchVehicleError();
+
         void setPhoto(Bitmap bitmap);
 
         void setName(String name);
@@ -32,6 +34,6 @@ public interface DetailVehicleContract {
 
     interface Presenter extends BasePresenter {
 
-
+        boolean isDataMissing();
     }
 }

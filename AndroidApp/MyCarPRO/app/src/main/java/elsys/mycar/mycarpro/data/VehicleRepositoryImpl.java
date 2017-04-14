@@ -31,6 +31,16 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
+    public Vehicle getById(String id) {
+        for (Vehicle vehicle : mVehicles) {
+            if (vehicle.getId().equals(id)) {
+                return vehicle;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void delete(String id) {
         for (Iterator<Vehicle> iterator = mVehicles.iterator(); iterator.hasNext();) {
             Vehicle vehicle = iterator.next();

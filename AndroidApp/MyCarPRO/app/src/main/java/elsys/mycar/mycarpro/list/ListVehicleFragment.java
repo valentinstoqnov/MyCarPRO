@@ -1,6 +1,8 @@
 package elsys.mycar.mycarpro.list;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,13 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.common.base.Preconditions;
 
 import java.util.List;
 
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
+import elsys.mycar.mycarpro.detail.DetailVehicleActivity;
+import elsys.mycar.mycarpro.detail.DetailVehicleFragment;
+import elsys.mycar.mycarpro.detail.DetailVehiclePresenter;
 import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.util.ActivityUtils;
 
 public class ListVehicleFragment extends Fragment implements ListVehicleContract.View {
 
@@ -37,6 +45,23 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        final FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_main);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && fab.isShown()) {
+                    fab.hide(true);
+                } else if (dy < 0 && fab.isHidden()) {
+                    fab.show(true);
+                }
+            }
+        });
+    }
+
+    @Override
     public void setPresenter(ListVehicleContract.Presenter presenter) {
         this.mPresenter = Preconditions.checkNotNull(presenter);
     }
@@ -51,7 +76,9 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
         mAdapter = new ListVehicleAdapter(new ListVehicleAdapter.OnCardActionListener() {
             @Override
             public void onViewClick(String vehicleId) {
-                //TODO: open bottom sheet stuff code here
+                Intent intent = new Intent(getContext(), DetailVehicleActivity.class);
+                intent.putExtra(DetailVehicleActivity.DETAIL_VEHICLE_ID, vehicleId);
+                startActivity(intent);
             }
 
             @Override

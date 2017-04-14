@@ -7,8 +7,8 @@
     tools:context=".detail.DetailVehicleFragment">
 
     <TextView
+        android:id="@+id/tv_detail_vehicle_make"
         android:drawableLeft="@drawable/ic_label_outline"
-        android:text="Make: Audi"
         android:gravity="center_horizontal"
         android:textSize="18sp"
         android:textColor="@android:color/black"
@@ -17,8 +17,8 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <TextView
+        android:id="@+id/tv_detail_vehicle_model"
         android:drawableLeft="@drawable/ic_label_outline"
-        android:text="Model: RS7"
         android:gravity="center_horizontal"
         android:textSize="18sp"
         android:textColor="@android:color/black"
@@ -27,9 +27,9 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <TextView
+        android:id="@+id/tv_detail_vehicle_manufacture_date"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:drawableLeft="@drawable/ic_event"
-        android:text="Manufacture date: 12 May 2028"
         android:gravity="center_horizontal"
         android:textSize="18sp"
         android:textColor="@android:color/black"
@@ -37,9 +37,9 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/tv_detail_vehicle_odometer"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:drawableLeft="@drawable/ic_label_outline"
-        android:text="Odometer: 1000002km"
         android:gravity="center_horizontal"
         android:textSize="18sp"
         android:textColor="@android:color/black"
@@ -47,9 +47,9 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/tv_detail_vehicle_horse_power"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:drawableLeft="@drawable/ic_gas_station"
-        android:text="Horse power: 500cc"
         android:gravity="center_horizontal"
         android:textSize="18sp"
         android:textColor="@android:color/black"
@@ -58,18 +58,16 @@
 
     <TextView
         android:textSize="40sp"
-        android:text="SOMEHOW DISPLAY FUEL TANK"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/tv_detail_vehicle_note"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:drawableLeft="@drawable/ic_note"
-        android:text="Other details: adsadalasdklsad;lsdkasxom;lsajoadmlsadojaslxsaosa;lasjod;ladsdasdasdjklasmd.,asldkasd.asklasd,aknlda, sdnklad,as nkdlas,d ank"
         android:gravity="center_horizontal"
         android:textSize="18sp"
         android:textColor="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

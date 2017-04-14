@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpSpinner() {
         ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
-                R.layout.vehicles_spinner_item_activities,
+                R.layout.vehicles_spinner_item,
                 new ArrayList<String>() {{
                     add("SADASD ASDSA");
                     add("NOOOOO");
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpBottomBar() {
-        bottomBar.selectTabAtPosition(1);
+        bottomBar.setDefaultTabPosition(1);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -115,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                         statusBarColor = profileDarkTabColor;
                         break;
                 }
-
                 setBarsColor(statusBarColor, actionBarColor);
             }
         });
