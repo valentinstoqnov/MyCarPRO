@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.model;
 
+import java.util.List;
+
 public class Vehicle {
 
     private String id;
@@ -12,6 +14,7 @@ public class Vehicle {
     private String fuelType;
     private int fuelTankCapacity;
     private double fuelConsumption;
+    private List<Insurance> insurances;
     private String note;
 
     public Vehicle(String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, String note) {
@@ -140,6 +143,14 @@ public class Vehicle {
 
     public void setFuelConsumption(double fuelConsumption) {
         this.fuelConsumption = fuelConsumption;
+    }
+
+    public List<Insurance> getInsurances() {
+        return insurances;
+    }
+
+    public void addInsurance(Insurance insurance) {
+        this.insurances.add(insurance);
     }
 
     public String getNote() {

@@ -7,8 +7,18 @@
     <color name="colorDivider">#BDBDBD</color>
 
     <color name="colorPrimary">#F44336</color>
-    <color name="colorPrimaryDark">#B71C1C</color>
+    <color name="colorPrimaryDark">#D32F2F</color>
     <color name="colorAccent">#F44336</color>
+
+    <color name="colorVehicleTabSelected">#FF9800</color>
+    <color name="colorActivitiesTabSelected">@color/colorPrimary</color>
+    <color name="colorStatisticsTabSelected">#795548</color>
+    <color name="colorProfileTabSelected">#4CAF50</color>
+
+    <color name="colorDarkVehicleTabSelected">#F57C00</color>
+    <color name="colorDarkActivitiesTabSelected">@color/colorPrimaryDark</color>
+    <color name="colorDarkStatisticsTabSelected">#5D4037</color>
+    <color name="colorDarkProfileTabSelected">#388E3C</color>
 
     <color name="colorFacebookBlue">#3b5998</color>
 </resources>

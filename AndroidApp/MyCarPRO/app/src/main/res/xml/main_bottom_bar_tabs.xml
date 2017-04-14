@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:barColorWhenSelected="http://schemas.android.com/apk/res-auto">
+    <tab
+        id="@+id/tab_vehicles"
+        icon="@drawable/ic_car"
+        title="Cars"
+        barColorWhenSelected="@color/colorVehicleTabSelected"/>
+    <tab
+        id="@+id/tab_activities"
+        icon="@drawable/ic_view_list"
+        title="Activities"
+        barColorWhenSelected="@color/colorActivitiesTabSelected"/>
+    <tab
+        id="@+id/tab_statistics"
+        icon="@drawable/ic_statistics"
+        title="Statistics"
+        barColorWhenSelected="@color/colorStatisticsTabSelected"/>
+    <tab
+        id="@+id/tab_user_profile"
+        icon="@drawable/ic_person"
+        title="Profile"
+        barColorWhenSelected="@color/colorProfileTabSelected"/>
+</tabs>

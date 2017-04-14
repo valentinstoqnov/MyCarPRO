@@ -40,33 +40,33 @@
             android:id="@+id/fab_main_car"
             fab:fab_label="Car"
             android:src="@drawable/ic_car"
-            app:fabSize="mini"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:fabSize="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_main_service"
             fab:fab_label="Service"
             android:src="@drawable/ic_service"
-            app:fabSize="mini"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:fabSize="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_main_refueling"
             fab:fab_label="Refueling"
             android:src="@drawable/ic_gas_station"
-            app:fabSize="mini"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:fabSize="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_main_insurance"
             fab:fab_label="Insurance"
             android:src="@drawable/ic_insurance"
-            app:fabSize="mini"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:fabSize="mini"/>
     </com.github.clans.fab.FloatingActionMenu>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -23,7 +23,7 @@
     <include layout="@layout/content_add_edit_insurance" />
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_add_insurance"
         android:src="@drawable/ic_done"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="bottom|end"
