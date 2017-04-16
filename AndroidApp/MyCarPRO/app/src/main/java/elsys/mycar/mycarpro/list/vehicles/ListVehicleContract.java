@@ -1,11 +1,9 @@
 package elsys.mycar.mycarpro.list.vehicles;
 
-import android.support.v7.widget.RecyclerView;
-
 import java.util.List;
 
-import elsys.mycar.mycarpro.BasePresenter;
-import elsys.mycar.mycarpro.BaseView;
+import elsys.mycar.mycarpro.base.BasePresenter;
+import elsys.mycar.mycarpro.base.BaseView;
 import elsys.mycar.mycarpro.model.Vehicle;
 
 public interface ListVehicleContract {

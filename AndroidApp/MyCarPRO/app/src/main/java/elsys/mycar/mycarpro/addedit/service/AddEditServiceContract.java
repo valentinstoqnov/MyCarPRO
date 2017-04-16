@@ -1,7 +1,7 @@
 package elsys.mycar.mycarpro.addedit.service;
 
-import elsys.mycar.mycarpro.BasePresenter;
-import elsys.mycar.mycarpro.BaseView;
+import elsys.mycar.mycarpro.base.BasePresenter;
+import elsys.mycar.mycarpro.base.BaseView;
 
 public interface AddEditServiceContract {
 
@@ -17,7 +17,7 @@ public interface AddEditServiceContract {
 
         void setTime(String time);
 
-        void setServiceType(String serviceType);
+        void setType(String serviceType);
 
         void setPrice(String price);
 
@@ -29,5 +29,7 @@ public interface AddEditServiceContract {
     interface Presenter extends BasePresenter{
 
         void saveService(String serviceType, String price, String odometer, String date, String time, String note);
+
+        boolean isDataMissing();
     }
 }

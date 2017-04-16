@@ -1,9 +1,7 @@
 package elsys.mycar.mycarpro.addedit.vehicle;
 
-import java.text.ParseException;
-
-import elsys.mycar.mycarpro.BasePresenter;
-import elsys.mycar.mycarpro.BaseView;
+import elsys.mycar.mycarpro.base.BasePresenter;
+import elsys.mycar.mycarpro.base.BaseView;
 
 public interface AddEditVehicleContract {
 
@@ -25,6 +23,8 @@ public interface AddEditVehicleContract {
 
         void setManufactureDate(String date);
 
+        void setDate(String date);
+
         void setPhoto(/*Drawable or Bitmap*/);
 
         void setFuelTank(/*some variables here*/);
@@ -35,5 +35,7 @@ public interface AddEditVehicleContract {
         void onDatePicked(int year, int month, int day);
 
         void saveVehicle(String name, String make, String model, String manufactureDate, String odometer, String horsePower, String notes/*photo and fuel tanks*/);
+
+        boolean isDataMissing();
     }
 }

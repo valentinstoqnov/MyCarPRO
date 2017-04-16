@@ -1,7 +1,5 @@
-package elsys.mycar.mycarpro;
+package elsys.mycar.mycarpro.homescreen;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,22 +9,23 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.common.base.Preconditions;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceActivity;
 import elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity;
 import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
@@ -36,9 +35,12 @@ import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
+import elsys.mycar.mycarpro.statistics.StatisticsFragment;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainContract.View{
+
+    public static final String VEHICLE_ID = "VEHICLE_ID";
 
     @BindView(R.id.bottom_bar_main) BottomBar bottomBar;
     @BindView(R.id.fab_main) FloatingActionButton fab;
@@ -51,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     @BindColor(R.color.colorDarkStatisticsTabSelected) int statisticsDarkTabColor;
     @BindColor(R.color.colorDarkProfileTabSelected) int profileDarkTabColor;
 
-    private int previosColor;
+    private MainContract.Presenter mPresenter;
+    private String mSelectedVehicleId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
+
+        MainPresenter mainPresenter = new MainPresenter(VehicleRepositoryImpl.getInstance(), this);
+        setPresenter(mainPresenter);
+
         setUpBottomBar();
         setUpSpinner();
-        /*fabMenu.setAnimated(false);
-        fabMenu.setMenuButtonHideAnimation(null);
-        fabMenu.setMenuButtonShowAnimation(null);*/
     }
 
     @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
@@ -88,19 +92,26 @@ public class MainActivity extends AppCompatActivity {
 
         if (aClass != null) {
             Intent intent = new Intent(this, aClass);
+            intent.putExtra(VEHICLE_ID, mSelectedVehicleId);
             startActivity(intent);
         }
     }
 
     private void setUpSpinner() {
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
-                R.layout.vehicles_spinner_item,
-                new ArrayList<String>() {{
-                    add("SADASD ASDSA");
-                    add("NOOOOO");
-                    add("SUUUU");
-                }});
-        spinner.setAdapter(mAdapter);
+        mPresenter.requestVehicleNames();
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedVehicleName = spinner.getItemAtPosition(position).toString();
+                //TODO: when we call presenter.start() it must automatically provide this stuff
+                mSelectedVehicleId = mPresenter.getVehicleIdByName(selectedVehicleName);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void setUpBottomBar() {
@@ -111,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(@IdRes int tabId) {
                 int actionBarColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
                 int statusBarColor = activitiesDarkTabColor;
-                previosColor = actionBarColor;
+
                 switch (tabId) {
                     case R.id.tab_vehicles:
                         onVehiclesTabSelected();
@@ -135,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onVehiclesTabSelected() {
-        ActivityUtils.hideFragments(getSupportFragmentManager(), ProfileFragment.TAG, ActivitiesFragment.TAG);
+        ActivityUtils.hideFragments(getSupportFragmentManager(), StatisticsFragment.TAG, ProfileFragment.TAG, ActivitiesFragment.TAG);
         tabLayoutActivities.setVisibility(View.GONE);
         tabLayoutStatistics.setVisibility(View.GONE);
 
@@ -156,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onActivitiesTabSelected() {
-        ActivityUtils.hideFragments(getSupportFragmentManager(), ListVehicleFragment.TAG, ProfileFragment.TAG);
+        ActivityUtils.hideFragments(getSupportFragmentManager(), StatisticsFragment.TAG, ListVehicleFragment.TAG, ProfileFragment.TAG);
 
         setFabMenuVisible();
         tabLayoutStatistics.setVisibility(View.GONE);
@@ -175,8 +186,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onStatisticsTabSelected() {
+        ActivityUtils.hideFragments(getSupportFragmentManager(), ListVehicleFragment.TAG, ProfileFragment.TAG, ActivitiesFragment.TAG);
+
         hideFabsAndTabActivities();
         tabLayoutStatistics.setVisibility(View.VISIBLE);
+
+        StatisticsFragment statisticsFragment = (StatisticsFragment) getSupportFragmentManager().findFragmentByTag(StatisticsFragment.TAG);
+
+        if (statisticsFragment == null) {
+            statisticsFragment = new StatisticsFragment();
+            ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), statisticsFragment, R.id.frame_layout_main_content, StatisticsFragment.TAG);
+        }else {
+            ActivityUtils.showFragment(getSupportFragmentManager(), statisticsFragment);
+        }
+
         spinner.setVisibility(View.VISIBLE);
     }
 
@@ -184,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         hideFabsAndTabActivities();
         tabLayoutStatistics.setVisibility(View.GONE);
 
-        ActivityUtils.hideFragments(getSupportFragmentManager(), ListVehicleFragment.TAG);
+        ActivityUtils.hideFragments(getSupportFragmentManager(), StatisticsFragment.TAG, ListVehicleFragment.TAG, ActivitiesFragment.TAG);
 
         ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
 
@@ -222,29 +245,18 @@ public class MainActivity extends AppCompatActivity {
         ColorDrawable colorDrawable = new ColorDrawable(actionBarColor);
         actionBar.setBackgroundDrawable(colorDrawable);
         spinner.setPopupBackgroundDrawable(colorDrawable);
+    }
 
+    @Override
+    public void setPresenter(MainContract.Presenter presenter) {
+        this.mPresenter = Preconditions.checkNotNull(presenter);
+    }
 
-
-
-
-
-
-/*        int colorStatusBarFrom = window.getStatusBarColor();
-        int colorFrom = previosColor;
-
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, actionBarColor);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int color = (int) animation.getAnimatedValue();
-                window.setNavigationBarColor(color);
-                window.setStatusBarColor(color);
-                ColorDrawable colorDrawable = new ColorDrawable(color);
-                actionBar.setBackgroundDrawable(colorDrawable);
-                spinner.setPopupBackgroundDrawable(colorDrawable);
-            }
-        });
-        colorAnimation.setDuration(600);
-        colorAnimation.start();*/
+    @Override
+    public void setVehicleNames(List<String> items) {
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
+                R.layout.vehicles_spinner_item,
+                items);
+        spinner.setAdapter(mAdapter);
     }
 }

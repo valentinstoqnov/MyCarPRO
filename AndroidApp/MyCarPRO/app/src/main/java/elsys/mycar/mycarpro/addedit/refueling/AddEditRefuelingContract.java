@@ -1,7 +1,7 @@
 package elsys.mycar.mycarpro.addedit.refueling;
 
-import elsys.mycar.mycarpro.BasePresenter;
-import elsys.mycar.mycarpro.BaseView;
+import elsys.mycar.mycarpro.base.BasePresenter;
+import elsys.mycar.mycarpro.base.BaseView;
 
 public interface AddEditRefuelingContract {
 
@@ -32,6 +32,8 @@ public interface AddEditRefuelingContract {
 
     interface Presenter extends BasePresenter {
 
-        void saveRefueling(String companyName, String quantity, String price, String odometer, String note, boolean isFull);
+        void saveRefueling(String companyName, String quantity, String price, String odometer, String date, String time, String note, boolean isFull);
+
+        boolean isDataMissing();
     }
 }

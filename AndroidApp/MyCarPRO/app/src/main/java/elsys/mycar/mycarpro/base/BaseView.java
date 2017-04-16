@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro;
+package elsys.mycar.mycarpro.base;
 
 public interface BaseView<T> {
 

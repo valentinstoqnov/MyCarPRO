@@ -1,7 +1,5 @@
 package elsys.mycar.mycarpro.model;
 
-import java.util.Date;
-
 public class Insurance {
 
     private String id;

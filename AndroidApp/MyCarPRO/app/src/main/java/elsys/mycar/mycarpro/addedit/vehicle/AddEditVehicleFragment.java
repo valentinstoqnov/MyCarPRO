@@ -40,6 +40,7 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     @BindView(R.id.btn_add_vehicle_manufacture_date) Button btnManufactureDate;
     @BindView(R.id.btn_add_vehicle_photo) Button btnPhoto;
     @BindView(R.id.btn_add_vehicle_fuel_tank) Button btnFuelTank;
+
     private FloatingActionButton fab;
 
     private AddEditVehicleContract.Presenter mPresenter;
@@ -52,15 +53,23 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_edit_vehicle, container, false);
+
         mUnbinder = ButterKnife.bind(this, view);
-        setManufactureDate(new SimpleDateFormat("dd MMM yyyy").format(Calendar.getInstance().getTime()));
+
         btnManufactureDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerUtils.showDatePicker(getContext(), AddEditVehicleFragment.this);
             }
         });
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     @Override
@@ -118,6 +127,11 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     @Override
     public void setMake(String make) {
         setTextToAutoComplete(tilMake, make);
+    }
+
+    @Override
+    public void setDate(String date) {
+        btnManufactureDate.setText(date);
     }
 
     @Override

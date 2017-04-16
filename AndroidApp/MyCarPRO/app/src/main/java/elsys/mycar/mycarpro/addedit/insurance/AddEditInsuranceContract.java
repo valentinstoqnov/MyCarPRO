@@ -1,7 +1,7 @@
 package elsys.mycar.mycarpro.addedit.insurance;
 
-import elsys.mycar.mycarpro.BasePresenter;
-import elsys.mycar.mycarpro.BaseView;
+import elsys.mycar.mycarpro.base.BasePresenter;
+import elsys.mycar.mycarpro.base.BaseView;
 
 public interface AddEditInsuranceContract {
 
@@ -24,10 +24,16 @@ public interface AddEditInsuranceContract {
         void setExpirationDate(String expirationDate);
 
         void setNote(String note);
+
+        void exit();
     }
 
     interface Presenter extends BasePresenter {
 
         void saveInsurance(String companyName, String price, String odometer, String date, String expirationDate, String note);
+
+        void onDatePicked(int year, int month, int day, boolean isExpiration);
+
+        boolean isDataMissing();
     }
 }

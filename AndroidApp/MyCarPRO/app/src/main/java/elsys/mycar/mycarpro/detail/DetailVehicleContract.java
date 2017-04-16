@@ -2,8 +2,8 @@ package elsys.mycar.mycarpro.detail;
 
 import android.graphics.Bitmap;
 
-import elsys.mycar.mycarpro.BasePresenter;
-import elsys.mycar.mycarpro.BaseView;
+import elsys.mycar.mycarpro.base.BasePresenter;
+import elsys.mycar.mycarpro.base.BaseView;
 
 public interface DetailVehicleContract {
 

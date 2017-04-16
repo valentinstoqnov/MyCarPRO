@@ -40,6 +40,12 @@ public class ActivitiesFragment extends Fragment {
         setUpViewPager();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
+
     private void setUpViewPager() {
         ActivitiesViewPagerAdapter adapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
 

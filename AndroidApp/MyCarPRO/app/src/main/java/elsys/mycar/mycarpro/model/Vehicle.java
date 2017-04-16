@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.model;
 
+import android.content.Intent;
+
 import java.util.List;
 
 public class Vehicle {
@@ -15,6 +17,8 @@ public class Vehicle {
     private int fuelTankCapacity;
     private double fuelConsumption;
     private List<Insurance> insurances;
+    private List<Service> services;
+    private List<Refueling> refuelings;
     private String note;
 
     public Vehicle(String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, String note) {
@@ -65,12 +69,24 @@ public class Vehicle {
         this.note = note;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void addInsurance(Insurance insurance) {
+        insurances.add(insurance);
+    }
+
+    public void addService(Service service) {
+        services.add(service);
+    }
+
+    public void addRefueling(Refueling refueling) {
+        refuelings.add(refueling);
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -149,8 +165,24 @@ public class Vehicle {
         return insurances;
     }
 
-    public void addInsurance(Insurance insurance) {
-        this.insurances.add(insurance);
+    public void setInsurances(List<Insurance> insurances) {
+        this.insurances = insurances;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public List<Refueling> getRefuelings() {
+        return refuelings;
+    }
+
+    public void setRefuelings(List<Refueling> refuelings) {
+        this.refuelings = refuelings;
     }
 
     public String getNote() {

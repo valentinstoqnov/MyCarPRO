@@ -9,7 +9,10 @@ import android.view.View;
 import com.github.clans.fab.FloatingActionButton;
 
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.util.ActivityUtils;
+
+import static elsys.mycar.mycarpro.homescreen.MainActivity.VEHICLE_ID;
 
 public class AddEditInsuranceActivity extends AppCompatActivity {
 
@@ -20,16 +23,18 @@ public class AddEditInsuranceActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_insurance);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        AddEditInsuranceFragment addEditInsuranceFragment = (AddEditInsuranceFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_add_insurance);
 
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), new AddEditInsuranceFragment(), R.id.frame_layout_add_insurance);
+        if(addEditInsuranceFragment == null) {
+            addEditInsuranceFragment = AddEditInsuranceFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditInsuranceFragment, R.id.frame_layout_add_insurance);
+        }
+
+        String vehicleId = getIntent().getStringExtra(VEHICLE_ID);
+
+        AddEditInsurancePresenter addEditInsurancePresenter = new AddEditInsurancePresenter(vehicleId, null, VehicleRepositoryImpl.getInstance(), addEditInsuranceFragment, true);
+
+        addEditInsuranceFragment.setPresenter(addEditInsurancePresenter);
     }
 
 }
