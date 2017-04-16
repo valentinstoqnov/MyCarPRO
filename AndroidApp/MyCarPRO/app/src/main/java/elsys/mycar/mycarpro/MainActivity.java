@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -47,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     @BindColor(R.color.colorDarkStatisticsTabSelected) int statisticsDarkTabColor;
     @BindColor(R.color.colorDarkProfileTabSelected) int profileDarkTabColor;
 
+    private int previosColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setUpBottomBar();
         setUpSpinner();
+        /*fabMenu.setAnimated(false);
+        fabMenu.setMenuButtonHideAnimation(null);
+        fabMenu.setMenuButtonShowAnimation(null);*/
     }
 
     @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
@@ -102,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(@IdRes int tabId) {
                 int actionBarColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
                 int statusBarColor = activitiesDarkTabColor;
-
+                previosColor = actionBarColor;
                 switch (tabId) {
                     case R.id.tab_vehicles:
                         onVehiclesTabSelected();
@@ -126,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onVehiclesTabSelected() {
-        ActivityUtils.hideFragments(getSupportFragmentManager(), ProfileFragment.TAG);
+        ActivityUtils.hideFragments(getSupportFragmentManager(), ProfileFragment.TAG, ActivitiesFragment.TAG);
         tabLayoutActivities.setVisibility(View.GONE);
         tabLayoutStatistics.setVisibility(View.GONE);
 
@@ -135,10 +144,9 @@ public class MainActivity extends AppCompatActivity {
         if (listVehicleFragment == null) {
             listVehicleFragment = ListVehicleFragment.newInstance();
             ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), listVehicleFragment, R.id.frame_layout_main_content, ListVehicleFragment.TAG);
+        }else {
+            ActivityUtils.showFragment(getSupportFragmentManager(), listVehicleFragment);
         }
-
-        ActivityUtils.showFragment(getSupportFragmentManager(), listVehicleFragment);
-
         setFabVisible();
 
         ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
@@ -159,9 +167,9 @@ public class MainActivity extends AppCompatActivity {
         if (activitiesFragment == null) {
             activitiesFragment = new ActivitiesFragment();
             ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), activitiesFragment, R.id.frame_layout_main_content, ActivitiesFragment.TAG);
+        }else {
+            ActivityUtils.showFragment(getSupportFragmentManager(), activitiesFragment);
         }
-
-        ActivityUtils.showFragment(getSupportFragmentManager(), activitiesFragment);
 
         spinner.setVisibility(View.VISIBLE);
     }
@@ -183,19 +191,19 @@ public class MainActivity extends AppCompatActivity {
         if (profileFragment == null) {
             profileFragment = ProfileFragment.newInstance();
             ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), profileFragment, R.id.frame_layout_main_content, ProfileFragment.TAG);
+        }else {
+            ActivityUtils.showFragment(getSupportFragmentManager(), profileFragment);
         }
-
-        ActivityUtils.showFragment(getSupportFragmentManager(), profileFragment);
         spinner.setVisibility(View.GONE);
     }
 
     private void setFabVisible() {
-        fabMenu.hideMenu(false);
+        fabMenu.hideMenu(true);
         fab.show(true);
     }
 
     private void setFabMenuVisible() {
-        fab.hide(false);
+        fab.hide(true);
         fabMenu.showMenu(true);
     }
 
@@ -206,12 +214,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setBarsColor(int statusBarColor, int actionBarColor) {
-        getWindow().setStatusBarColor(statusBarColor);
+        final Window window = getWindow();
+        final ActionBar actionBar = getSupportActionBar();
+
+        window.setNavigationBarColor(actionBarColor);
+        window.setStatusBarColor(statusBarColor);
         ColorDrawable colorDrawable = new ColorDrawable(actionBarColor);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setBackgroundDrawable(colorDrawable);
-        }
+        actionBar.setBackgroundDrawable(colorDrawable);
         spinner.setPopupBackgroundDrawable(colorDrawable);
+
+
+
+
+
+
+
+/*        int colorStatusBarFrom = window.getStatusBarColor();
+        int colorFrom = previosColor;
+
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, actionBarColor);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int color = (int) animation.getAnimatedValue();
+                window.setNavigationBarColor(color);
+                window.setStatusBarColor(color);
+                ColorDrawable colorDrawable = new ColorDrawable(color);
+                actionBar.setBackgroundDrawable(colorDrawable);
+                spinner.setPopupBackgroundDrawable(colorDrawable);
+            }
+        });
+        colorAnimation.setDuration(600);
+        colorAnimation.start();*/
     }
 }
