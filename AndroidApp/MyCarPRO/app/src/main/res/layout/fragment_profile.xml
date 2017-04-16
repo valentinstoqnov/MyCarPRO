@@ -1,0 +1,33 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#C8E6C9"
+    android:padding="16dp"
+    tools:context="elsys.mycar.mycarpro.profile.ProfileFragment">
+
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/img_view_profile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        android:src="@drawable/ic_person"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/img_view_profile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="Aasdaasd ASDasda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+</android.support.constraint.ConstraintLayout>

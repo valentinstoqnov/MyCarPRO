@@ -13,6 +13,6 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
 
     @Override
     public void saveInsurance(String companyName, String price, String odometer, String date, String expirationDate, String note) {
-
+        
     }
 }

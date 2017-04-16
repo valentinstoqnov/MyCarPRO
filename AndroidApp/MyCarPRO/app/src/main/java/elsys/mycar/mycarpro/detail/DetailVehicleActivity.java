@@ -28,17 +28,20 @@ public class DetailVehicleActivity extends AppCompatActivity {
 
 //        ImageView imageView = (ImageView) findViewById(R.id.img_view_detail_vehicle);
 
-        DetailVehicleFragment detailVehicleFragment = DetailVehicleFragment.newInstance();
+        DetailVehicleFragment detailVehicleFragment = (DetailVehicleFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_detail_vehicle);
+
+        if (detailVehicleFragment == null) {
+            detailVehicleFragment = DetailVehicleFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), detailVehicleFragment, R.id.frame_layout_detail_vehicle);
+        }
+
+        String vehicleId = getIntent().getStringExtra(DETAIL_VEHICLE_ID);
 
         DetailVehiclePresenter detailVehiclePresenter = new DetailVehiclePresenter(
-                detailVehicleFragment,
-                VehicleRepositoryImpl.getInstance(),
-                getIntent().getStringExtra(DETAIL_VEHICLE_ID),
-                true
+                detailVehicleFragment, VehicleRepositoryImpl.getInstance(),
+                vehicleId, true
         );
 
         detailVehicleFragment.setPresenter(detailVehiclePresenter);
-
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), detailVehicleFragment, R.id.frame_layout_detail_vehicle);
     }
 }

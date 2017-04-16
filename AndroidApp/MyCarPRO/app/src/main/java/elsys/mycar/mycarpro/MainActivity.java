@@ -4,15 +4,13 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -30,8 +28,10 @@ import elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity;
 import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
 import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
-import elsys.mycar.mycarpro.list.ListVehicleFragment;
-import elsys.mycar.mycarpro.list.ListVehiclePresenter;
+import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
+import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
+import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
+import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.fab_main) FloatingActionButton fab;
     @BindView(R.id.fab_menu_main) FloatingActionMenu fabMenu;
     @BindView(R.id.spn_main_vehicles) Spinner spinner;
+    @BindView(R.id.tab_layout_statistics) TabLayout tabLayoutStatistics;
+    @BindView(R.id.tab_layout_activities) TabLayout tabLayoutActivities;
     @BindColor(R.color.colorDarkVehicleTabSelected) int vehicleDarkTabColor;
     @BindColor(R.color.colorDarkActivitiesTabSelected) int activitiesDarkTabColor;
     @BindColor(R.color.colorDarkStatisticsTabSelected) int statisticsDarkTabColor;
@@ -124,26 +126,66 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onVehiclesTabSelected() {
-        ListVehicleFragment listVehicleFragment = ListVehicleFragment.newInstance();
+        ActivityUtils.hideFragments(getSupportFragmentManager(), ProfileFragment.TAG);
+        tabLayoutActivities.setVisibility(View.GONE);
+        tabLayoutStatistics.setVisibility(View.GONE);
+
+        ListVehicleFragment listVehicleFragment = (ListVehicleFragment) getSupportFragmentManager().findFragmentByTag(ListVehicleFragment.TAG);
+
+        if (listVehicleFragment == null) {
+            listVehicleFragment = ListVehicleFragment.newInstance();
+            ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), listVehicleFragment, R.id.frame_layout_main_content, ListVehicleFragment.TAG);
+        }
+
+        ActivityUtils.showFragment(getSupportFragmentManager(), listVehicleFragment);
+
+        setFabVisible();
+
         ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
         listVehicleFragment.setPresenter(listVehiclePresenter);
+
         spinner.setVisibility(View.GONE);
-        setFabVisible();
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), listVehicleFragment, R.id.frame_layout_main_content);
     }
 
     private void onActivitiesTabSelected() {
+        ActivityUtils.hideFragments(getSupportFragmentManager(), ListVehicleFragment.TAG, ProfileFragment.TAG);
+
         setFabMenuVisible();
+        tabLayoutStatistics.setVisibility(View.GONE);
+        tabLayoutActivities.setVisibility(View.VISIBLE);
+
+        ActivitiesFragment activitiesFragment = (ActivitiesFragment) getSupportFragmentManager().findFragmentByTag(ActivitiesFragment.TAG);
+
+        if (activitiesFragment == null) {
+            activitiesFragment = new ActivitiesFragment();
+            ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), activitiesFragment, R.id.frame_layout_main_content, ActivitiesFragment.TAG);
+        }
+
+        ActivityUtils.showFragment(getSupportFragmentManager(), activitiesFragment);
+
         spinner.setVisibility(View.VISIBLE);
     }
 
     private void onStatisticsTabSelected() {
-        hideFabs();
+        hideFabsAndTabActivities();
+        tabLayoutStatistics.setVisibility(View.VISIBLE);
         spinner.setVisibility(View.VISIBLE);
     }
 
     private void onProfileTabSelected() {
-        hideFabs();
+        hideFabsAndTabActivities();
+        tabLayoutStatistics.setVisibility(View.GONE);
+
+        ActivityUtils.hideFragments(getSupportFragmentManager(), ListVehicleFragment.TAG);
+
+        ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
+
+        if (profileFragment == null) {
+            profileFragment = ProfileFragment.newInstance();
+            ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), profileFragment, R.id.frame_layout_main_content, ProfileFragment.TAG);
+        }
+
+        ActivityUtils.showFragment(getSupportFragmentManager(), profileFragment);
         spinner.setVisibility(View.GONE);
     }
 
@@ -153,14 +195,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setFabMenuVisible() {
-        spinner.setVisibility(View.VISIBLE);
         fab.hide(false);
         fabMenu.showMenu(true);
     }
 
-    private void hideFabs() {
+    private void hideFabsAndTabActivities() {
         fabMenu.hideMenu(true);
         fab.hide(true);
+        tabLayoutActivities.setVisibility(View.GONE);
     }
 
     private void setBarsColor(int statusBarColor, int actionBarColor) {

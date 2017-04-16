@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.list;
+package elsys.mycar.mycarpro.list.vehicles;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;

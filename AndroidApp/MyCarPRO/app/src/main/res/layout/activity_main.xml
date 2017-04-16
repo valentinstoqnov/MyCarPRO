@@ -24,9 +24,29 @@
                 android:layout_marginEnd="8dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_width="200dp"
-
                 android:layout_height="wrap_content"/>
         </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:visibility="gone"
+            app:tabTextColor="@color/colorSecondaryText"
+            app:tabSelectedTextColor="@color/colorTextIcons"
+            app:tabIndicatorColor="@color/colorTextIcons"
+            app:tabBackground="@color/colorStatisticsTabSelected"
+            android:background="@color/colorStatisticsTabSelected"
+            android:id="@+id/tab_layout_statistics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <android.support.design.widget.TabLayout
+            android:visibility="gone"
+            app:tabTextColor="@color/colorPrimaryText"
+            app:tabSelectedTextColor="@color/colorTextIcons"
+            app:tabIndicatorColor="@color/colorTextIcons"
+            app:tabBackground="@color/colorActivitiesTabSelected"
+            android:id="@+id/tab_layout_activities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main"/>

@@ -38,7 +38,6 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_vehicle, container, false);
         mUnbinder = ButterKnife.bind(this, view);
-        mPresenter.start();
         return view;
     }
 
@@ -46,6 +45,12 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     @Override

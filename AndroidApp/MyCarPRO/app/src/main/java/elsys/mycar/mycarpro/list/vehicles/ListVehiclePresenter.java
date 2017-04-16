@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.list;
+package elsys.mycar.mycarpro.list.vehicles;
 
 import com.google.common.base.Preconditions;
 
