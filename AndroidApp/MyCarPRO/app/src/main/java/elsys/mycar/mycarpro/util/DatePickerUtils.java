@@ -1,6 +1,7 @@
 package elsys.mycar.mycarpro.util;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 
 import java.util.Calendar;
@@ -16,5 +17,14 @@ public class DatePickerUtils {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, listener, year, month, day);
         datePickerDialog.show();
+    }
+
+    public static void showTimePicker(Context context, TimePickerDialog.OnTimeSetListener listener) {
+        Calendar dateTime = Calendar.getInstance();
+        int hour = dateTime.get(Calendar.HOUR_OF_DAY);
+        int minute = dateTime.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(context, listener, hour, minute, true);
+        timePickerDialog.show();
     }
 }

@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.addedit.refueling;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -7,21 +9,29 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Switch;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.google.common.base.Preconditions;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.addedit.service.AddEditServiceFragment;
+import elsys.mycar.mycarpro.util.DatePickerUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 import elsys.mycar.mycarpro.util.TextInputUtils;
 
-public class AddEditRefuelingFragment extends Fragment implements AddEditRefuelingContract.View{
+public class AddEditRefuelingFragment extends Fragment implements AddEditRefuelingContract.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     @BindView(R.id.til_add_refueling_company_name) TextInputLayout tilCompanyName;
     @BindView(R.id.til_add_refueling_odometer) TextInputLayout tilOdometer;
@@ -36,12 +46,35 @@ public class AddEditRefuelingFragment extends Fragment implements AddEditRefueli
     private FloatingActionButton fab;
     private AddEditRefuelingContract.Presenter mPresenter;
 
+    public static AddEditRefuelingFragment newInstance() {
+        return new AddEditRefuelingFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_edit_refueling, container, false);
         mUnbinder = ButterKnife.bind(this, view);
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerUtils.showDatePicker(getContext(), AddEditRefuelingFragment.this);
+            }
+        });
+
+        btnTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerUtils.showTimePicker(getContext(), AddEditRefuelingFragment.this);
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     @Override
@@ -130,5 +163,29 @@ public class AddEditRefuelingFragment extends Fragment implements AddEditRefueli
     @Override
     public void setFullFuelTank(boolean isFull) {
 
+    }
+
+    @Override
+    public void addGasStations(List<String> items) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) tilCompanyName.getEditText();
+        if (autoCompleteTextView != null) {
+            autoCompleteTextView.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void exit() {
+        getActivity().finish();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        mPresenter.onDatePicked(year, month, dayOfMonth);
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        mPresenter.onTimePicked(hourOfDay, minute);
     }
 }

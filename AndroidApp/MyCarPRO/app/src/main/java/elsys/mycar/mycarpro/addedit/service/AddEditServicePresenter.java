@@ -33,6 +33,7 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
             mView.setDate(DateUtils.getTextCurrentDate());
             mView.setTime(DateUtils.getTextCurrentTime());
         }
+        mView.addServiceTypes(mVehicleRepository.getServiceTypes());
     }
 
     @Override
@@ -41,17 +42,32 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
             try {
                 long parsedOdometer = Long.decode(odometer);
                 long parsedPrice = PriceUtils.stringToLong(price);
-                Service service = new Service(serviceType, DateUtils.parseValidTextDateFromText(date), parsedPrice, parsedOdometer, note);
+                Service service = new Service(serviceType, DateUtils.getTextDateTime(date, time), parsedPrice, parsedOdometer, note);
                 service.setId(UUID.randomUUID().toString());
+
                 mVehicleRepository.addService(mVehicleId, service);
+
+                mView.showMessage("Insurance successfully saved!");
+                mView.exit();
             }catch (NumberFormatException e) {
                 mView.showMessage("Price and odometer fields expect numbers only");
-            }catch (ParseException e) {
+            }catch (ParseException | IllegalArgumentException e) {
+                e.printStackTrace();
                 mView.showMessage("Incorrect date");
             }
         }else {
             mView.showMessage("Please, make sure everything is filled!");
         }
+    }
+
+    @Override
+    public void onDatePicked(int year, int month, int day) {
+        mView.setDate(DateUtils.textDateFromInts(year, month, day));
+    }
+
+    @Override
+    public void onTimePicked(int hour, int minute) {
+        mView.setTime(DateUtils.textTimeFromInts(hour, minute));
     }
 
     @Override

@@ -26,4 +26,12 @@ public interface VehicleRepository {
     void addService(String vehicleId, Service service);
 
     void addRefueling(String vehicleId, Refueling refueling);
+
+    List<String> getMakes();
+
+    List<String> getCompanyNames();
+
+    List<String> getServiceTypes();
+
+    List<String> getGasStations();
 }

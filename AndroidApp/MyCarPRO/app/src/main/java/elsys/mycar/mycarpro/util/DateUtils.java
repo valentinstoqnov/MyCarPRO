@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.util;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,17 +30,23 @@ public class DateUtils {
         Calendar parsedTime = Calendar.getInstance();
         parsedTime.setTime(TIME_FORMAT.parse(time));
 
-        parsedDate.set(parsedDate.get(Calendar.YEAR), parsedDate.get(Calendar.MONTH),
-                parsedDate.get(Calendar.DAY_OF_MONTH), parsedTime.get(Calendar.HOUR_OF_DAY),
-                parsedTime.get(Calendar.MINUTE));
+        parsedDate.set(Calendar.HOUR_OF_DAY, parsedTime.get(Calendar.HOUR_OF_DAY));
+        parsedDate.set(Calendar.MINUTE, parsedDate.get(Calendar.MINUTE));
 
-        return DATE_TIME_FORMAT.format(parsedDate);
+        return DATE_TIME_FORMAT.format(parsedDate.getTime());
     }
 
     public static String textDateFromInts(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         return DATE_MONTH_YEAR_FORMAT.format(calendar.getTime());
+    }
+
+    public static String textTimeFromInts(int hour, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        return TIME_FORMAT.format(calendar.getTime());
     }
 
     public static String getTextDayFromTextDate(String date) {

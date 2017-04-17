@@ -34,6 +34,7 @@ public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Prese
             mView.setDate(DateUtils.getTextCurrentDate());
             mView.setTime(DateUtils.getTextCurrentTime());
         }
+        mView.addGasStations(mVehicleRepository.getGasStations());
     }
 
     @Override
@@ -47,14 +48,28 @@ public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Prese
 
                 Refueling refueling = new Refueling(companyName, dateTime, parsedQuantity, parsedPrice, parsedOdometer, note);
                 mVehicleRepository.addRefueling(mVehicleId, refueling);
+
+                mView.showMessage("Insurance successfully saved!");
+                mView.exit();
             }catch (NumberFormatException e) {
                 mView.showMessage("Price and odometer fields expect numbers only");
             }catch (ParseException | IllegalArgumentException e) {
+                e.printStackTrace();
                 mView.showMessage("Incorrect date");
             }
         }else {
             mView.showMessage("Please, make sure everything is filled!");
         }
+    }
+
+    @Override
+    public void onDatePicked(int year, int month, int day) {
+        mView.setDate(DateUtils.textDateFromInts(year, month, day));
+    }
+
+    @Override
+    public void onTimePicked(int hour, int minute) {
+        mView.setTime(DateUtils.textTimeFromInts(hour, minute));
     }
 
     @Override

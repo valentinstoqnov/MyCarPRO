@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.addedit.vehicle;
 
+import com.google.common.base.Preconditions;
+
 import java.text.ParseException;
 
 import elsys.mycar.mycarpro.data.VehicleRepository;
@@ -14,9 +16,11 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
     private AddEditVehicleContract.View mView;
     private boolean mIsDataMissing;
 
-    public AddEditVehiclePresenter(VehicleRepository mVehicleRepository, AddEditVehicleContract.View mView) {
-        this.mVehicleRepository = mVehicleRepository;
-        this.mView = mView;
+    public AddEditVehiclePresenter(String mVehicleId, VehicleRepository mVehicleRepository, AddEditVehicleContract.View mView, boolean mIsDataMissing) {
+        this.mVehicleId = mVehicleId;
+        this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
+        this.mView = Preconditions.checkNotNull(mView);
+        this.mIsDataMissing = mIsDataMissing;
     }
 
     @Override
@@ -24,6 +28,7 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
         if (mIsDataMissing && isNewVehicle()) {
             mView.setDate(DateUtils.getTextCurrentDate());
         }
+        mView.addMakes(mVehicleRepository.getMakes());
     }
 
     @Override
@@ -46,9 +51,9 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 mView.showMessage("Odometer and horse power must be numeric");
-            } catch (ParseException e) {
+            } catch (ParseException | IllegalArgumentException e) {
                 e.printStackTrace();
-                mView.showMessage("Invalid date");
+                mView.showMessage("Incorrect date");
             }
         }else {
             mView.showMessage("Please, make sure everything is filled!");

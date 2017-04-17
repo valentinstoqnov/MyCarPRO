@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.addedit.insurance;
 
+import java.util.List;
+
 import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.base.BaseView;
 
@@ -24,6 +26,8 @@ public interface AddEditInsuranceContract {
         void setExpirationDate(String expirationDate);
 
         void setNote(String note);
+
+        void addCompanies(List<String> items);
 
         void exit();
     }

@@ -32,6 +32,7 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
         if (mIsDataMissing && isNewInsurance()) {
             mView.setDate(DateUtils.getTextCurrentDate());
         }
+        mView.addCompanies(mVehicleRepository.getCompanyNames());
     }
 
     @Override
@@ -40,14 +41,15 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
             try {
                 long parsedOdometer = Long.decode(odometer);
                 long parsedPrice = PriceUtils.stringToLong(price);
-                Insurance insurance = new Insurance(companyName, parsedPrice, parsedOdometer, DateUtils.parseValidTextDateFromText(date), expirationDate, note);
+                Insurance insurance = new Insurance(companyName, parsedPrice, parsedOdometer, DateUtils.parseValidTextDateFromText(date), DateUtils.parseValidTextDateFromText(expirationDate), note);
                 insurance.setId(UUID.randomUUID().toString());
                 mVehicleRepository.addInsurance(mVehicleId, insurance);
                 mView.showMessage("Insurance successfully saved!");
                 mView.exit();
             }catch (NumberFormatException e) {
                 mView.showMessage("Price and odometer fields expect numbers only");
-            }catch (ParseException e) {
+            }catch (ParseException | IllegalArgumentException e) {
+                e.printStackTrace();
                 mView.showMessage("Incorrect date");
             }
         }else {

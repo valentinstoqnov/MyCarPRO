@@ -9,7 +9,10 @@ import android.view.View;
 
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceFragment;
+import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.util.ActivityUtils;
+
+import static elsys.mycar.mycarpro.homescreen.MainActivity.VEHICLE_ID;
 
 public class AddEditRefuelingActivity extends AppCompatActivity {
 
@@ -20,17 +23,18 @@ public class AddEditRefuelingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        AddEditRefuelingFragment addEditRefuelingFragment = (AddEditRefuelingFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_add_refueling);
 
+        if (addEditRefuelingFragment == null) {
+            addEditRefuelingFragment = AddEditRefuelingFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditRefuelingFragment, R.id.frame_layout_add_refueling);
+        }
 
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), new AddEditRefuelingFragment(), R.id.frame_layout_add_refueling);
+        String vehicleId = getIntent().getStringExtra(VEHICLE_ID);
+
+        AddEditRefuelingPresenter addEditRefuelingPresenter = new AddEditRefuelingPresenter(vehicleId, null, addEditRefuelingFragment, VehicleRepositoryImpl.getInstance(), true);
+
+        addEditRefuelingFragment.setPresenter(addEditRefuelingPresenter);
     }
 
 }

@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.addedit.refueling;
 
+import java.util.List;
+
 import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.base.BaseView;
 
@@ -28,11 +30,19 @@ public interface AddEditRefuelingContract {
         void setNote(String note);
 
         void setFullFuelTank(boolean isFull);
+
+        void addGasStations(List<String> items);
+
+        void exit();
     }
 
     interface Presenter extends BasePresenter {
 
         void saveRefueling(String companyName, String quantity, String price, String odometer, String date, String time, String note, boolean isFull);
+
+        void onDatePicked(int year, int month, int day);
+
+        void onTimePicked(int hour, int minute);
 
         boolean isDataMissing();
     }

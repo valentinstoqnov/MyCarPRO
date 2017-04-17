@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         window.setStatusBarColor(statusBarColor);
         ColorDrawable colorDrawable = new ColorDrawable(actionBarColor);
         actionBar.setBackgroundDrawable(colorDrawable);
+        spinner.setBackgroundColor(actionBarColor);
         spinner.setPopupBackgroundDrawable(colorDrawable);
     }
 
