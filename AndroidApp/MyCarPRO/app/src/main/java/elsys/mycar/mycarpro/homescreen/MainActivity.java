@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) getSupportFragmentManager().findFragmentByTag(ActivitiesFragment.TAG);
 
         if (activitiesFragment == null) {
-            activitiesFragment = new ActivitiesFragment();
+            activitiesFragment = ActivitiesFragment.newInstance(mSelectedVehicleId);
             ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), activitiesFragment, R.id.frame_layout_main_content, ActivitiesFragment.TAG);
         }else {
             ActivityUtils.showFragment(getSupportFragmentManager(), activitiesFragment);
@@ -259,5 +259,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 R.layout.vehicles_spinner_item,
                 items);
         spinner.setAdapter(mAdapter);
+        //mSelectedVehicleId = mPresenter.getVehicleIdByName(items.get(0));
     }
 }

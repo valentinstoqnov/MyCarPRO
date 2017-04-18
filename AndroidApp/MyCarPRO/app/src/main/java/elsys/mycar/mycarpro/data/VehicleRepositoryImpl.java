@@ -124,6 +124,16 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
+    public List<Service> getServicesByVehicleId(String vehicleId) {
+        for (Vehicle vehicle : mVehicles) {
+            if (vehicle.getId().equals(vehicleId)) {
+                return vehicle.getServices();
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<String> getMakes() {
         return new ArrayList<>(Data.MAKES.keySet());
     }

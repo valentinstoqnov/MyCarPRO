@@ -16,8 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.list.activities.ActivitiesViewPagerAdapter;
-import elsys.mycar.mycarpro.list.activities.ListAllActivitiesFragment;
-import elsys.mycar.mycarpro.list.activities.ListServicesFragment;
 
 public class StatisticsFragment extends Fragment {
 

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
+import elsys.mycar.mycarpro.homescreen.MainActivity;
+import elsys.mycar.mycarpro.list.activities.services.ListServicesFragment;
+import elsys.mycar.mycarpro.list.activities.services.ListServicesPresenter;
 
 public class ActivitiesFragment extends Fragment {
 
@@ -24,6 +29,17 @@ public class ActivitiesFragment extends Fragment {
 
     private TabLayout tabLayout;
     private Unbinder mUnbinder;
+
+    public static ActivitiesFragment newInstance(String vehicleId) {
+        Bundle args = new Bundle();
+        args.putString(MainActivity.VEHICLE_ID, vehicleId);
+
+        ActivitiesFragment fragment = new ActivitiesFragment();
+
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +65,16 @@ public class ActivitiesFragment extends Fragment {
     private void setUpViewPager() {
         ActivitiesViewPagerAdapter adapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
 
+        String vehicleId = getArguments().getString(MainActivity.VEHICLE_ID);
+
+        Log.d(TAG, "vID = " + vehicleId);
+
+        ListServicesFragment listServicesFragment = new ListServicesFragment();
+        ListServicesPresenter listServicesPresenter = new ListServicesPresenter("SAD"/*vehicleId*/, listServicesFragment, VehicleRepositoryImpl.getInstance(), true);
+        listServicesFragment.setPresenter(listServicesPresenter);
+
         adapter.addFragment(new ListAllActivitiesFragment());
-        adapter.addFragment(new ListServicesFragment());
+        adapter.addFragment(listServicesFragment);
         adapter.addFragment(new ListInsurancesFragment());
         adapter.addFragment(new ListRefuelingsFragment());
 
