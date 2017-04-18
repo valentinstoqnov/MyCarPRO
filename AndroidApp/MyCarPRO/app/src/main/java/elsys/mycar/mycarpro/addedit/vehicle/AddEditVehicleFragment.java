@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import com.github.clans.fab.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -142,6 +145,15 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     @Override
     public void setManufactureDate(String date) {
         btnManufactureDate.setText(date);
+    }
+
+    @Override
+    public void addMakes(List<String> items) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) tilMake.getEditText();
+        if (autoCompleteTextView != null) {
+            autoCompleteTextView.setAdapter(adapter);
+        }
     }
 
     @Override

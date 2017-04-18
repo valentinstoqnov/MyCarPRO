@@ -148,4 +148,5 @@
     <string name="time">Time</string>
     <string name="quantity">Quantity</string>
     <string name="service_type">Service type</string>
+    <string name="gas_station_name">Gas station name</string>
 </resources>

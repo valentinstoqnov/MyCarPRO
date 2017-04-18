@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.addedit.vehicle;
 
+import java.util.List;
+
 import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.base.BaseView;
 
@@ -24,6 +26,8 @@ public interface AddEditVehicleContract {
         void setManufactureDate(String date);
 
         void setDate(String date);
+
+        void addMakes(List<String> items);
 
         void setPhoto(/*Drawable or Bitmap*/);
 

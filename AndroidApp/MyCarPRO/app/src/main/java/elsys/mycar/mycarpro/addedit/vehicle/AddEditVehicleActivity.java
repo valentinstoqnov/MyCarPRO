@@ -23,7 +23,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
         setUpToolbar();
 
         AddEditVehicleFragment addEditVehicleFragment = AddEditVehicleFragment.newInstance();
-        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(VehicleRepositoryImpl.getInstance(), addEditVehicleFragment);
+        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(null, VehicleRepositoryImpl.getInstance(), addEditVehicleFragment, true);
         addEditVehicleFragment.setPresenter(addEditVehiclePresenter);
 
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),

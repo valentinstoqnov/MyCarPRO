@@ -1,6 +1,7 @@
 package elsys.mycar.mycarpro.data;
 
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -120,5 +121,25 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                 vehicle.addRefueling(refueling);
             }
         }
+    }
+
+    @Override
+    public List<String> getMakes() {
+        return new ArrayList<>(Data.MAKES.keySet());
+    }
+
+    @Override
+    public List<String> getCompanyNames() {
+        return new ArrayList<>(Data.INSURANCE_COMPANIES);
+    }
+
+    @Override
+    public List<String> getServiceTypes() {
+        return new ArrayList<>(Data.SERVICE_TYPES);
+    }
+
+    @Override
+    public List<String> getGasStations() {
+        return new ArrayList<>(Data.GAS_STATION_COMPANIES);
     }
 }

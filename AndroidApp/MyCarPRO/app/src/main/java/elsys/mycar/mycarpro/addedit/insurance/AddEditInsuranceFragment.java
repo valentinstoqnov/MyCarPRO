@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.google.common.base.Preconditions;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,9 +77,13 @@ public class AddEditInsuranceFragment extends Fragment implements AddEditInsuran
             }
         });
 
-        mPresenter.start();
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     @Override
@@ -151,6 +159,15 @@ public class AddEditInsuranceFragment extends Fragment implements AddEditInsuran
     @Override
     public void setNote(String note) {
         setTextToTil(tilNote, note);
+    }
+
+    @Override
+    public void addCompanies(List<String> items) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) tilCompanyName.getEditText();
+        if (autoCompleteTextView != null) {
+            autoCompleteTextView.setAdapter(adapter);
+        }
     }
 
     @Override

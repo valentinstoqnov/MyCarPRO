@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.addedit.service;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -7,22 +9,29 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.common.base.Preconditions;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceContract;
+import elsys.mycar.mycarpro.util.DatePickerUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 import elsys.mycar.mycarpro.util.TextInputUtils;
 
-public class AddEditServiceFragment extends Fragment implements AddEditServiceContract.View{
+public class AddEditServiceFragment extends Fragment implements AddEditServiceContract.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     @BindView(R.id.til_add_service_type) TextInputLayout tilType;
     @BindView(R.id.btn_add_service_date) Button btnDate;
@@ -35,11 +44,29 @@ public class AddEditServiceFragment extends Fragment implements AddEditServiceCo
     private AddEditServiceContract.Presenter mPresenter;
     private Unbinder mUnbinder;
 
+    public static AddEditServiceFragment newInstance() {
+        return new AddEditServiceFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_edit_service, container, false);
         mUnbinder = ButterKnife.bind(this, view);
+
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerUtils.showDatePicker(getContext(), AddEditServiceFragment.this);
+            }
+        });
+
+        btnTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerUtils.showTimePicker(getContext(), AddEditServiceFragment.this);
+            }
+        });
         return view;
     }
 
@@ -123,5 +150,29 @@ public class AddEditServiceFragment extends Fragment implements AddEditServiceCo
     @Override
     public void setNote(String note) {
         TextInputUtils.setTextToTil(tilNote, note);
+    }
+
+    @Override
+    public void addServiceTypes(List<String> items) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) tilType.getEditText();
+        if (autoCompleteTextView != null) {
+            autoCompleteTextView.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void exit() {
+        getActivity().finish();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        mPresenter.onDatePicked(year, month, dayOfMonth);
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        mPresenter.onTimePicked(hourOfDay, minute);
     }
 }
