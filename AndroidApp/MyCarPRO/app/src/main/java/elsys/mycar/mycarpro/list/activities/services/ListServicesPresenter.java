@@ -6,19 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.VehicleRepository;
+import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.model.Service;
 
-public class ListServicesPresenter implements ListServiceContract.Presenter {
+public class ListServicesPresenter implements ListActivitiesContract.Presenter {
 
     private String mVehicleId;
-    private ListServiceContract.View mView;
     private VehicleRepository mVehicleRepository;
+    private ListServiceContract.View mView;
     private boolean mIsDataMissing;
 
-    public ListServicesPresenter(String mVehicleId, ListServiceContract.View mView, VehicleRepository mVehicleRepository, boolean mIsDataMissing) {
+    public ListServicesPresenter(String mVehicleId, VehicleRepository mVehicleRepository, ListServiceContract.View mView, boolean mIsDataMissing) {
         this.mVehicleId = mVehicleId;
-        this.mView = Preconditions.checkNotNull(mView);
         this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
+        this.mView = Preconditions.checkNotNull(mView);
         this.mIsDataMissing = mIsDataMissing;
     }
 
@@ -26,13 +27,30 @@ public class ListServicesPresenter implements ListServiceContract.Presenter {
     public void start() {
         if (mVehicleId == null) {
             mView.showNoSuchVehicle();
-        }else {
-            if (mIsDataMissing) {
-                List<Service> services = new ArrayList<>();
-                services.add(new Service("asdasd", "Kurvi", "PETIO PEDAL", 12, 12, "note"));
-                services.add(new Service("bghn", "PETIO PEDAL", "9 May 2012", 232, 323, "note"));
-                services.add(new Service("fgbgrfhsdf", "PEDALI", "123 May 132213", 123, 65, "note"));
-                mView.addServices(services/*mVehicleRepository.getServicesByVehicleId(mVehicleId)*/);
+            List<Service> services = new ArrayList<>();
+            services.add(new Service("ads", "Windows", "09 May 2017", 2323, 124,"note"));
+            services.add(new Service("adsasd", "Lights", "10 May 2017", 1030, 155,"note"));
+            services.add(new Service("adxcvs", "Engine oil", "11 May 2017", 1231, 233,"note"));
+            services.add(new Service("adsqwre", "Filters", "23 May 2017", 5434, 555,"note"));
+            services.add(new Service("ads", "Windows", "09 May 2017", 2323, 124,"note"));
+            services.add(new Service("adsasd", "Lights", "10 May 2017", 1030, 155,"note"));
+            services.add(new Service("adxcvs", "Engine oil", "11 May 2017", 1231, 233,"note"));
+            services.add(new Service("adsqwre", "Filters", "23 May 2017", 5434, 555,"note"));
+            services.add(new Service("ads", "Windows", "09 May 2017", 2323, 124,"note"));
+            services.add(new Service("adsasd", "Lights", "10 May 2017", 1030, 155,"note"));
+            services.add(new Service("adxcvs", "Engine oil", "11 May 2017", 1231, 233,"note"));
+            services.add(new Service("adsqwre", "Filters", "23 May 2017", 5434, 555,"note"));
+            services.add(new Service("ads", "Windows", "09 May 2017", 2323, 124,"note"));
+            services.add(new Service("adsasd", "Lights", "10 May 2017", 1030, 155,"note"));
+            services.add(new Service("adxcvs", "Engine oil", "11 May 2017", 1231, 233,"note"));
+            services.add(new Service("adsqwre", "Filters", "23 May 2017", 5434, 555,"note"));
+            mView.addItems(services);
+        }else if (mIsDataMissing){
+            List<Service> services = mVehicleRepository.getServicesByVehicleId(mVehicleId);
+            if (services == null || services.size() == 0) {
+                mView.showNoItemsFound();
+            }else {
+                mView.addItems(services);
             }
         }
     }

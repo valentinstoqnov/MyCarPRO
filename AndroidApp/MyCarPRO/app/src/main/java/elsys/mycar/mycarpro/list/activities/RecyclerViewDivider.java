@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.list.activities.services;
+package elsys.mycar.mycarpro.list.activities;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

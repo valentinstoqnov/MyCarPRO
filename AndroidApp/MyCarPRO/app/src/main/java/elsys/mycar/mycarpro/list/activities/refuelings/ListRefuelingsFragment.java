@@ -1,8 +1,9 @@
-package elsys.mycar.mycarpro.list.activities.services;
+package elsys.mycar.mycarpro.list.activities.refuelings;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.common.base.Preconditions;
@@ -27,20 +29,20 @@ import elsys.mycar.mycarpro.list.activities.ListActivitiesAdapter;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.list.activities.RecyclerViewDivider;
 import elsys.mycar.mycarpro.model.Insurance;
-import elsys.mycar.mycarpro.model.Service;
+import elsys.mycar.mycarpro.model.Refueling;
 
-public class ListServicesFragment extends Fragment implements ListServiceContract.View{
+public class ListRefuelingsFragment extends Fragment implements ListRefuelingsContract.View {
 
     @BindView(R.id.rv_list) RecyclerView recyclerView;
-    @BindString(R.string.date_price_placeholder) String placeholder;
     @BindView(R.id.textView_list) TextView textViewMessage;
+    @BindString(R.string.date_price_placeholder) String placeholder;
 
-    private Unbinder mUnbinder;
-    private ListActivitiesContract.Presenter mPresenter;
     private ListActivitiesAdapter mAdapter;
+    private ListActivitiesContract.Presenter mPresenter;
+    private Unbinder mUnbinder;
 
-    public static ListServicesFragment newInstance() {
-        return new ListServicesFragment();
+    public static ListRefuelingsFragment newInstance() {
+        return new ListRefuelingsFragment();
     }
 
     @Override
@@ -54,6 +56,7 @@ public class ListServicesFragment extends Fragment implements ListServiceContrac
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("KUR2", "KUR2");
         mPresenter.start();
     }
 
@@ -69,12 +72,12 @@ public class ListServicesFragment extends Fragment implements ListServiceContrac
     }
 
     @Override
-    public void addItems(List<Service> items) {
+    public void addItems(List<Refueling> items) {
         if (recyclerView.getVisibility() == View.GONE) {
             recyclerView.setVisibility(View.VISIBLE);
             textViewMessage.setVisibility(View.GONE);
         }
-        mAdapter.addServices(items);
+        mAdapter.addRefuelings(items);
     }
 
     @Override
@@ -98,8 +101,8 @@ public class ListServicesFragment extends Fragment implements ListServiceContrac
         RecyclerViewDivider divider = new RecyclerViewDivider(drawable);
         recyclerView.addItemDecoration(divider);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new ListActivitiesAdapter(placeholder, "lv.", R.drawable.ic_service);
-        mAdapter.setServices(new ArrayList<Service>());
+        mAdapter = new ListActivitiesAdapter(placeholder, "lv.", R.drawable.ic_gas_station);
+        mAdapter.setRefuelings(new ArrayList<Refueling>());
         recyclerView.setAdapter(mAdapter);
     }
 }

@@ -89,10 +89,16 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     public String getVehicleIdByName(String name) {
         for (Vehicle vehicle : mVehicles) {
             if (vehicle.getName().equals(name)) {
+                Log.d("getVehicleIdByName: ", "true");
+                Log.d("id", "id = " + vehicle.getId());
                 return vehicle.getId();
+                //Log.d("getVehicleIdByName: ", "true after return");
+            }else {
+                Log.d("getVehicleIdByName: ", "false");
             }
         }
 
+        Log.d("getVehicleIdByName: ", "before null");
         return null;
     }
 
@@ -128,6 +134,26 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         for (Vehicle vehicle : mVehicles) {
             if (vehicle.getId().equals(vehicleId)) {
                 return vehicle.getServices();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Insurance> getInsurancesByVehicleId(String vehicleId) {
+        for (Vehicle vehicle : mVehicles) {
+            if (vehicle.getId().equals(vehicleId)) {
+                return vehicle.getInsurances();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Refueling> getRefuelingsByVehicleId(String vehicleId) {
+        for (Vehicle vehicle : mVehicles) {
+            if (vehicle.getId().equals(vehicleId)) {
+                return vehicle.getRefuelings();
             }
         }
         return null;

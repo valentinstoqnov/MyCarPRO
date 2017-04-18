@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.homescreen;
 
+import android.util.Log;
+
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.VehicleRepository;
@@ -16,17 +18,15 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void start() {
-
-    }
-
-    @Override
-    public String getVehicleIdByName(String name) {
-        return mVehicleRepository.getVehicleIdByName(name);
-    }
-
-    @Override
-    public void requestVehicleNames() {
         List<String> names = mVehicleRepository.getAllVehicleNames();
         mView.setVehicleNames(names);
+        mView.setSelectedVehicleId(mVehicleRepository.getVehicleIdByName(names.get(0)));
+    }
+
+    @Override
+    public void onSelectedVehicleChanged(String vehicleName) {
+        String vehicleId = mVehicleRepository.getVehicleIdByName(vehicleName);
+        Log.d("presenter vehicle id", "id = " + vehicleId);
+        mView.setSelectedVehicleId(vehicleId);
     }
 }

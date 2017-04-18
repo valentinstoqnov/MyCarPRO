@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -59,16 +60,27 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        VehicleRepositoryImpl v = VehicleRepositoryImpl.getInstance();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
+        spinner.setSelection(0);
+        bottomBar.setDefaultTabPosition(1);
+
         MainPresenter mainPresenter = new MainPresenter(VehicleRepositoryImpl.getInstance(), this);
         setPresenter(mainPresenter);
 
-        setUpBottomBar();
         setUpSpinner();
+        setUpBottomBar();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("onResume: ", "main activity");
+        mPresenter.start();
     }
 
     @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
@@ -98,13 +110,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void setUpSpinner() {
-        mPresenter.requestVehicleNames();
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedVehicleName = spinner.getItemAtPosition(position).toString();
-                //TODO: when we call presenter.start() it must automatically provide this stuff
-                mSelectedVehicleId = mPresenter.getVehicleIdByName(selectedVehicleName);
+                Log.d("onItemSelected: ", "name === " + selectedVehicleName);
+                mPresenter.onSelectedVehicleChanged(selectedVehicleName);
             }
 
             @Override
@@ -115,8 +126,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void setUpBottomBar() {
-        bottomBar.setDefaultTabPosition(1);
-
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -176,11 +185,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) getSupportFragmentManager().findFragmentByTag(ActivitiesFragment.TAG);
 
         if (activitiesFragment == null) {
+            //TODO: FUCK THIS FUCKING SPINNER YOU SON OF A BITCH !1!!!!1!1
             activitiesFragment = ActivitiesFragment.newInstance(mSelectedVehicleId);
             ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), activitiesFragment, R.id.frame_layout_main_content, ActivitiesFragment.TAG);
         }else {
             ActivityUtils.showFragment(getSupportFragmentManager(), activitiesFragment);
         }
+
+        Log.d("onActivitiesTabSelected", "vehicleId = " + mSelectedVehicleId);
 
         spinner.setVisibility(View.VISIBLE);
     }
@@ -259,6 +271,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 R.layout.vehicles_spinner_item,
                 items);
         spinner.setAdapter(mAdapter);
-        //mSelectedVehicleId = mPresenter.getVehicleIdByName(items.get(0));
+    }
+
+    @Override
+    public void setSelectedVehicleId(String vehicleId) {
+        Log.d("activity vehicleId", "id = " + vehicleId);
+        this.mSelectedVehicleId = vehicleId;
     }
 }

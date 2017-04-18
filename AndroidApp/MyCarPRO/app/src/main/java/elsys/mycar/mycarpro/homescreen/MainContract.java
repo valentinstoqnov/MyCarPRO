@@ -9,13 +9,13 @@ public interface MainContract {
 
     interface View extends BaseView<Presenter> {
 
+        void setSelectedVehicleId(String vehicleId);
+
         void setVehicleNames(List<String> items);
     }
 
     interface Presenter extends BasePresenter {
 
-        void requestVehicleNames();
-
-        String getVehicleIdByName(String name);
+        void onSelectedVehicleChanged(String vehicleName);
     }
 }

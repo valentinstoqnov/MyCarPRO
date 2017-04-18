@@ -1,5 +1,6 @@
 package elsys.mycar.mycarpro.data;
 
+import java.sql.Ref;
 import java.util.List;
 
 import elsys.mycar.mycarpro.model.Insurance;
@@ -28,6 +29,10 @@ public interface VehicleRepository {
     void addRefueling(String vehicleId, Refueling refueling);
 
     List<Service> getServicesByVehicleId(String vehicleId);
+
+    List<Insurance> getInsurancesByVehicleId(String vehicleId);
+
+    List<Refueling> getRefuelingsByVehicleId(String vehicleId);
 
     List<String> getMakes();
 

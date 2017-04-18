@@ -151,4 +151,6 @@
     <string name="gas_station_name">Gas station name</string>
 
     <string formatted="false" name="date_price_placeholder">%s | Cost: %s%s</string>
+    <string name="no_items_found">No items found, please add something !</string>
+    <string name="no_vehicle_found">No such vehicle, it might have been deleted !</string>
 </resources>

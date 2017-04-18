@@ -1,8 +1,10 @@
-package elsys.mycar.mycarpro.list.activities.services;
+package elsys.mycar.mycarpro.list.activities.insurances;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,20 +29,19 @@ import elsys.mycar.mycarpro.list.activities.ListActivitiesAdapter;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.list.activities.RecyclerViewDivider;
 import elsys.mycar.mycarpro.model.Insurance;
-import elsys.mycar.mycarpro.model.Service;
 
-public class ListServicesFragment extends Fragment implements ListServiceContract.View{
+public class ListInsurancesFragment extends Fragment implements ListInsurancesContract.View{
 
     @BindView(R.id.rv_list) RecyclerView recyclerView;
-    @BindString(R.string.date_price_placeholder) String placeholder;
     @BindView(R.id.textView_list) TextView textViewMessage;
+    @BindString(R.string.date_price_placeholder) String placeholder;
 
-    private Unbinder mUnbinder;
-    private ListActivitiesContract.Presenter mPresenter;
     private ListActivitiesAdapter mAdapter;
+    private ListActivitiesContract.Presenter mPresenter;
+    private Unbinder mUnbinder;
 
-    public static ListServicesFragment newInstance() {
-        return new ListServicesFragment();
+    public static ListInsurancesFragment newInstance() {
+        return new ListInsurancesFragment();
     }
 
     @Override
@@ -57,6 +58,7 @@ public class ListServicesFragment extends Fragment implements ListServiceContrac
         mPresenter.start();
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -69,12 +71,12 @@ public class ListServicesFragment extends Fragment implements ListServiceContrac
     }
 
     @Override
-    public void addItems(List<Service> items) {
+    public void addItems(List<Insurance> items) {
         if (recyclerView.getVisibility() == View.GONE) {
             recyclerView.setVisibility(View.VISIBLE);
             textViewMessage.setVisibility(View.GONE);
         }
-        mAdapter.addServices(items);
+        mAdapter.addInsurances(items);
     }
 
     @Override
@@ -98,8 +100,8 @@ public class ListServicesFragment extends Fragment implements ListServiceContrac
         RecyclerViewDivider divider = new RecyclerViewDivider(drawable);
         recyclerView.addItemDecoration(divider);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new ListActivitiesAdapter(placeholder, "lv.", R.drawable.ic_service);
-        mAdapter.setServices(new ArrayList<Service>());
+        mAdapter = new ListActivitiesAdapter(placeholder, "lv.", R.drawable.ic_insurance);
+        mAdapter.setInsurances(new ArrayList<Insurance>());
         recyclerView.setAdapter(mAdapter);
     }
 }
