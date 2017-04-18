@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 module.exports.init = function () {
     var carSchema = mongoose.Schema({
-        carOwner: String,
+        carOwner: {type: String, required: true},
         name: {type: String, required: true},
         mark: {type: String, required: true},
         model: {type: String, required: true},
@@ -17,8 +17,6 @@ module.exports.init = function () {
             type: String,
             date: String
         }],
-
-        creator: {type: String, required: true}
     });
 
     var Room = mongoose.model('Car', carSchema);
