@@ -6,10 +6,10 @@ module.exports = {
     },
 
     find: function (args, callback) {
-        Car.find({"creator": args.query.user}, callback);
+        Car.find(args, callback);
     },
 
-    findOne: function (username, callback) {
-        Car.findOne({"carOwner": username}, callback);
+    findOne: function (id, callback) {
+        Car.findOne({"_id": id},callback)
     }
 };
