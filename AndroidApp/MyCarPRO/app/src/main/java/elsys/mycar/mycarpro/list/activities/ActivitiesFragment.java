@@ -11,6 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
+
+import com.google.common.collect.HashBiMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,22 +35,16 @@ public class ActivitiesFragment extends Fragment {
 
     @BindView(R.id.view_pager_activities) ViewPager viewPager;
 
+    private Spinner spinner;
     private TabLayout tabLayout;
     private Unbinder mUnbinder;
     private ListServicesPresenter mListServicesPresenter;
     private ListInsurancesPresenter mListInsurancesPresenter;
     private ListRefuelingPresenter mListRefuelingPresenter;
-    private ActivitiesViewPagerAdapter mAdapter;
+    private String mVehicleId;
 
-    public static ActivitiesFragment newInstance(String vehicleId) {
-        Bundle args = new Bundle();
-        args.putString(MainActivity.VEHICLE_ID, vehicleId);
-
-        ActivitiesFragment fragment = new ActivitiesFragment();
-
-        fragment.setArguments(args);
-
-        return fragment;
+    public static ActivitiesFragment newInstance() {
+        return new ActivitiesFragment();
     }
 
     @Override
@@ -63,6 +61,30 @@ public class ActivitiesFragment extends Fragment {
         tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout_activities);
         setUpViewPager();
         setUpTabLayout();
+        spinner = (Spinner) getActivity().findViewById(R.id.spn_main_vehicles);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String str = HashBiMap.create(VehicleRepositoryImpl.getInstance().getVehicleIdToNameHash()).inverse().get(spinner.getSelectedItem().toString());
+                switch (viewPager.getCurrentItem()) {
+                    case 0:
+                        mListServicesPresenter.onVehicleChanged(mVehicleId);
+                        break;
+                    case 1:
+                        mListInsurancesPresenter.onVehicleChanged(mVehicleId);
+                        break;
+                    case 2:
+                        mListRefuelingPresenter.onVehicleChanged(mVehicleId);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
@@ -73,24 +95,24 @@ public class ActivitiesFragment extends Fragment {
 
     private void setUpViewPager() {
         Log.d("SET UP VP", "CALLED . . . . . .");
-        mAdapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
+        ActivitiesViewPagerAdapter mAdapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
 
-        String vehicleId = getArguments().getString(MainActivity.VEHICLE_ID);
-        Log.d("FRAGMENT", "id = " + vehicleId);
+       // String vehicleId = getArguments().getString(MainActivity.VEHICLE_ID);
+        //Log.d("FRAGMENT", "id = " + vehicleId);
         VehicleRepositoryImpl vehicleRepository = VehicleRepositoryImpl.getInstance();
 
         ListServicesFragment listServicesFragment = ListServicesFragment.newInstance();
-        mListServicesPresenter = new ListServicesPresenter(vehicleId, vehicleRepository, listServicesFragment, true);
+        mListServicesPresenter = new ListServicesPresenter(mVehicleId, vehicleRepository, listServicesFragment, true);
 
         listServicesFragment.setPresenter(mListServicesPresenter);
 
         ListInsurancesFragment listInsurancesFragment = ListInsurancesFragment.newInstance();
-        mListInsurancesPresenter = new ListInsurancesPresenter(vehicleId, vehicleRepository, listInsurancesFragment, true);
+        mListInsurancesPresenter = new ListInsurancesPresenter(mVehicleId, vehicleRepository, listInsurancesFragment, true);
 
         listInsurancesFragment.setPresenter(mListInsurancesPresenter);
 
         ListRefuelingsFragment listRefuelingsFragment = ListRefuelingsFragment.newInstance();
-        mListRefuelingPresenter = new ListRefuelingPresenter(vehicleId, vehicleRepository, listRefuelingsFragment, true);
+        mListRefuelingPresenter = new ListRefuelingPresenter(mVehicleId, vehicleRepository, listRefuelingsFragment, true);
 
         listRefuelingsFragment.setPresenter(mListRefuelingPresenter);
 
@@ -98,7 +120,7 @@ public class ActivitiesFragment extends Fragment {
         mAdapter.addFragment(listInsurancesFragment);
         mAdapter.addFragment(listRefuelingsFragment);
 
-  /*      ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
+        ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -109,13 +131,13 @@ public class ActivitiesFragment extends Fragment {
                 Log.d(TAG, "onPageSelected: trigger");
                 switch (position) {
                     case 0:
-                        mListServicesPresenter.start();
+                        mListServicesPresenter.onVehicleChanged(mVehicleId);
                         break;
                     case 1:
-                        mListInsurancesPresenter.start();
+                        mListInsurancesPresenter.onVehicleChanged(mVehicleId);
                         break;
                     case 2:
-                        mListRefuelingPresenter.start();
+                        mListRefuelingPresenter.onVehicleChanged(mVehicleId);
                         break;
                 }
             }
@@ -124,10 +146,11 @@ public class ActivitiesFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
 
             }
-        };*/
-//
-//        viewPager.addOnPageChangeListener(listener);
+        };
 
+        viewPager.addOnPageChangeListener(listener);
+
+        viewPager.setCurrentItem(0);
         viewPager.setAdapter(mAdapter);
     }
 
@@ -154,5 +177,9 @@ public class ActivitiesFragment extends Fragment {
 
             }
         });
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.mVehicleId = vehicleId;
     }
 }

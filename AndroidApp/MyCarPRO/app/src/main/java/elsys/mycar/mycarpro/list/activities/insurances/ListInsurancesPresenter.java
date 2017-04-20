@@ -2,14 +2,13 @@ package elsys.mycar.mycarpro.list.activities.insurances;
 
 import com.google.common.base.Preconditions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.VehicleRepository;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.model.Insurance;
 
-public class ListInsurancesPresenter implements ListActivitiesContract.Presenter {
+public class ListInsurancesPresenter implements ListInsurancesContract.Presenter{
 
     private String mVehicleId;
     private VehicleRepository mVehicleRepository;
@@ -25,26 +24,43 @@ public class ListInsurancesPresenter implements ListActivitiesContract.Presenter
 
     @Override
     public void start() {
+        if (mIsDataMissing) {
+            loadItems();
+        }
+    }
+
+    @Override
+    public void onVehicleChanged(String vehicleId) {
+        mVehicleId = vehicleId;
+        loadItems();
+    }
+
+    @Override
+    public void loadItems() {
         if (mVehicleId == null) {
             mView.showNoSuchVehicle();
-            List<Insurance> insurances = new ArrayList<>();
-            insurances.add(new Insurance("qwe","Armeec", 1233, 1232, "23 Apr 2016", "25 Apr 2017", "note"));
-            insurances.add(new Insurance("qwe","Allianz", 32456, 1232, "15 Apr 2016", "25 Apr 2017", "note"));
-            insurances.add(new Insurance("qwe","DZI", 2334, 1232, "20 Jan 2016", "25 Apr 2017", "note"));
-            insurances.add(new Insurance("qwe","Armeec", 234, 1232, "01 Apr 2016", "25 Apr 2017", "note"));
-            mView.addItems(insurances);
-        }else if (mIsDataMissing){
+        }else {
             List<Insurance> insurances = mVehicleRepository.getInsurancesByVehicleId(mVehicleId);
-            if (insurances == null || insurances.size() == 0) {
-                mView.showNoItemsFound();
-            }else {
-                mView.addItems(insurances);
-            }
+            processInsurances(insurances);
         }
+    }
+
+    @Override
+    public void openInsuranceDetails(Insurance insurance) {
+        mView.showDetailItemUi(Preconditions.checkNotNull(insurance).getId());
     }
 
     @Override
     public boolean isDataMissing() {
         return mIsDataMissing;
     }
+
+    private void processInsurances(List<Insurance> insurances) {
+        if (insurances == null || insurances.isEmpty()) {
+            mView.showNoItemsFound();
+        }else {
+            mView.showInsurances(insurances);
+        }
+    }
+
 }

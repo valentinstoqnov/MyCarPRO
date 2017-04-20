@@ -1,6 +1,7 @@
 package elsys.mycar.mycarpro.data;
 
 import java.sql.Ref;
+import java.util.HashMap;
 import java.util.List;
 
 import elsys.mycar.mycarpro.model.Insurance;
@@ -18,7 +19,7 @@ public interface VehicleRepository {
 
     List<Vehicle> getAll();
 
-    List<String> getAllVehicleNames();
+    HashMap<String, String> getVehicleIdToNameHash();
 
     String getVehicleIdByName(String name);
 

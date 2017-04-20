@@ -66,13 +66,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-        spinner.setSelection(0);
         bottomBar.setDefaultTabPosition(1);
 
         MainPresenter mainPresenter = new MainPresenter(VehicleRepositoryImpl.getInstance(), this);
         setPresenter(mainPresenter);
 
-        setUpSpinner();
+        //lsetUpSpinner();
+        mainPresenter.start();
+        spinner.setSelection(0);
+        //TODO: Activities and Statistics Fragments should findById the spinner and subscribe to select events
         setUpBottomBar();
     }
 
@@ -186,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         if (activitiesFragment == null) {
             //TODO: FUCK THIS FUCKING SPINNER YOU SON OF A BITCH !1!!!!1!1
-            activitiesFragment = ActivitiesFragment.newInstance(mSelectedVehicleId);
+            activitiesFragment = ActivitiesFragment.newInstance();
             ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), activitiesFragment, R.id.frame_layout_main_content, ActivitiesFragment.TAG);
         }else {
             ActivityUtils.showFragment(getSupportFragmentManager(), activitiesFragment);
@@ -194,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         Log.d("onActivitiesTabSelected", "vehicleId = " + mSelectedVehicleId);
 
+        //activitiesFragment.setVehicleId(mSelectedVehicleId);
         spinner.setVisibility(View.VISIBLE);
     }
 

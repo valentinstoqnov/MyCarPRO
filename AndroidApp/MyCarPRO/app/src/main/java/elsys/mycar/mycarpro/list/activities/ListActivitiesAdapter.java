@@ -8,8 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 
+import java.sql.Ref;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,20 +69,21 @@ public class ListActivitiesAdapter extends RecyclerView.Adapter<ListActivitiesAd
     }
 
     public void addServices(List<Service> services) {
-        Preconditions.checkNotNull(mServices).addAll(services);
+        mServices = Preconditions.checkNotNull(services);
         Log.d("service addition", "size = " + services.size());
         mItemCount = mServices.size();
         this.notifyDataSetChanged();
     }
 
     public void addInsurances(List<Insurance> insurances) {
-        Preconditions.checkNotNull(mInsurances).addAll(insurances);
+        mInsurances = Preconditions.checkNotNull(insurances);
         mItemCount = mInsurances.size();
         this.notifyDataSetChanged();
     }
 
     public void addRefuelings(List<Refueling> refuelings) {
-        Preconditions.checkNotNull(mRefuelings).addAll(refuelings);
+        mRefuelings = Preconditions.checkNotNull(refuelings);
+        mItemCount = refuelings.size();
         this.notifyDataSetChanged();
     }
 

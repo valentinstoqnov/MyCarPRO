@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -74,6 +75,17 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
+    public HashMap<String, String> getVehicleIdToNameHash() {
+        HashMap<String, String> hash = new HashMap<>(mVehicles.size());
+
+        for (Vehicle vehicle : mVehicles) {
+            hash.put(vehicle.getId(), vehicle.getName());
+        }
+
+        return hash;
+    }
+
+/*    @Override
     public List<String> getAllVehicleNames() {
         List<String> names = new ArrayList<>();
 
@@ -83,7 +95,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
         Collections.sort(names);
         return names;
-    }
+    }*/
 
     @Override
     public String getVehicleIdByName(String name) {

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.common.base.Preconditions;
@@ -25,19 +26,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.list.activities.BaseRecyclerViewAdapter;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesAdapter;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.list.activities.RecyclerViewDivider;
+import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingsAdapter;
 import elsys.mycar.mycarpro.model.Insurance;
+import elsys.mycar.mycarpro.model.Refueling;
 
 public class ListInsurancesFragment extends Fragment implements ListInsurancesContract.View{
 
     @BindView(R.id.rv_list) RecyclerView recyclerView;
     @BindView(R.id.textView_list) TextView textViewMessage;
+    @BindView(R.id.progress_bar_list) ProgressBar progressBar;
     @BindString(R.string.date_price_placeholder) String placeholder;
 
-    private ListActivitiesAdapter mAdapter;
-    private ListActivitiesContract.Presenter mPresenter;
+    private ListInsurancesAdapter mAdapter;
+    private ListInsurancesContract.Presenter mPresenter;
     private Unbinder mUnbinder;
 
     public static ListInsurancesFragment newInstance() {
@@ -66,17 +71,22 @@ public class ListInsurancesFragment extends Fragment implements ListInsurancesCo
     }
 
     @Override
-    public void setPresenter(ListActivitiesContract.Presenter presenter) {
+    public void setPresenter(ListInsurancesContract.Presenter presenter) {
         this.mPresenter = Preconditions.checkNotNull(presenter);
     }
 
     @Override
-    public void addItems(List<Insurance> items) {
+    public void showInsurances(List<Insurance> items) {
         if (recyclerView.getVisibility() == View.GONE) {
             recyclerView.setVisibility(View.VISIBLE);
             textViewMessage.setVisibility(View.GONE);
         }
-        mAdapter.addInsurances(items);
+        mAdapter.replaceData(items);
+    }
+
+    @Override
+    public void showDetailItemUi(String itemId) {
+        Snackbar.make(getView(), "item click", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -95,13 +105,37 @@ public class ListInsurancesFragment extends Fragment implements ListInsurancesCo
         textViewMessage.setText(message);
     }
 
+    @Override
+    public void showProgress() {
+        if (progressBar.getVisibility() != View.VISIBLE) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        progressBar.setIndeterminate(true);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setIndeterminate(false);
+
+        if (progressBar.getVisibility() != View.GONE) {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
     private void setUpRecyclerView() {
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.line_divider);
         RecyclerViewDivider divider = new RecyclerViewDivider(drawable);
         recyclerView.addItemDecoration(divider);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new ListActivitiesAdapter(placeholder, "lv.", R.drawable.ic_insurance);
-        mAdapter.setInsurances(new ArrayList<Insurance>());
+
+        mAdapter = new ListInsurancesAdapter(new ArrayList<Insurance>(0), new BaseRecyclerViewAdapter.ActivitiesItemListener<Insurance>() {
+            @Override
+            public void onItemClick(Insurance insurance) {
+                mPresenter.openInsuranceDetails(insurance);
+            }
+        }, R.drawable.ic_gas_station, placeholder, "lv.");
+
         recyclerView.setAdapter(mAdapter);
     }
 }

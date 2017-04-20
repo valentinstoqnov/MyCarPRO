@@ -3,16 +3,18 @@ package elsys.mycar.mycarpro.list.activities.services;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.common.base.Preconditions;
 
 import java.util.ArrayList;
@@ -23,21 +25,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.list.activities.ListActivitiesAdapter;
+import elsys.mycar.mycarpro.list.activities.BaseRecyclerViewAdapter;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.list.activities.RecyclerViewDivider;
-import elsys.mycar.mycarpro.model.Insurance;
 import elsys.mycar.mycarpro.model.Service;
 
-public class ListServicesFragment extends Fragment implements ListServiceContract.View{
+public class ListServicesFragment extends Fragment implements ListServicesContract.View{
 
     @BindView(R.id.rv_list) RecyclerView recyclerView;
-    @BindString(R.string.date_price_placeholder) String placeholder;
     @BindView(R.id.textView_list) TextView textViewMessage;
+    @BindView(R.id.progress_bar_list) ProgressBar progressBar;
+    @BindString(R.string.date_price_placeholder) String placeholder;
 
     private Unbinder mUnbinder;
-    private ListActivitiesContract.Presenter mPresenter;
-    private ListActivitiesAdapter mAdapter;
+    private ListServicesContract.Presenter mPresenter;
+    private ListServiceAdapter mAdapter;
 
     public static ListServicesFragment newInstance() {
         return new ListServicesFragment();
@@ -64,17 +66,23 @@ public class ListServicesFragment extends Fragment implements ListServiceContrac
     }
 
     @Override
-    public void setPresenter(ListActivitiesContract.Presenter presenter) {
+    public void setPresenter(ListServicesContract.Presenter presenter) {
         this.mPresenter = Preconditions.checkNotNull(presenter);
     }
 
     @Override
-    public void addItems(List<Service> items) {
+    public void showServices(List<Service> items) {
         if (recyclerView.getVisibility() == View.GONE) {
             recyclerView.setVisibility(View.VISIBLE);
             textViewMessage.setVisibility(View.GONE);
         }
-        mAdapter.addServices(items);
+        mAdapter.replaceData(items);
+    }
+
+    @Override
+    public void showDetailItemUi(String itemId) {
+        //TODO
+        Snackbar.make(getView(), "Item click", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -93,13 +101,37 @@ public class ListServicesFragment extends Fragment implements ListServiceContrac
         textViewMessage.setText(message);
     }
 
+    @Override
+    public void showProgress() {
+        if (progressBar.getVisibility() != View.VISIBLE) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        progressBar.setIndeterminate(true);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setIndeterminate(false);
+
+        if (progressBar.getVisibility() != View.GONE) {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
     private void setUpRecyclerView() {
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.line_divider);
         RecyclerViewDivider divider = new RecyclerViewDivider(drawable);
         recyclerView.addItemDecoration(divider);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new ListActivitiesAdapter(placeholder, "lv.", R.drawable.ic_service);
-        mAdapter.setServices(new ArrayList<Service>());
+
+        mAdapter = new ListServiceAdapter(new ArrayList<Service>(0), new BaseRecyclerViewAdapter.ActivitiesItemListener<Service>() {
+            @Override
+            public void onItemClick(Service service) {
+                mPresenter.openServiceDetails(service);
+            }
+        }, R.drawable.ic_service, placeholder, "lv.");
+
         recyclerView.setAdapter(mAdapter);
     }
 }

@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.list.activities.services;
 
+import android.util.Log;
+
 import com.google.common.base.Preconditions;
 
 import java.util.ArrayList;
@@ -9,14 +11,14 @@ import elsys.mycar.mycarpro.data.VehicleRepository;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.model.Service;
 
-public class ListServicesPresenter implements ListActivitiesContract.Presenter {
+public class ListServicesPresenter implements ListServicesContract.Presenter {
 
     private String mVehicleId;
     private VehicleRepository mVehicleRepository;
-    private ListServiceContract.View mView;
+    private ListServicesContract.View mView;
     private boolean mIsDataMissing;
 
-    public ListServicesPresenter(String mVehicleId, VehicleRepository mVehicleRepository, ListServiceContract.View mView, boolean mIsDataMissing) {
+    public ListServicesPresenter(String mVehicleId, VehicleRepository mVehicleRepository, ListServicesContract.View mView, boolean mIsDataMissing) {
         this.mVehicleId = mVehicleId;
         this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
         this.mView = Preconditions.checkNotNull(mView);
@@ -25,38 +27,48 @@ public class ListServicesPresenter implements ListActivitiesContract.Presenter {
 
     @Override
     public void start() {
-        if (mVehicleId == null) {
-            mView.showNoSuchVehicle();
-            List<Service> services = new ArrayList<>();
-            services.add(new Service("ads", "Windows", "09 May 2017", 2323, 124,"note"));
-            services.add(new Service("adsasd", "Lights", "10 May 2017", 1030, 155,"note"));
-            services.add(new Service("adxcvs", "Engine oil", "11 May 2017", 1231, 233,"note"));
-            services.add(new Service("adsqwre", "Filters", "23 May 2017", 5434, 555,"note"));
-            services.add(new Service("ads", "Windows", "09 May 2017", 2323, 124,"note"));
-            services.add(new Service("adsasd", "Lights", "10 May 2017", 1030, 155,"note"));
-            services.add(new Service("adxcvs", "Engine oil", "11 May 2017", 1231, 233,"note"));
-            services.add(new Service("adsqwre", "Filters", "23 May 2017", 5434, 555,"note"));
-            services.add(new Service("ads", "Windows", "09 May 2017", 2323, 124,"note"));
-            services.add(new Service("adsasd", "Lights", "10 May 2017", 1030, 155,"note"));
-            services.add(new Service("adxcvs", "Engine oil", "11 May 2017", 1231, 233,"note"));
-            services.add(new Service("adsqwre", "Filters", "23 May 2017", 5434, 555,"note"));
-            services.add(new Service("ads", "Windows", "09 May 2017", 2323, 124,"note"));
-            services.add(new Service("adsasd", "Lights", "10 May 2017", 1030, 155,"note"));
-            services.add(new Service("adxcvs", "Engine oil", "11 May 2017", 1231, 233,"note"));
-            services.add(new Service("adsqwre", "Filters", "23 May 2017", 5434, 555,"note"));
-            mView.addItems(services);
-        }else if (mIsDataMissing){
-            List<Service> services = mVehicleRepository.getServicesByVehicleId(mVehicleId);
-            if (services == null || services.size() == 0) {
-                mView.showNoItemsFound();
-            }else {
-                mView.addItems(services);
-            }
+        if (mIsDataMissing) {
+            loadItems();
         }
+    }
+
+    @Override
+    public void loadItems() {
+        if (mVehicleId == null) {
+            List<Service> s = new ArrayList<Service>();
+            s.add(new Service("12edsxa", "IDK", "2 May 2020", 2020, 200, "note"));
+            s.add(new Service("12edsxaasd", "Sad story", "2 May 2012", 2020, 200, "note"));
+            s.add(new Service("12edsxah", "IDK - asd", "20 Apr 2020", 2020, 200, "note"));
+            s.add(new Service("12edsxawer3", "adal;d.asd;", "01 Jan 2012", 2020, 200, "note"));
+            processServices(s);
+            //mView.showNoSuchVehicle();
+        }else {
+            List<Service> services = mVehicleRepository.getServicesByVehicleId(mVehicleId);
+            processServices(services);
+        }
+    }
+
+    @Override
+    public void onVehicleChanged(String vehicleId) {
+        mVehicleId = vehicleId;
+        loadItems();
+    }
+
+    @Override
+    public void openServiceDetails(Service service) {
+        mView.showDetailItemUi(Preconditions.checkNotNull(service).getId());
     }
 
     @Override
     public boolean isDataMissing() {
         return mIsDataMissing;
+    }
+
+    private void processServices(List<Service> services) {
+        if (services == null || services.isEmpty()) {
+            mView.showNoItemsFound();
+        }else {
+            mView.showServices(services);
+        }
     }
 }
