@@ -1,0 +1,8 @@
+{
+  "company_name": String,
+  "price": long,
+  "odometer": long,
+  "note": String,
+  "date": String,
+  "expiration_date": String
+}
