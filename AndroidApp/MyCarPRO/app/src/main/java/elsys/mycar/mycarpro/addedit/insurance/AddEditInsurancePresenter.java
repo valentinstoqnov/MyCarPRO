@@ -20,7 +20,7 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
     private boolean mIsDataMissing;
 
     public AddEditInsurancePresenter(String vehicleId, String insuranceId, VehicleRepository mVehicleRepository, AddEditInsuranceContract.View mView, boolean mIsDataMissing) {
-        this.mVehicleId = Preconditions.checkNotNull(vehicleId);
+        this.mVehicleId = Preconditions.checkNotNull(vehicleId, "vehicle id cannot be null");
         this.mInsuranceId = insuranceId;
         this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
         this.mView = Preconditions.checkNotNull(mView);

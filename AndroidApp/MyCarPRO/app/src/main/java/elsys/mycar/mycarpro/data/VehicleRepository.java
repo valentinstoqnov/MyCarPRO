@@ -23,6 +23,8 @@ public interface VehicleRepository {
 
     String getVehicleIdByName(String name);
 
+    String getVehicleNamesById(String id);
+
     void addInsurance(String vehicleId, Insurance insurance);
 
     void addService(String vehicleId, Service service);

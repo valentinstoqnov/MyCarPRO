@@ -115,6 +115,15 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
+    public String getVehicleNamesById(String id) {
+        Vehicle vehicle = getById(id);
+        if (vehicle != null) {
+            return vehicle.getId();
+        }
+        return null;
+    }
+
+    @Override
     public void addInsurance(String vehicleId, Insurance insurance) {
         for (Vehicle vehicle : mVehicles) {
             if (vehicle.getId().equals(vehicleId)) {

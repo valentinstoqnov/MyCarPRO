@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.list.activities;
+package elsys.mycar.mycarpro.list.activities.viewpager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
