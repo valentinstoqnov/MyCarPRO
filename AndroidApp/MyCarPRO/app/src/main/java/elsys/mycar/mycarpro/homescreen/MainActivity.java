@@ -300,8 +300,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         this.mSelectedVehicleId = vehicleId;
     }
 
+
+
     @Override
-    public void setVehicleNames(List<String> items) {
+    public void showVehicleNames(List<String> items) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.vehicles_spinner_item, items);
 
     }

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -76,6 +77,8 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
 
         ButterKnife.bind(this);
 
+        switchSpinnerVisibility(R.id.tab_vehicles);
+
         fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
 
         VehicleRepositoryImpl vehicleRepository = VehicleRepositoryImpl.getInstance();
@@ -83,6 +86,18 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         setPresenter(mainPresenter);
 
         setUpBottomBar();
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.onSelectedVehicleChanged(spinner.getItemAtPosition(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
@@ -102,7 +117,7 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void setVehicleNames(List<String> items) {
+    public void showVehicleNames(List<String> items) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.vehicles_spinner_item, items);
         spinner.setAdapter(adapter);
     }
@@ -192,7 +207,10 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void onActivitiesTabSelected() {
-        fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
+        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
+        ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
+        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(VehicleRepositoryImpl.getInstance(), activitiesFragment);
+        activitiesFragment.setPresenter(activitiesPresenter);
     }
 
     private void onVehiclesTabSelected() {

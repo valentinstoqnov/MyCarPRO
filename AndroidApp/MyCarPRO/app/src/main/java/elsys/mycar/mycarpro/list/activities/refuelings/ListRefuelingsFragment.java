@@ -115,6 +115,11 @@ public class ListRefuelingsFragment extends Fragment implements ListRefuelingsCo
         }
     }
 
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
     private void setUpRecyclerView() {
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.line_divider);
         RecyclerViewDivider divider = new RecyclerViewDivider(drawable);

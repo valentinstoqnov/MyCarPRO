@@ -28,7 +28,7 @@ public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
 
     @Override
     public void start() {
-        if (mIsDataMissing) {
+        if (mIsDataMissing && mView.isActive()) {
             loadItems();
         }
     }

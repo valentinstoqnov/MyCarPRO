@@ -11,7 +11,7 @@ public interface MainContract {
 
         void setSelectedVehicleId(String vehicleId);
 
-        void setVehicleNames(List<String> items);
+        void showVehicleNames(List<String> items);
 
         void showAddEditVehicleUi();
 

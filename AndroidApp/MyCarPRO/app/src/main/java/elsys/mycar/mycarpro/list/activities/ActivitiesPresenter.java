@@ -8,10 +8,9 @@ public class ActivitiesPresenter implements ActivitiesContract.Presenter{
     private ActivitiesContract.View mView;
     private String mVehicleName;
 
-    public ActivitiesPresenter(VehicleRepository mVehicleRepository, ActivitiesContract.View mView, String mVehicleName) {
+    public ActivitiesPresenter(VehicleRepository mVehicleRepository, ActivitiesContract.View mView) {
         this.mVehicleRepository = mVehicleRepository;
         this.mView = mView;
-        this.mVehicleName = mVehicleName;
     }
 
     @Override

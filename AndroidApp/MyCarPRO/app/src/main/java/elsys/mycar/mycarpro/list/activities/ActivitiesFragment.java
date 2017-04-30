@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,8 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     @Override
     public void onResume() {
         super.onResume();
-//        mPresenter.start();
+        mPresenter.onVehicleChange(getSelectedVehicleName(mSpinner.getSelectedItemPosition()));
+        mPresenter.start();
     }
 
     @Override
@@ -98,6 +100,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     }
 
     private void refreshFragmentAtPosition(int position) {
+        Log.d(TAG, "refreshFragmentAtPosition: " + position);
         switch (position) {
             case 0:
                 mListServicesPresenter.start();
@@ -134,6 +137,8 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         adapter.addFragment(listRefuelingsFragment);
 
         viewPager.setAdapter(adapter);
+
+        mPresenter.onVehicleChange(vehicleName);
     }
 
     @Override

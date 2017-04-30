@@ -117,6 +117,11 @@ public class ListServicesFragment extends Fragment implements ListServicesContra
         }
     }
 
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
     private void setUpRecyclerView() {
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.line_divider);
         RecyclerViewDivider divider = new RecyclerViewDivider(drawable);
