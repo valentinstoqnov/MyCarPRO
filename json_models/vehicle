@@ -1,0 +1,18 @@
+{
+  "name": String,
+  "make": String,
+  "model": String,
+  "horse_power": int,
+  "manufacture_date": String,
+  "fuel_tank_capacity": int,
+  "fuel_consumption": double,
+  "fuel_type": String,
+  "services": {},
+  "insurances": {},
+  "refuelings": {},
+  "odometer": long,
+  "note": String
+  
+  
+  //somehow photo
+}

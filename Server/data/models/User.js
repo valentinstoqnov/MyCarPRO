@@ -4,6 +4,8 @@ var mongoose = require('mongoose'),
 module.exports.init = function () {
     var userSchema = mongoose.Schema({
         username: {type: String, required: true, unique: true},
+        first_name: {type: String, required: true},
+        last_name: {type: String, required: true},
         hashPass: String,
         salt: String
     });

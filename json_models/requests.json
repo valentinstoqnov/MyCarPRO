@@ -1,0 +1,112 @@
+home/users Post create user
+{
+  "username" : String
+  "first_name": String,
+"last_name": String,
+"email": String,
+"password": string
+}
+res = usera ako e uspeshno
+
+home/users/login POST login
+res = usera
+
+
+
+home/cars + username GET  /cars/username
+res = masiv ot kolite
+
+home/cars/username POST - create
+{
+  "cars"
+}
+{
+	"name": "pesho",
+	"make": "asd",
+  "model": "asd",
+  "horse_power": 12,
+  "manufacture_date": 12,
+  "fuel_tank_capacity": 12,
+  "fuel_consumption": 2,
+  "fuel_type": "12",
+  "note" : "hello world",
+  "odometer" : 22,
+  "color" : "green"
+}
+
+
+
+
+home/cars/fuil POST -add fuil
+{
+  "_id" : String // id- to na kolata
+  + fuil
+}
+
+
+home/cars/fuil PUT -edit fuil
+{
+  "_id" : String // id- to na kolata
+  + fuil
+}
+{
+  "_id":"58fdc8c0018dfb14f0ac0894",
+  "gas_station_name": "mareshki",
+  "quantity": "22",
+  "price": 22,
+  "odometer": 22,
+  "note": "shte ima",
+  "date_time": "asd"
+
+}
+
+
+
+
+
+home/cars/services POST add services
+{
+  _id :string // id to na kolata
+  + services
+}
+
+
+home/cars/services PUT edit services
+{
+  _id :string // id to na kolata
+  + services
+}
+{
+  "_id":"58fdc8c0018dfb14f0ac0894",
+  "type" : "gumi",
+  "price": 22,
+  "odometer": 22,
+  "note": "asd",
+  "date_time": "AS"
+}
+
+
+
+
+
+home/cars/insurance POST add insurance
+{
+  _id :string // id to na kolata
+  + insurance
+}
+home/cars/insurance PUT edit insurance
+{
+  _id :string // id to na kolata
+  + insurance
+}
+
+{
+  "_id":"58fdc8c0018dfb14f0ac0894",
+    "company_name": "sofia",
+  "price": 8888,
+  "odometer": 20,
+  "note": "alah",
+  "date": "akbar",
+  "expiration_date": "utre"
+
+}
