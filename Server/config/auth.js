@@ -10,10 +10,14 @@ module.exports = {
     login: function (req, res, next) {
         var token = uuidV1();
         User.findOne({"username": req.body.username}, function (err, user) {
-            user1 = user;
-            hashMap.set(token, user1);
-            res.setHeader("token", token);
-            res.send(user);
+            if (user && user.authenticate(req.body.password)) {
+                user1 = user;
+                hashMap.set(token, user1);
+                res.setHeader("token", token);
+                res.send(user);
+            }else {
+                res.json({"reason" : "wrong username or password"})
+            }
         });
     },
     logout: function (req, res, next) {
