@@ -333,4 +333,24 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         intent.putExtra(VEHICLE_ID, vehicleId);
         startActivity(intent);
     }
+
+    @Override
+    public void showVehiclesUi() {
+
+    }
+
+    @Override
+    public void showActivitiesUi() {
+
+    }
+
+    @Override
+    public void showStatisticsUi() {
+
+    }
+
+    @Override
+    public void showProfileUi() {
+
+    }
 }

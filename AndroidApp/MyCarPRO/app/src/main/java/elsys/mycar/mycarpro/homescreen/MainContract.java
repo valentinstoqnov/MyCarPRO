@@ -20,6 +20,14 @@ public interface MainContract {
         void showAddEditInsuranceUi(String vehicleId);
 
         void showAddEditRefuelingUi(String vehicleId);
+
+        void showVehiclesUi();
+
+        void showActivitiesUi();
+
+        void showStatisticsUi();
+
+        void showProfileUi();
     }
 
     interface Presenter extends BasePresenter {
@@ -31,6 +39,14 @@ public interface MainContract {
         void openAddEditInsurance();
 
         void openAddEditRefueling();
+
+        void openVehicles();
+
+        void openActivities();
+
+        void openStatistics();
+
+        void openProfile();
 
         void onSelectedVehicleChanged(String vehicleName);
     }

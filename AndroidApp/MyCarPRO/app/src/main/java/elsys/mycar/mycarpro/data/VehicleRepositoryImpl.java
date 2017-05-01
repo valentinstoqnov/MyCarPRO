@@ -28,7 +28,12 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         for (int i = 0; i < 5 ; i++) {
             Vehicle v = new Vehicle(UUID.randomUUID().toString(), "Some name" + i, "saasd", "asd", date, 12, 12, "KURVIII");
             v.setInsurances(new ArrayList<Insurance>());
-            v.setServices(new ArrayList<Service>());
+            List<Service> s = new ArrayList<>();
+            s.add(new Service("12edsxa", "IDK", "2 May 2020", 2020, 200, "note"));
+            s.add(new Service("12edsxaasd", "Sad story", "2 May 2012", 2020, 200, "note"));
+            s.add(new Service("12edsxah", "IDK - asd", "20 Apr 2020", 2020, 200, "note"));
+            s.add(new Service("12edsxawer3", "adal;d.asd;", "01 Jan 2012", 2020, 200, "note"));
+            v.setServices(s);
             v.setRefuelings(new ArrayList<Refueling>());
             mVehicles.add(v);
         }

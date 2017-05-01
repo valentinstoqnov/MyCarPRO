@@ -11,6 +11,91 @@ import elsys.mycar.mycarpro.model.Vehicle;
 
 public interface VehicleRepository {
 
+    interface IDK {
+
+        void saveVehicle(Vehicle vehicle);
+
+        void updateVehicle(Vehicle vehicle);
+
+        void deleteVehicle(String id);
+
+        void getVehicleById(String id);
+
+        void getVehicles();
+
+
+        void saveRefueling(String vehicleId, Refueling refueling);
+
+        void updateRefueling(String vehicleId, Refueling refueling);
+
+        void saveService(String vehicleId, Service service);
+
+        void updateService(String vehicleId, Service service);
+
+        void saveInsurance(String vehicleId, Insurance insurance);
+
+        void updateInsurance(String vehicleId, Insurance insurance);
+
+    }
+
+    interface VehiclesCallback {
+
+        void onVehicleSaved(Vehicle vehicle);
+
+        void onVehiclesAvailable(List<Vehicle> vehicles);
+
+        void onFailure();
+    }
+
+    interface ServicesCallback {
+
+        void onServiceSaved(Service service);
+
+        void onServicesAvailable(List<Service> services);
+
+        void onFailure();
+    }
+
+    interface RefuelingsCallback {
+
+        void onRefuelingSaved(Refueling refueling);
+
+        void onRefuelingsAvailable(List<Refueling> refuelings);
+
+        void onFailure();
+    }
+
+    interface InsurancesCallback {
+
+        void onInsuranceSaved(Insurance insurance);
+
+        void onInsurancesAvailable(List<Insurance> insurances);
+
+        void onFailure();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     void save(Vehicle vehicle);
 
     Vehicle getById(String id);

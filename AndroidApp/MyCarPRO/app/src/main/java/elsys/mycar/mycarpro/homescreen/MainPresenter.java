@@ -52,9 +52,33 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void openVehicles() {
+        mView.showVehiclesUi();
+    }
+
+    @Override
+    public void openActivities() {
+        mView.showActivitiesUi();
+    }
+
+    @Override
+    public void openStatistics() {
+        mView.showStatisticsUi();
+    }
+
+    @Override
+    public void openProfile() {
+        mView.showProfileUi();
+    }
+
+    @Override
     public void onSelectedVehicleChanged(String vehicleName) {
         String vehicleId = mVehicleRepository.getVehicleIdByName(vehicleName);
         mView.setSelectedVehicleId(vehicleId);
         mVehicleId = vehicleId;
+
+        //TODO: SEE THIS TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //TODO: adding and removing or optimizing those spinner item selected listeners making sure those vehicle ids are requested at the right time build view ui for detail view of given item
+
     }
 }
