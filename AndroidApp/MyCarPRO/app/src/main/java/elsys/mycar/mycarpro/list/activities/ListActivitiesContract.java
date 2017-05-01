@@ -22,6 +22,8 @@ public interface ListActivitiesContract {
         void showProgress();
 
         void hideProgress();
+
+        boolean isActive();
     }
 
     interface Presenter extends BasePresenter{

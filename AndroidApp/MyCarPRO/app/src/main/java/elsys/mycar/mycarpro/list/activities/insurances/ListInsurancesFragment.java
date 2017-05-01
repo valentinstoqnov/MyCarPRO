@@ -1,6 +1,5 @@
 package elsys.mycar.mycarpro.list.activities.insurances;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +24,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.list.activities.BaseRecyclerViewAdapter;
-import elsys.mycar.mycarpro.list.activities.ListActivitiesAdapter;
-import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
-import elsys.mycar.mycarpro.list.activities.RecyclerViewDivider;
-import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingsAdapter;
+import elsys.mycar.mycarpro.list.activities.recyclerview.BaseRecyclerViewAdapter;
+import elsys.mycar.mycarpro.list.activities.recyclerview.RecyclerViewDivider;
 import elsys.mycar.mycarpro.model.Insurance;
-import elsys.mycar.mycarpro.model.Refueling;
 
 public class ListInsurancesFragment extends Fragment implements ListInsurancesContract.View{
 
@@ -121,6 +115,11 @@ public class ListInsurancesFragment extends Fragment implements ListInsurancesCo
         if (progressBar.getVisibility() != View.GONE) {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
     }
 
     private void setUpRecyclerView() {

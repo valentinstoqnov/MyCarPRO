@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.list.activities;
+package elsys.mycar.mycarpro.list.activities.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

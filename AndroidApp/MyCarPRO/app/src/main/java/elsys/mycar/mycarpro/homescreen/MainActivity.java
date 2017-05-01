@@ -46,13 +46,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @BindView(R.id.bottom_bar_main) BottomBar bottomBar;
     @BindView(R.id.fab_main) FloatingActionButton fab;
     @BindView(R.id.fab_menu_main) FloatingActionMenu fabMenu;
-    @BindView(R.id.spn_main_vehicles) Spinner spinner;
     @BindView(R.id.tab_layout_statistics) TabLayout tabLayoutStatistics;
     @BindView(R.id.tab_layout_activities) TabLayout tabLayoutActivities;
     @BindColor(R.color.colorDarkVehicleTabSelected) int vehicleDarkTabColor;
     @BindColor(R.color.colorDarkActivitiesTabSelected) int activitiesDarkTabColor;
     @BindColor(R.color.colorDarkStatisticsTabSelected) int statisticsDarkTabColor;
     @BindColor(R.color.colorDarkProfileTabSelected) int profileDarkTabColor;
+
+    //@BindView(R.id.spn_main_vehicles) Spinner spinner;
 
     private MainContract.Presenter mPresenter;
     private String mSelectedVehicleId;
@@ -71,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         MainPresenter mainPresenter = new MainPresenter(VehicleRepositoryImpl.getInstance(), this);
         setPresenter(mainPresenter);
 
-        //lsetUpSpinner();
+        //setUpSpinner();
         mainPresenter.start();
-        spinner.setSelection(0);
+       // spinner.setSelection(0);
         //TODO: Activities and Statistics Fragments should findById the spinner and subscribe to select events
         setUpBottomBar();
     }
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mPresenter.start();
     }
 
-    @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
+/*    @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
     public void onFabClick(FloatingActionButton button) {
         Class aClass = null;
 
@@ -109,10 +110,28 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             intent.putExtra(VEHICLE_ID, mSelectedVehicleId);
             startActivity(intent);
         }
+    }*/
+
+    @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
+    public void onFabClick(FloatingActionButton button) {
+        switch (button.getId()) {
+            case R.id.fab_main:
+                mPresenter.openAddEditVehicle();
+                break;
+            case R.id.fab_main_insurance:
+                mPresenter.openAddEditInsurance();
+                break;
+            case R.id.fab_main_refueling:
+                mPresenter.openAddEditRefueling();
+                break;
+            case R.id.fab_main_service:
+                mPresenter.openAddEditService();
+                break;
+        }
     }
 
     private void setUpSpinner() {
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+/*        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedVehicleName = spinner.getItemAtPosition(position).toString();
@@ -124,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
     }
 
     private void setUpBottomBar() {
@@ -174,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
         listVehicleFragment.setPresenter(listVehiclePresenter);
 
-        spinner.setVisibility(View.GONE);
+        //spinner.setVisibility(View.GONE);
     }
 
     private void onActivitiesTabSelected() {
@@ -187,7 +206,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) getSupportFragmentManager().findFragmentByTag(ActivitiesFragment.TAG);
 
         if (activitiesFragment == null) {
-            //TODO: FUCK THIS FUCKING SPINNER YOU SON OF A BITCH !1!!!!1!1
             activitiesFragment = ActivitiesFragment.newInstance();
             ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), activitiesFragment, R.id.frame_layout_main_content, ActivitiesFragment.TAG);
         }else {
@@ -197,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Log.d("onActivitiesTabSelected", "vehicleId = " + mSelectedVehicleId);
 
         //activitiesFragment.setVehicleId(mSelectedVehicleId);
-        spinner.setVisibility(View.VISIBLE);
+       // spinner.setVisibility(View.VISIBLE);
     }
 
     private void onStatisticsTabSelected() {
@@ -215,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             ActivityUtils.showFragment(getSupportFragmentManager(), statisticsFragment);
         }
 
-        spinner.setVisibility(View.VISIBLE);
+        //spinner.setVisibility(View.VISIBLE);
     }
 
     private void onProfileTabSelected() {
@@ -232,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }else {
             ActivityUtils.showFragment(getSupportFragmentManager(), profileFragment);
         }
-        spinner.setVisibility(View.GONE);
+        //spinner.setVisibility(View.GONE);
     }
 
     private void setFabVisible() {
@@ -259,8 +277,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         window.setStatusBarColor(statusBarColor);
         ColorDrawable colorDrawable = new ColorDrawable(actionBarColor);
         actionBar.setBackgroundDrawable(colorDrawable);
-        spinner.setBackgroundColor(actionBarColor);
-        spinner.setPopupBackgroundDrawable(colorDrawable);
+       // spinner.setBackgroundColor(actionBarColor);
+        //spinner.setPopupBackgroundDrawable(colorDrawable);
     }
 
     @Override
@@ -268,17 +286,51 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         this.mPresenter = Preconditions.checkNotNull(presenter);
     }
 
-    @Override
+/*    @Override
     public void setVehicleNames(List<String> items) {
         ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
                 R.layout.vehicles_spinner_item,
                 items);
-        spinner.setAdapter(mAdapter);
-    }
+       // spinner.setAdapter(mAdapter);
+    }*/
 
     @Override
     public void setSelectedVehicleId(String vehicleId) {
         Log.d("activity vehicleId", "id = " + vehicleId);
         this.mSelectedVehicleId = vehicleId;
+    }
+
+
+
+    @Override
+    public void showVehicleNames(List<String> items) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.vehicles_spinner_item, items);
+
+    }
+
+    @Override
+    public void showAddEditVehicleUi() {
+        startActivity(new Intent(this, AddEditVehicleActivity.class));
+    }
+
+    @Override
+    public void showAddEditServiceUi(String vehicleId) {
+        Intent intent = new Intent(this, AddEditServiceActivity.class);
+        intent.putExtra(VEHICLE_ID, vehicleId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showAddEditInsuranceUi(String vehicleId) {
+        Intent intent = new Intent(this, AddEditInsuranceActivity.class);
+        intent.putExtra(VEHICLE_ID, vehicleId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showAddEditRefuelingUi(String vehicleId) {
+        Intent intent = new Intent(this, AddEditRefuelingActivity.class);
+        intent.putExtra(VEHICLE_ID, vehicleId);
+        startActivity(intent);
     }
 }

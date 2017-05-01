@@ -14,34 +14,35 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
-import com.google.common.collect.HashBiMap;
+import com.google.common.base.Preconditions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
-import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.list.activities.insurances.ListInsurancesFragment;
 import elsys.mycar.mycarpro.list.activities.insurances.ListInsurancesPresenter;
 import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingPresenter;
 import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingsFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesPresenter;
+import elsys.mycar.mycarpro.list.activities.viewpager.ActivitiesViewPagerAdapter;
 
-public class ActivitiesFragment extends Fragment {
+public class ActivitiesFragment extends Fragment implements ActivitiesContract.View{
 
     public static final String TAG = "ActivitiesFragment";
 
     @BindView(R.id.view_pager_activities) ViewPager viewPager;
 
-    private Spinner spinner;
     private TabLayout tabLayout;
     private Unbinder mUnbinder;
+
+    private ActivitiesContract.Presenter mPresenter;
+    private Spinner mSpinner;
     private ListServicesPresenter mListServicesPresenter;
     private ListInsurancesPresenter mListInsurancesPresenter;
     private ListRefuelingPresenter mListRefuelingPresenter;
-    private String mVehicleId;
 
     public static ActivitiesFragment newInstance() {
         return new ActivitiesFragment();
@@ -56,28 +57,22 @@ public class ActivitiesFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onVehicleChange(getSelectedVehicleName(mSpinner.getSelectedItemPosition()));
+        mPresenter.start();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout_activities);
-        setUpViewPager();
-        setUpTabLayout();
-        spinner = (Spinner) getActivity().findViewById(R.id.spn_main_vehicles);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinner = (Spinner) getActivity().findViewById(R.id.spn_main_vehicles);
+
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String str = HashBiMap.create(VehicleRepositoryImpl.getInstance().getVehicleIdToNameHash()).inverse().get(spinner.getSelectedItem().toString());
-                switch (viewPager.getCurrentItem()) {
-                    case 0:
-                        mListServicesPresenter.onVehicleChanged(mVehicleId);
-                        break;
-                    case 1:
-                        mListInsurancesPresenter.onVehicleChanged(mVehicleId);
-                        break;
-                    case 2:
-                        mListRefuelingPresenter.onVehicleChanged(mVehicleId);
-                        break;
-                }
+                mPresenter.onVehicleChange(getSelectedVehicleName(position));
             }
 
             @Override
@@ -85,6 +80,65 @@ public class ActivitiesFragment extends Fragment {
 
             }
         });
+        
+        setUpViewPager();
+
+        tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout_activities);
+        setUpTabLayout();
+    }
+
+    private String getSelectedVehicleName(int position) {
+        Object itemAtPosition = mSpinner.getItemAtPosition(position);
+
+        String vehicleName = null;
+
+        if (itemAtPosition != null) {
+            vehicleName = itemAtPosition.toString();
+        }
+
+        return vehicleName;
+    }
+
+    private void refreshFragmentAtPosition(int position) {
+        Log.d(TAG, "refreshFragmentAtPosition: " + position);
+        switch (position) {
+            case 0:
+                mListServicesPresenter.start();
+                break;
+            case 1:
+                mListInsurancesPresenter.start();
+                break;
+            case 2:
+                mListRefuelingPresenter.start();
+                break;
+        }
+    }
+
+    private void setUpViewPager() {
+        ActivitiesViewPagerAdapter adapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
+
+        VehicleRepositoryImpl vehicleRepository = VehicleRepositoryImpl.getInstance();
+
+        String vehicleName = getSelectedVehicleName(mSpinner.getSelectedItemPosition());
+
+        ListServicesFragment listServicesFragment = ListServicesFragment.newInstance();
+        mListServicesPresenter = new ListServicesPresenter(vehicleName, vehicleRepository, listServicesFragment, true);
+        listServicesFragment.setPresenter(mListServicesPresenter);
+        adapter.addFragment(listServicesFragment);
+
+        ListInsurancesFragment listInsurancesFragment = ListInsurancesFragment.newInstance();
+        mListInsurancesPresenter = new ListInsurancesPresenter(vehicleName, vehicleRepository, listInsurancesFragment, true);
+        listInsurancesFragment.setPresenter(mListInsurancesPresenter);
+        adapter.addFragment(listInsurancesFragment);
+
+        ListRefuelingsFragment listRefuelingsFragment = ListRefuelingsFragment.newInstance();
+        mListRefuelingPresenter = new ListRefuelingPresenter(vehicleName, vehicleRepository, listRefuelingsFragment, true);
+        listRefuelingsFragment.setPresenter(mListRefuelingPresenter);
+        adapter.addFragment(listRefuelingsFragment);
+
+        viewPager.setAdapter(adapter);
+
+        mPresenter.onVehicleChange(vehicleName);
     }
 
     @Override
@@ -93,66 +147,11 @@ public class ActivitiesFragment extends Fragment {
         mUnbinder.unbind();
     }
 
-    private void setUpViewPager() {
-        Log.d("SET UP VP", "CALLED . . . . . .");
-        ActivitiesViewPagerAdapter mAdapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
-
-       // String vehicleId = getArguments().getString(MainActivity.VEHICLE_ID);
-        //Log.d("FRAGMENT", "id = " + vehicleId);
-        VehicleRepositoryImpl vehicleRepository = VehicleRepositoryImpl.getInstance();
-
-        ListServicesFragment listServicesFragment = ListServicesFragment.newInstance();
-        mListServicesPresenter = new ListServicesPresenter(mVehicleId, vehicleRepository, listServicesFragment, true);
-
-        listServicesFragment.setPresenter(mListServicesPresenter);
-
-        ListInsurancesFragment listInsurancesFragment = ListInsurancesFragment.newInstance();
-        mListInsurancesPresenter = new ListInsurancesPresenter(mVehicleId, vehicleRepository, listInsurancesFragment, true);
-
-        listInsurancesFragment.setPresenter(mListInsurancesPresenter);
-
-        ListRefuelingsFragment listRefuelingsFragment = ListRefuelingsFragment.newInstance();
-        mListRefuelingPresenter = new ListRefuelingPresenter(mVehicleId, vehicleRepository, listRefuelingsFragment, true);
-
-        listRefuelingsFragment.setPresenter(mListRefuelingPresenter);
-
-        mAdapter.addFragment(listServicesFragment);
-        mAdapter.addFragment(listInsurancesFragment);
-        mAdapter.addFragment(listRefuelingsFragment);
-
-        ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                Log.d(TAG, "onPageSelected: trigger");
-                switch (position) {
-                    case 0:
-                        mListServicesPresenter.onVehicleChanged(mVehicleId);
-                        break;
-                    case 1:
-                        mListInsurancesPresenter.onVehicleChanged(mVehicleId);
-                        break;
-                    case 2:
-                        mListRefuelingPresenter.onVehicleChanged(mVehicleId);
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        };
-
-        viewPager.addOnPageChangeListener(listener);
-
-        viewPager.setCurrentItem(0);
-        viewPager.setAdapter(mAdapter);
+    @Override
+    public void setPresenter(ActivitiesContract.Presenter presenter) {
+        this.mPresenter = Preconditions.checkNotNull(presenter);
     }
+
 
     private void setUpTabLayout() {
         tabLayout.setupWithViewPager(viewPager);
@@ -164,6 +163,7 @@ public class ActivitiesFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                refreshFragmentAtPosition(tab.getPosition());
                 tab.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
             }
 
@@ -179,7 +179,11 @@ public class ActivitiesFragment extends Fragment {
         });
     }
 
-    public void setVehicleId(String vehicleId) {
-        this.mVehicleId = vehicleId;
+    @Override
+    public void showVehicleContent(String vehicleId) {
+        mListServicesPresenter.onVehicleChanged(vehicleId);
+        mListInsurancesPresenter.onVehicleChanged(vehicleId);
+        mListRefuelingPresenter.onVehicleChanged(vehicleId);
+        refreshFragmentAtPosition(viewPager.getCurrentItem());
     }
 }

@@ -28,7 +28,7 @@ public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
 
     @Override
     public void start() {
-        if (mIsDataMissing) {
+        if (mIsDataMissing && mView.isActive()) {
             loadItems();
         }
     }
@@ -46,7 +46,7 @@ public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
     @Override
     public void onVehicleChanged(String vehicleId) {
         mVehicleId = vehicleId;
-        loadItems();
+        mIsDataMissing = true;
     }
 
     @Override
@@ -64,6 +64,7 @@ public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
             mView.showNoItemsFound();
         }else {
             mView.showRefuelings(refuelings);
+            mIsDataMissing = false;
         }
     }
 }

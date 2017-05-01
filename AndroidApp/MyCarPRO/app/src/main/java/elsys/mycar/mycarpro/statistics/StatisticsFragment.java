@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.list.activities.ActivitiesViewPagerAdapter;
+import elsys.mycar.mycarpro.list.activities.viewpager.ActivitiesViewPagerAdapter;
 
 public class StatisticsFragment extends Fragment {
 
@@ -41,6 +41,10 @@ public class StatisticsFragment extends Fragment {
 
         }
     };
+
+    public static StatisticsFragment newInstance() {
+        return new StatisticsFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

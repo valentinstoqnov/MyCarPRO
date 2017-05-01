@@ -11,10 +11,26 @@ public interface MainContract {
 
         void setSelectedVehicleId(String vehicleId);
 
-        void setVehicleNames(List<String> items);
+        void showVehicleNames(List<String> items);
+
+        void showAddEditVehicleUi();
+
+        void showAddEditServiceUi(String vehicleId);
+
+        void showAddEditInsuranceUi(String vehicleId);
+
+        void showAddEditRefuelingUi(String vehicleId);
     }
 
     interface Presenter extends BasePresenter {
+
+        void openAddEditVehicle();
+
+        void openAddEditService();
+
+        void openAddEditInsurance();
+
+        void openAddEditRefueling();
 
         void onSelectedVehicleChanged(String vehicleName);
     }

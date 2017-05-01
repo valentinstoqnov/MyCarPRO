@@ -24,7 +24,7 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
 
     @Override
     public void start() {
-        if (mIsDataMissing) {
+        if (mIsDataMissing && mView.isActive()) {
             loadItems();
         }
     }
@@ -32,7 +32,7 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
     @Override
     public void onVehicleChanged(String vehicleId) {
         mVehicleId = vehicleId;
-        loadItems();
+        mIsDataMissing = true;
     }
 
     @Override
@@ -60,6 +60,7 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
             mView.showNoItemsFound();
         }else {
             mView.showInsurances(insurances);
+            mIsDataMissing = false;
         }
     }
 
