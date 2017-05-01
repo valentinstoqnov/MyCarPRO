@@ -35,13 +35,7 @@ public class ListServicesPresenter implements ListServicesContract.Presenter {
     @Override
     public void loadItems() {
         if (mVehicleId == null) {
-            List<Service> s = new ArrayList<Service>();
-            s.add(new Service("12edsxa", "IDK", "2 May 2020", 2020, 200, "note"));
-            s.add(new Service("12edsxaasd", "Sad story", "2 May 2012", 2020, 200, "note"));
-            s.add(new Service("12edsxah", "IDK - asd", "20 Apr 2020", 2020, 200, "note"));
-            s.add(new Service("12edsxawer3", "adal;d.asd;", "01 Jan 2012", 2020, 200, "note"));
-            processServices(s);
-            //mView.showNoSuchVehicle();
+            mView.showNoSuchVehicle();
         }else {
             List<Service> services = mVehicleRepository.getServicesByVehicleId(mVehicleId);
             processServices(services);

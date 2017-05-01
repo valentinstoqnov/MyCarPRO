@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -77,13 +78,13 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
 
         ButterKnife.bind(this);
 
-        switchSpinnerVisibility(R.id.tab_vehicles);
-
         fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
 
         VehicleRepositoryImpl vehicleRepository = VehicleRepositoryImpl.getInstance();
         MainPresenter mainPresenter = new MainPresenter(vehicleRepository, this);
         setPresenter(mainPresenter);
+
+        fabMenu.setClosedOnTouchOutside(true);
 
         setUpBottomBar();
 
@@ -149,6 +150,32 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         startActivity(intent);
     }
 
+    @Override
+    public void showVehiclesUi() {
+        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ListVehicleFragment.TAG);
+        ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
+        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
+        listVehicleFragment.setPresenter(listVehiclePresenter);
+    }
+
+    @Override
+    public void showActivitiesUi() {
+        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
+        ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
+        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(VehicleRepositoryImpl.getInstance(), activitiesFragment);
+        activitiesFragment.setPresenter(activitiesPresenter);
+    }
+
+    @Override
+    public void showStatisticsUi() {
+        fragmentManagingUtils.addOrShowFragment(StatisticsFragment.TAG);
+    }
+
+    @Override
+    public void showProfileUi() {
+        fragmentManagingUtils.addOrShowFragment(ProfileFragment.TAG);
+    }
+
     @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
     public void onFabClick(FloatingActionButton button) {
         switch (button.getId()) {
@@ -176,18 +203,22 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
 
                 switch (tabId) {
                     case R.id.tab_vehicles:
-                        onVehiclesTabSelected();
+                        mPresenter.openVehicles();
+                        //onVehiclesTabSelected();
                         primaryDarkColor = vehicleDarkTabColor;
                         break;
                     case R.id.tab_activities:
-                        onActivitiesTabSelected();
+                        mPresenter.openActivities();
+                        //onActivitiesTabSelected();
                         break;
                     case R.id.tab_statistics:
-                        onStatisticsTabSelected();
+                        mPresenter.openStatistics();
+                        //onStatisticsTabSelected();
                         primaryDarkColor = statisticsDarkTabColor;
                         break;
                     case R.id.tab_user_profile:
-                        onProfileTabSelected();
+                        mPresenter.openProfile();
+                        //onProfileTabSelected();
                         primaryDarkColor = profileDarkTabColor;
                         break;
                 }
@@ -198,7 +229,7 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         });
     }
 
-    private void onStatisticsTabSelected() {
+  /*  private void onStatisticsTabSelected() {
         fragmentManagingUtils.addOrShowFragment(StatisticsFragment.TAG);
     }
 
@@ -218,7 +249,7 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
         ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
         listVehicleFragment.setPresenter(listVehiclePresenter);
-    }
+    }*/
 
     private void setUiColor(int primaryDarkColor, int primaryColor) {
         final Window window = getWindow();
@@ -289,8 +320,18 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         if (fab.isShown()) {
             fab.hide(true);
         }
-        if (!fabMenu.isShown()) {
+        if (fabMenu.isMenuHidden()) {
             fabMenu.showMenu(true);
+        }
+    }
+
+    private void hideFabs() {
+        if (fabMenu.isShown()) {
+            fabMenu.hideMenu(true);
+        }
+
+        if (fab.isShown()) {
+            fab.hide(true);
         }
     }
 
@@ -305,16 +346,6 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         if (!tabLayoutStatistics.isShown()) {
             tabLayoutActivities.setVisibility(View.GONE);
             tabLayoutStatistics.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void hideFabs() {
-        if (fabMenu.isShown()) {
-            fabMenu.hideMenu(true);
-        }
-
-        if (fab.isShown()) {
-            fab.hide(true);
         }
     }
 

@@ -1,20 +1,29 @@
 package elsys.mycar.mycarpro.data.api;
 
 import java.util.List;
-
 import elsys.mycar.mycarpro.model.Vehicle;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface VehicleApi {
 
-    @POST("/cars/{username}")
-    Call<Vehicle> saveVehicle(@Path("username") String username, @Body Vehicle vehicle);
+    @POST("/cars")
+    Call<Vehicle> saveVehicle(@Body Vehicle vehicle);
 
-    @GET("/cars/{username}")
-    Call<List<Vehicle>> getVehicles(@Path("username") String username);
+    @PUT("/cars")
+    Call<Vehicle> updateVehicle(@Body Vehicle vehicle);
 
+    @DELETE("/cars/{vehicle_id}")
+    void deleteVehicle(@Path("vehicle_id") String vehicleId);
+
+    @GET("/cars/{vehicle_id}")
+    Call<Vehicle> getVehicleById(@Path("vehicle_id") String vehicleId);
+
+    @GET("/cars")
+    Call<List<Vehicle>> getVehicles();
 }
