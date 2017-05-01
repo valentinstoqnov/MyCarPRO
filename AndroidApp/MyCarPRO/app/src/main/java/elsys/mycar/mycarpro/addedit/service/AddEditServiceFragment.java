@@ -153,7 +153,7 @@ public class AddEditServiceFragment extends Fragment implements AddEditServiceCo
     }
 
     @Override
-    public void addServiceTypes(List<String> items) {
+    public void showServiceTypes(List<String> items) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) tilType.getEditText();
         if (autoCompleteTextView != null) {
@@ -164,6 +164,11 @@ public class AddEditServiceFragment extends Fragment implements AddEditServiceCo
     @Override
     public void exit() {
         getActivity().finish();
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
     }
 
     @Override

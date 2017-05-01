@@ -15,11 +15,11 @@ public interface VehicleApi {
     @POST("/cars")
     Call<Vehicle> saveVehicle(@Body Vehicle vehicle);
 
-    @PUT("/cars")
-    Call<Vehicle> updateVehicle(@Body Vehicle vehicle);
+    @PUT("/cars/{vehicle_id}")
+    Call<Vehicle> updateVehicle(@Path("vehicle_id") String vehicleId, @Body Vehicle vehicle);
 
     @DELETE("/cars/{vehicle_id}")
-    void deleteVehicle(@Path("vehicle_id") String vehicleId);
+    Call<String> deleteVehicle(@Path("vehicle_id") String vehicleId);
 
     @GET("/cars/{vehicle_id}")
     Call<Vehicle> getVehicleById(@Path("vehicle_id") String vehicleId);

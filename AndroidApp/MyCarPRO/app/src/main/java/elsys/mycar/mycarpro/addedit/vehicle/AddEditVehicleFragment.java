@@ -148,7 +148,7 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     }
 
     @Override
-    public void addMakes(List<String> items) {
+    public void showMakes(List<String> items) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) tilMake.getEditText();
         if (autoCompleteTextView != null) {
@@ -157,13 +157,18 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     }
 
     @Override
-    public void setPhoto() {
-        //TODO: implement
+    public void setColor(int color) {
+
     }
 
     @Override
-    public void setFuelTank() {
-        //TODO: implement
+    public void setFuelTank(String fuelType, int fuelTankCapacity, double fuelConsumption) {
+
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
     }
 
     @Override

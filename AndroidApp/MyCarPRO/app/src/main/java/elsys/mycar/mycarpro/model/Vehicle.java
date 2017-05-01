@@ -4,6 +4,8 @@ import android.content.Intent;
 
 import java.util.List;
 
+import elsys.mycar.mycarpro.util.StringUtils;
+
 public class Vehicle {
 
     private String id;
@@ -19,7 +21,25 @@ public class Vehicle {
     private List<Insurance> insurances;
     private List<Service> services;
     private List<Refueling> refuelings;
+    private int color;
     private String note;
+
+    public Vehicle(String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, int color, String note) {
+        this.name = name;
+        this.make = make;
+        this.model = model;
+        this.manufactureDate = manufactureDate;
+        this.horsePower = horsePower;
+        this.odometer = odometer;
+        this.fuelType = fuelType;
+        this.fuelTankCapacity = fuelTankCapacity;
+        this.fuelConsumption = fuelConsumption;
+        this.insurances = insurances;
+        this.services = services;
+        this.refuelings = refuelings;
+        this.color = color;
+        this.note = note;
+    }
 
     public Vehicle(String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, String note) {
         this.name = name;
@@ -191,6 +211,14 @@ public class Vehicle {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }
 

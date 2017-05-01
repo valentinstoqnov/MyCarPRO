@@ -6,10 +6,11 @@ import com.google.common.base.Preconditions;
 
 import java.util.List;
 
-import elsys.mycar.mycarpro.data.VehicleRepository;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.model.Insurance;
 import elsys.mycar.mycarpro.model.Refueling;
+import elsys.mycar.mycarpro.model.Vehicle;
 
 public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
 
@@ -38,8 +39,19 @@ public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
         if (mVehicleId == null) {
             mView.showNoSuchVehicle();
         }else {
-            List<Refueling> refuelings = mVehicleRepository.getRefuelingsByVehicleId(mVehicleId);
-            processRefuelings(refuelings);
+            mView.showProgress();
+            mVehicleRepository.getVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
+                @Override
+                public void onSuccess(Vehicle vehicle) {
+                    processRefuelings(vehicle.getRefuelings());
+                }
+
+                @Override
+                public void onFailure() {
+                    mView.showMessage("Something went wrong...");
+                    mView.hideProgress();
+                }
+            });
         }
     }
 
@@ -66,5 +78,6 @@ public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
             mView.showRefuelings(refuelings);
             mIsDataMissing = false;
         }
+        mView.hideProgress();
     }
 }

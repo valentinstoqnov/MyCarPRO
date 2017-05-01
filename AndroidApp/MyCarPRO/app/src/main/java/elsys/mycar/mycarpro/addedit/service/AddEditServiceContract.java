@@ -27,9 +27,11 @@ public interface AddEditServiceContract {
 
         void setNote(String note);
 
-        void addServiceTypes(List<String> items);
+        void showServiceTypes(List<String> items);
 
         void exit();
+
+        boolean isActive();
     }
 
     interface Presenter extends BasePresenter{

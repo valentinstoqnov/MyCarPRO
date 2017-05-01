@@ -4,9 +4,10 @@ import com.google.common.base.Preconditions;
 
 import java.util.List;
 
-import elsys.mycar.mycarpro.data.VehicleRepository;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.model.Insurance;
+import elsys.mycar.mycarpro.model.Vehicle;
 
 public class ListInsurancesPresenter implements ListInsurancesContract.Presenter{
 
@@ -40,8 +41,19 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
         if (mVehicleId == null) {
             mView.showNoSuchVehicle();
         }else {
-            List<Insurance> insurances = mVehicleRepository.getInsurancesByVehicleId(mVehicleId);
-            processInsurances(insurances);
+            mView.showProgress();
+            mVehicleRepository.getVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
+                @Override
+                public void onSuccess(Vehicle vehicle) {
+                    processInsurances(vehicle.getInsurances());
+                }
+
+                @Override
+                public void onFailure() {
+                    mView.showMessage("Something went wrong...");
+                    mView.hideProgress();
+                }
+            });
         }
     }
 
@@ -62,6 +74,7 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
             mView.showInsurances(insurances);
             mIsDataMissing = false;
         }
+        mView.hideProgress();
     }
 
 }

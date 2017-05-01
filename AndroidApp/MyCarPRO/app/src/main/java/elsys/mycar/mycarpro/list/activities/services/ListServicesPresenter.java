@@ -7,9 +7,10 @@ import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.List;
 
-import elsys.mycar.mycarpro.data.VehicleRepository;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.model.Service;
+import elsys.mycar.mycarpro.model.Vehicle;
 
 public class ListServicesPresenter implements ListServicesContract.Presenter {
 
@@ -37,8 +38,19 @@ public class ListServicesPresenter implements ListServicesContract.Presenter {
         if (mVehicleId == null) {
             mView.showNoSuchVehicle();
         }else {
-            List<Service> services = mVehicleRepository.getServicesByVehicleId(mVehicleId);
-            processServices(services);
+            mView.showProgress();
+            mVehicleRepository.getVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
+                @Override
+                public void onSuccess(Vehicle vehicle) {
+                    processServices(vehicle.getServices());
+                }
+
+                @Override
+                public void onFailure() {
+                    mView.showMessage("Something went wrong...");
+                    mView.hideProgress();
+                }
+            });
         }
     }
 
@@ -65,5 +77,6 @@ public class ListServicesPresenter implements ListServicesContract.Presenter {
             mView.showServices(services);
             mIsDataMissing = false;
         }
+        mView.hideProgress();
     }
 }

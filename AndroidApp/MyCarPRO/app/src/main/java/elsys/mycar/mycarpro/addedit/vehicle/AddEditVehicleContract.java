@@ -27,11 +27,13 @@ public interface AddEditVehicleContract {
 
         void setDate(String date);
 
-        void addMakes(List<String> items);
+        void showMakes(List<String> items);
 
-        void setPhoto(/*Drawable or Bitmap*/);
+        void setColor(int color);
 
-        void setFuelTank(/*some variables here*/);
+        void setFuelTank(String fuelType, int fuelTankCapacity, double fuelConsumption);
+
+        boolean isActive();
     }
 
     interface Presenter extends BasePresenter {

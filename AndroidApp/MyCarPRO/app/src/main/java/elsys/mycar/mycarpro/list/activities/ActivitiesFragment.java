@@ -28,6 +28,9 @@ import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingsFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesPresenter;
 import elsys.mycar.mycarpro.list.activities.viewpager.ActivitiesViewPagerAdapter;
+import elsys.mycar.mycarpro.util.ProviderUtils;
+import elsys.mycar.mycarpro.util.StringUtils;
+import elsys.mycar.mycarpro.util.TokenUtils;
 
 public class ActivitiesFragment extends Fragment implements ActivitiesContract.View{
 
@@ -43,6 +46,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     private ListServicesPresenter mListServicesPresenter;
     private ListInsurancesPresenter mListInsurancesPresenter;
     private ListRefuelingPresenter mListRefuelingPresenter;
+    private String mToken;
 
     public static ActivitiesFragment newInstance() {
         return new ActivitiesFragment();
@@ -51,6 +55,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        manageToken();
         View view = inflater.inflate(R.layout.fragment_activities, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
@@ -59,8 +64,10 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.onVehicleChange(getSelectedVehicleName(mSpinner.getSelectedItemPosition()));
-        mPresenter.start();
+        if (manageToken()) {
+            mPresenter.onVehicleChange(getSelectedVehicleName(mSpinner.getSelectedItemPosition()));
+            mPresenter.start();
+        }
     }
 
     @Override
@@ -117,7 +124,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     private void setUpViewPager() {
         ActivitiesViewPagerAdapter adapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
 
-        VehicleRepositoryImpl vehicleRepository = VehicleRepositoryImpl.getInstance();
+        elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl vehicleRepository = ProviderUtils.getVehicleRepository(mToken);
 
         String vehicleName = getSelectedVehicleName(mSpinner.getSelectedItemPosition());
 
@@ -185,5 +192,17 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         mListInsurancesPresenter.onVehicleChanged(vehicleId);
         mListRefuelingPresenter.onVehicleChanged(vehicleId);
         refreshFragmentAtPosition(viewPager.getCurrentItem());
+    }
+
+    private boolean manageToken() {
+        String token = TokenUtils.getToken(getActivity());
+        mToken = token;
+        if (StringUtils.checkNotNullOrEmpty(token)) {
+            return true;
+        }else {
+            //goto login
+            getActivity().finish();
+            return false;
+        }
     }
 }

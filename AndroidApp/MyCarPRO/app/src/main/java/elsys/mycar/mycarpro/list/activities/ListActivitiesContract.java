@@ -23,6 +23,8 @@ public interface ListActivitiesContract {
 
         void hideProgress();
 
+        void showMessage(String message);
+
         boolean isActive();
     }
 

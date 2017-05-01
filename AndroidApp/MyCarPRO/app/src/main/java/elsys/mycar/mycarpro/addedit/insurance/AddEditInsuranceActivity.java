@@ -12,7 +12,7 @@ import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 
-import static elsys.mycar.mycarpro.homescreen.MainActivity.VEHICLE_ID;
+import static elsys.mycar.mycarpro.homescreen.HomeActivity.VEHICLE_ID;
 
 public class AddEditInsuranceActivity extends AppCompatActivity {
 
