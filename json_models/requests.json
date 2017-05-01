@@ -9,14 +9,14 @@ home/users Post create user
 res = usera ako e uspeshno
 
 home/users/login POST login
-res = usera
+res = usera i token za auth v headet "token" : token
 
 
 
-home/cars + username GET  /cars/username
+home/cars  /cars
 res = masiv ot kolite
 
-home/cars/username POST - create
+home/cars POST - create
 {
   "cars"
 }
@@ -37,18 +37,9 @@ home/cars/username POST - create
 
 
 
-home/cars/fuil POST -add fuil
-{
-  "_id" : String // id- to na kolata
-  + fuil
-}
+home/cars/fuil/id_na_kolata POST -add fuil
+home/cars/fuil/id na kolata PUT -edit fuil
 
-
-home/cars/fuil PUT -edit fuil
-{
-  "_id" : String // id- to na kolata
-  + fuil
-}
 {
   "_id":"58fdc8c0018dfb14f0ac0894",
   "gas_station_name": "mareshki",
@@ -64,18 +55,12 @@ home/cars/fuil PUT -edit fuil
 
 
 
-home/cars/services POST add services
-{
-  _id :string // id to na kolata
-  + services
-}
+home/cars/services/id POST add services
 
 
-home/cars/services PUT edit services
-{
-  _id :string // id to na kolata
-  + services
-}
+
+home/cars/services/id PUT edit services
+
 {
   "_id":"58fdc8c0018dfb14f0ac0894",
   "type" : "gumi",
@@ -89,16 +74,10 @@ home/cars/services PUT edit services
 
 
 
-home/cars/insurance POST add insurance
-{
-  _id :string // id to na kolata
-  + insurance
-}
-home/cars/insurance PUT edit insurance
-{
-  _id :string // id to na kolata
-  + insurance
-}
+home/cars/insurance/id POST add insurance
+
+home/cars/insurance/id PUT edit insurance
+
 
 {
   "_id":"58fdc8c0018dfb14f0ac0894",

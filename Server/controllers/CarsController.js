@@ -2,9 +2,9 @@ var cars = require('../data/cars');
 
 module.exports = {
     create: function (req, res, next) {
-
+        console.log("cretae")
         var car = req.body;
-        car.carOwner = req.params.carOwner;
+        car.carOwner = req.user.username;
         cars.create(car, function (err, room) {
             if (err) {
                 res.status(400);
@@ -16,7 +16,8 @@ module.exports = {
     },
 
     getCars: function (req, res, next) {
-        cars.find({"carOwner": req.params.user}, function (err, cars) {
+        console.log(req.user)
+        cars.find({"carOwner": req.user.username}, function (err, cars) {
             if (err) {
                 res.status(400);
                 console.log(err)
@@ -28,19 +29,17 @@ module.exports = {
     },
     postAddFuil: function (req, res, next) {
         var fuel = req.body;
-        console.log()
-        cars.findOne(req.body._id, function (err, car) {
+        cars.findOne(req.params.id, function (err, car) {
             car.refuelings
                 .push(fuel);
             car.save();
-            console.log(car);
-
             res.send(fuel);
         })
     },
     putEditFuel: function (req, res, next) {
         var fuel = req.body;
-        cars.findOne(req.body._id, function (err, car) {
+        cars.findOne(req.params.id, function (err, car) {
+
             car.refuelings
                 .pop();
             car.refuelings.push(fuel);
@@ -52,7 +51,7 @@ module.exports = {
     postAddService: function (req, res, next) {
         var service = req.body;
         console.log(service);
-        cars.findOne(req.body._id, function (err, car) {
+        cars.findOne(req.params.id, function (err, car) {
             car.services
                 .push(service);
             car.save();
@@ -65,7 +64,7 @@ module.exports = {
     putEditService: function (req, res, next) {
         var service = req.body;
         console.log(service);
-        cars.findOne(req.body._id, function (err, car) {
+        cars.findOne(req.params.id, function (err, car) {
             console.log(car)
             car.services
                 .pop();
@@ -80,7 +79,7 @@ module.exports = {
     postAddInsurance: function (req, res, next) {
         var insurence = req.body;
 
-        cars.findOne(req.body._id, function (err, car) {
+        cars.findOne(req.params.id, function (err, car) {
             car.insurances.push(insurence);
             car.save();
 
@@ -90,7 +89,7 @@ module.exports = {
     putEditInsurance: function (req, res, next) {
         var insurance = req.body;
 
-        cars.findOne(req.body._id, function (err, car) {
+        cars.findOne(req.params.id, function (err, car) {
             car.insurances
                 .pop();
             car.insurances
