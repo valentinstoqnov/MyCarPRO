@@ -11,5 +11,10 @@ module.exports = {
 
     findOne: function (id, callback) {
         Car.findOne({"_id": id},callback)
+    },
+    delete:function (id, callback) {
+        Car.findOneAndRemove({_id:id},function (err) {
+            callback;
+        })
     }
 };

@@ -97,5 +97,9 @@ module.exports = {
             res.send(insurance);
             car.save();
         })
+    },
+    delete: function (req, res, next) {
+        cars.delete(req.params.id);
+        res.send(req.params.id);
     }
 };

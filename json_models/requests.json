@@ -12,8 +12,11 @@ home/users/login POST login
 res = usera i token za auth v headet "token" : token
 
 
+home/cars/idCar DELETE
+returnva idto na kolata
 
-home/cars  /cars
+
+home/cars  /cars GET
 res = masiv ot kolite
 
 home/cars POST - create
