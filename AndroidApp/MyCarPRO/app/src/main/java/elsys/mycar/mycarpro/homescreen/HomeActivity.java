@@ -42,6 +42,7 @@ import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
+import elsys.mycar.mycarpro.loginscreen.LoginActivity;
 import elsys.mycar.mycarpro.model.Service;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
@@ -69,11 +70,13 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
 
     private FragmentManagingUtils fragmentManagingUtils;
     private MainContract.Presenter mPresenter;
-    private String mToken;
+    private TokenUtils mTokenUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mTokenUtils = new TokenUtils(this);
 
         setContentView(R.layout.activity_main);
 
@@ -108,8 +111,7 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (manageToken()) {
+        if (mTokenUtils.checkToken()) {
             mPresenter.start();
         }
     }
@@ -163,7 +165,7 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
 
         ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(
-                ProviderUtils.getVehicleRepository(mToken), listVehicleFragment
+                ProviderUtils.getVehicleRepository(mTokenUtils.getToken()), listVehicleFragment
         );
 
         listVehicleFragment.setPresenter(listVehiclePresenter);
@@ -210,7 +212,7 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
             @Override
             public void onTabSelected(@IdRes int tabId) {
 
-                if (manageToken()) {
+               // if (manageToken()) {
                     int primaryColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
                     int primaryDarkColor = activitiesDarkTabColor;
 
@@ -239,7 +241,7 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
                     setUiColor(primaryDarkColor, primaryColor);
                     switchUiComponents(tabId);
                 }
-            }
+       //     }
         });
     }
 
@@ -370,18 +372,6 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
 
         if (tabLayoutStatistics.isShown()) {
             tabLayoutStatistics.setVisibility(View.GONE);
-        }
-    }
-
-    private boolean manageToken() {
-        String token = TokenUtils.getToken(this);
-        mToken = token;
-        if (StringUtils.checkNotNullOrEmpty(token)) {
-            return true;
-        }else {
-            //goto login
-            finish();
-            return false;
         }
     }
 }

@@ -1,5 +1,6 @@
 package elsys.mycar.mycarpro.list.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingsFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesPresenter;
 import elsys.mycar.mycarpro.list.activities.viewpager.ActivitiesViewPagerAdapter;
+import elsys.mycar.mycarpro.loginscreen.LoginActivity;
 import elsys.mycar.mycarpro.util.ProviderUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 import elsys.mycar.mycarpro.util.TokenUtils;
@@ -46,7 +48,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     private ListServicesPresenter mListServicesPresenter;
     private ListInsurancesPresenter mListInsurancesPresenter;
     private ListRefuelingPresenter mListRefuelingPresenter;
-    private String mToken;
+    private TokenUtils mTokenUtils;
 
     public static ActivitiesFragment newInstance() {
         return new ActivitiesFragment();
@@ -55,7 +57,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        manageToken();
+        mTokenUtils = new TokenUtils(getActivity());
         View view = inflater.inflate(R.layout.fragment_activities, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
@@ -64,7 +66,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     @Override
     public void onResume() {
         super.onResume();
-        if (manageToken()) {
+        if (mTokenUtils.checkToken()) {
             mPresenter.onVehicleChange(getSelectedVehicleName(mSpinner.getSelectedItemPosition()));
             mPresenter.start();
         }
@@ -124,7 +126,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     private void setUpViewPager() {
         ActivitiesViewPagerAdapter adapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
 
-        elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl vehicleRepository = ProviderUtils.getVehicleRepository(mToken);
+        elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl vehicleRepository = ProviderUtils.getVehicleRepository(mTokenUtils.getToken());
 
         String vehicleName = getSelectedVehicleName(mSpinner.getSelectedItemPosition());
 
@@ -192,17 +194,5 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         mListInsurancesPresenter.onVehicleChanged(vehicleId);
         mListRefuelingPresenter.onVehicleChanged(vehicleId);
         refreshFragmentAtPosition(viewPager.getCurrentItem());
-    }
-
-    private boolean manageToken() {
-        String token = TokenUtils.getToken(getActivity());
-        mToken = token;
-        if (StringUtils.checkNotNullOrEmpty(token)) {
-            return true;
-        }else {
-            //goto login
-            getActivity().finish();
-            return false;
-        }
     }
 }

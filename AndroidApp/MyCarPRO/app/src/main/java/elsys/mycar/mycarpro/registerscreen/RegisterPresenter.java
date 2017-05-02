@@ -1,12 +1,11 @@
 package elsys.mycar.mycarpro.registerscreen;
 
 import elsys.mycar.mycarpro.data.repository.user.UserRepository;
+import elsys.mycar.mycarpro.model.User;
+import elsys.mycar.mycarpro.util.StringUtils;
 
-/**
- * Created by valio_stoyanov on 02.05.17.
- */
 
-public class RegisterPresenter
+public class RegisterPresenter implements RegisterContract.Presenter{
 
 
     private RegisterContract.View mView;
@@ -23,45 +22,54 @@ public class RegisterPresenter
     }
 
     @Override
-    public void register(String firstName, String lastName, String email, String password) {
+    public void register(final String username, String firstName, String lastName, String email, String password) {
         mView.showAuthenticating();
 
-        String id = UUID.randomUUID().toString();
-        User user = new User(id, firstName, lastName, email, password);
+        User user = new User(username, firstName, lastName, email, password);
 
         if (validate(user)) {
-            if (mUserRepository.exist(user)) {
-                mView.showAccountExistsError();
-            }else {
-                mUserRepository.save(user);
-            }
-        }
+            mUserRepository.saveUser(user, new UserRepository.OnUserSavedCallback() {
+                @Override
+                public void onSuccess(User user) {
+                    mView.hideAuthenticating();
+                    mView.registered(user.getUserName());
+                }
 
-        mView.hideAuthenticating();
-        mView.registered(email);
+                @Override
+                public void onFailure() {
+                    mView.hideAuthenticating();
+                    mView.showRegisterFailed();
+                }
+            });
+        }
     }
 
     private boolean validate(User user) {
         boolean valid = true;
 
-        if (user.getFirstName() == null || user.getFirstName().isEmpty()) {
+        if (StringUtils.checkNotNullOrEmpty(user.getFirstName())) {
             valid = false;
             mView.showFirstNameError("Invalid email");
         }
 
-        if (user.getLastName() == null || user.getLastName().isEmpty()) {
+        if (StringUtils.checkNotNullOrEmpty(user.getPassword())) {
             valid = false;
             mView.showLastNameError("Invalid password");
         }
 
-        if (user.getEmail() == null || user.getEmail().isEmpty()) {
+        if (StringUtils.checkNotNullOrEmpty(user.getEmail())) {
             valid = false;
             mView.showEmailError("Invalid email");
         }
 
-        if (user.getPassword() == null || user.getPassword().isEmpty()) {
+        if (StringUtils.checkNotNullOrEmpty(user.getUserName())) {
             valid = false;
-            mView.showPasswordError("Invalid password");
+            mView.showPasswordError("Invalid username");
+        }
+
+        if (StringUtils.checkNotNullOrEmpty(user.getLastName())) {
+            valid = false;
+            mView.showLastNameError("Invalid last name");
         }
 
         return valid;

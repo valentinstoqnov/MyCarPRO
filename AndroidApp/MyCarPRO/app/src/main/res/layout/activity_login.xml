@@ -16,7 +16,7 @@
         android:id="@+id/tv_sign_in"
         android:layout_marginTop="32dp"
         android:gravity="center"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorAccent"
         android:textSize="40sp"
         android:text="@string/sign_in"
         android:layout_width="match_parent"

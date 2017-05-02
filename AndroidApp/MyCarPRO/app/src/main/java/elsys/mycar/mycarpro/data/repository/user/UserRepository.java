@@ -17,7 +17,7 @@ public interface UserRepository {
 
     interface OnUserLoggedInCallback {
 
-        void onSuccess(String token, User user);
+        void onSuccess(String token);
 
         void onFailure();
     }

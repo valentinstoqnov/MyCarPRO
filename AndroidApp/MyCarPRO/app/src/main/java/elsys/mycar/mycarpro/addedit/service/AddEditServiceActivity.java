@@ -19,12 +19,11 @@ import static elsys.mycar.mycarpro.homescreen.HomeActivity.VEHICLE_ID;
 
 public class AddEditServiceActivity extends AppCompatActivity {
 
-    private String mToken;
-
+    private TokenUtils mTokenUtils;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        manageToken();
+        mTokenUtils = new TokenUtils(this);
         setContentView(R.layout.activity_add_edit_service);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,7 +37,7 @@ public class AddEditServiceActivity extends AppCompatActivity {
 
         String vehicleId = getIntent().getStringExtra(VEHICLE_ID);
 
-        AddEditServicePresenter addEditServicePresenter = new AddEditServicePresenter(vehicleId, null, ProviderUtils.getVehicleRepository(mToken), addEditServiceFragment, true);
+        AddEditServicePresenter addEditServicePresenter = new AddEditServicePresenter(vehicleId, null, ProviderUtils.getVehicleRepository(mTokenUtils.getToken()), addEditServiceFragment, true);
 
         addEditServiceFragment.setPresenter(addEditServicePresenter);
     }
@@ -46,18 +45,6 @@ public class AddEditServiceActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        manageToken();
-    }
-
-    private boolean manageToken() {
-        String token = TokenUtils.getToken(this);
-        mToken = token;
-        if (StringUtils.checkNotNullOrEmpty(token)) {
-            return true;
-        }else {
-            //goto login
-            finish();
-            return false;
-        }
+        mTokenUtils.checkToken();
     }
 }

@@ -14,6 +14,10 @@
         completions."
     </string>
 
+    <string name="authenticating">Authenticating…</string>
+    
+    <string name="account_already_exists">The account already exists</string>
+
     <string name="error_chars_only">Characters only</string>
 
     <string name="login">Login</string>
@@ -156,4 +160,5 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="already_a_member_login">Alread a member? Sign in</string>
+    <string name="username">Username</string>
 </resources>

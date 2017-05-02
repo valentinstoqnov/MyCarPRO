@@ -1,29 +1,32 @@
 package elsys.mycar.mycarpro.loginscreen;
 
-/**
- * Created by valio_stoyanov on 02.05.17.
- */
+import elsys.mycar.mycarpro.base.BasePresenter;
+import elsys.mycar.mycarpro.base.BaseView;
+import elsys.mycar.mycarpro.model.User;
 
 public interface LoginContract {
 
 
-    void setEmail(String email);
+    interface View extends BaseView<Presenter> {
 
-    void showEmailError(String error);
+        void setUsername(String username);
 
-    void showPasswordError(String error);
+        void showUsernameError(String error);
 
-    void showNoSuchUser();
+        void showPasswordError(String error);
 
-    void showProgress();
+        void showLoginFailed();
 
-    void hideProgress();
+        void showProgress();
 
-    void loggedIn();
-}
+        void hideProgress();
 
-interface Presenter extends BasePresenter {
+        void loggedIn(String token);
 
-    void login(String email, String password);
-}
+    }
+
+    interface Presenter extends BasePresenter {
+
+        void login(String username, String password);
+    }
 }

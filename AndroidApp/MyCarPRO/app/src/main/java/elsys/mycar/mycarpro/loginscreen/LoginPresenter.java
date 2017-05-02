@@ -2,10 +2,11 @@ package elsys.mycar.mycarpro.loginscreen;
 
 import elsys.mycar.mycarpro.data.repository.user.UserRepository;
 import elsys.mycar.mycarpro.model.User;
+import elsys.mycar.mycarpro.util.StringUtils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginPresenter {
+public class LoginPresenter implements LoginContract.Presenter{
 
     private LoginContract.View mView;
     private UserRepository mUserRepository;
@@ -21,35 +22,29 @@ public class LoginPresenter {
     }
 
     @Override
-    public void login(String email, String password) {
+    public void login(String username, String password) {
         mView.showProgress();
 
-        User user = new User(email, password);
+        if (StringUtils.checkNotNullOrEmpty(username)) {
+            if (StringUtils.checkNotNullOrEmpty(password)) {
+                mUserRepository.loginUser(username, password, new UserRepository.OnUserLoggedInCallback() {
+                    @Override
+                    public void onSuccess(String token) {
+                        mView.hideProgress();
+                        mView.loggedIn(token);
+                    }
 
-        if (validate(user)) {
-            if (mUserRepository.exist(user)) {
-                mView.loggedIn();
-            } else {
-                mView.showNoSuchUser();
+                    @Override
+                    public void onFailure() {
+                        mView.hideProgress();
+                        mView.showLoginFailed();
+                    }
+                });
+            }else {
+                mView.showPasswordError("Password not filled in");
             }
+        }else {
+            mView.showUsernameError("Username not filled in");
         }
-
-        mView.hideProgress();
-    }
-
-    private boolean validate(User user) {
-        boolean valid = true;
-
-        if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            valid = false;
-            mView.showEmailError("Invalid email");
-        }
-
-        if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            valid = false;
-            mView.showPasswordError("Invalid password");
-        }
-
-        return valid;
     }
 }

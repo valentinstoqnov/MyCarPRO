@@ -21,10 +21,19 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RegisterFragment registerFragment = RegisterFragment.newInstance();
+        FragmentManagingUtils fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_register);
+
+        RegisterFragment registerFragment = (RegisterFragment) fragmentManagingUtils.getFragmentByTag(RegisterFragment.TAG);
+
+        if (registerFragment == null) {
+            registerFragment = RegisterFragment.newInstance();
+            fragmentManagingUtils.addFragment(registerFragment, RegisterFragment.TAG);
+        }else {
+            fragmentManagingUtils.showFragment(registerFragment);
+        }
+
         RegisterPresenter registerPresenter = new RegisterPresenter(registerFragment, ProviderUtils.getUserRepository());
         registerFragment.setPresenter(registerPresenter);
-        FragmentManagingUtils fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.la)
     }
 
 }

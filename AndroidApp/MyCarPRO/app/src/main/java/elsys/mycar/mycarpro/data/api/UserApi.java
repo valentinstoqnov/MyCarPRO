@@ -11,6 +11,6 @@ public interface UserApi {
     @POST("/users")
     Call<User> saveUser(@Body User user);
 
-    @POST("/users")
+    @POST("/users/login")
     Call<User> loginUser(@Body SimpleUser simpleUser);
 }

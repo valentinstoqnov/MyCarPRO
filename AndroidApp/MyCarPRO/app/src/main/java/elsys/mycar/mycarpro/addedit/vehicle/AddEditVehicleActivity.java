@@ -18,17 +18,17 @@ import elsys.mycar.mycarpro.util.TokenUtils;
 public class AddEditVehicleActivity extends AppCompatActivity {
 
     private ActionBar mActionBar;
-    private String mToken;
+    private TokenUtils mTokenUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        manageToken();
+        mTokenUtils = new TokenUtils(this);
         setContentView(R.layout.activity_add_edit_vehicle);
         setUpToolbar();
 
         AddEditVehicleFragment addEditVehicleFragment = AddEditVehicleFragment.newInstance();
-        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(null, ProviderUtils.getVehicleRepository(mToken), addEditVehicleFragment, true);
+        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(null, ProviderUtils.getVehicleRepository(mTokenUtils.getToken()), addEditVehicleFragment, true);
         addEditVehicleFragment.setPresenter(addEditVehiclePresenter);
 
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
@@ -39,19 +39,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        manageToken();
-    }
-
-    private boolean manageToken() {
-        String token = TokenUtils.getToken(this);
-        mToken = token;
-        if (StringUtils.checkNotNullOrEmpty(token)) {
-            return true;
-        }else {
-            //goto login
-            finish();
-            return false;
-        }
+        mTokenUtils.checkToken();
     }
 
     private void setUpToolbar() {

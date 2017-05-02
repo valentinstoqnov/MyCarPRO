@@ -34,8 +34,8 @@ public class ProviderUtils {
         return new UserRepositoryImpl(getUserApi(getRetrofit("")));
     }
 
-    public static SharedPreferences getSharedPreferences(Activity activity) {
-        return activity.getPreferences(Context.MODE_PRIVATE);
+    public static SharedPreferences getTokenSharedPreferences(String name, Activity activity) {
+        return activity.getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
     private static UserApi getUserApi(Retrofit retrofit) {
