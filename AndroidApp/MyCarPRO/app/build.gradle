@@ -42,6 +42,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.github.clans:fab:1.6.4'
+    compile 'me.priyesh:chroma:1.0.2'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }

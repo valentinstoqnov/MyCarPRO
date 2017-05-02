@@ -34,9 +34,6 @@ public class Vehicle {
         this.fuelType = fuelType;
         this.fuelTankCapacity = fuelTankCapacity;
         this.fuelConsumption = fuelConsumption;
-        this.insurances = insurances;
-        this.services = services;
-        this.refuelings = refuelings;
         this.color = color;
         this.note = note;
     }

@@ -3,8 +3,7 @@ package elsys.mycar.mycarpro.addedit.vehicle;
 import com.google.common.base.Preconditions;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
@@ -15,10 +14,16 @@ import elsys.mycar.mycarpro.util.StringUtils;
 
 public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter, OnSaveOrUpdateCallback<Vehicle> {
 
+    private static final String FUEL_TANK_FORMAT = "%s%nCap.:%d%nCons.:%f";
+
     private String mVehicleId;
     private VehicleRepository mVehicleRepository;
     private AddEditVehicleContract.View mView;
     private boolean mIsDataMissing;
+
+    private String mFuelType;
+    private int mCapacity;
+    private double mConsumption;
 
     public AddEditVehiclePresenter(String mVehicleId, VehicleRepository mVehicleRepository, AddEditVehicleContract.View mView, boolean mIsDataMissing) {
         this.mVehicleId = mVehicleId;
@@ -58,7 +63,16 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
     }
 
     @Override
-    public void saveVehicle(String name, String make, String model, String manufactureDate, String odometer, String horsePower, String notes) {
+    public void onFuelTankPicked(String fuelType, int fuelTankCapacity, double fuelConsumption) {
+        mFuelType = fuelType;
+        mCapacity = fuelTankCapacity;
+        mConsumption = fuelConsumption;
+
+        mView.setFuelTank(formatFuelTank(fuelType, fuelTankCapacity, fuelConsumption));
+    }
+
+    @Override
+    public void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note) {
         mView.showProgress();
         if (StringUtils.checkNotNullOrEmpty(name, make, model, manufactureDate, odometer, horsePower)) {
             try {
@@ -66,7 +80,7 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
                 int parsedOdometer = Integer.parseInt(odometer);
                 int parsedHorsePower = Integer.parseInt(horsePower);
 
-                Vehicle vehicle = new Vehicle(name, make, model, parsedDate, parsedOdometer, parsedHorsePower, notes);
+                Vehicle vehicle = new Vehicle(name, make, model, parsedDate, parsedHorsePower, parsedOdometer, mFuelType, mCapacity, mConsumption, color, note);
 
                 if (isNewVehicle()) {
                     createVehicle(vehicle);
@@ -108,7 +122,7 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
             mView.setMake(vehicle.getMake());
             mView.setDate(vehicle.getManufactureDate());
             mView.setModel(vehicle.getModel());
-            mView.setFuelTank(vehicle.getFuelType(), vehicle.getFuelTankCapacity(), vehicle.getFuelConsumption());
+            mView.setFuelTank(formatFuelTank(vehicle.getFuelType(), vehicle.getFuelTankCapacity(), vehicle.getFuelConsumption()));
             mView.setColor(vehicle.getColor());
             mIsDataMissing = false;
         }
@@ -116,6 +130,10 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
 
     private boolean isNewVehicle() {
         return mVehicleId == null;
+    }
+
+    private String formatFuelTank(String fuelType, int capacity, double consumption) {
+        return String.format(Locale.US, FUEL_TANK_FORMAT, fuelType, capacity, consumption);
     }
 
     @Override

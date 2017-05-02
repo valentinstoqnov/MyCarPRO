@@ -31,7 +31,7 @@ public interface AddEditVehicleContract {
 
         void setColor(int color);
 
-        void setFuelTank(String fuelType, int fuelTankCapacity, double fuelConsumption);
+        void setFuelTank(String fuelTank);
 
         boolean isActive();
     }
@@ -40,7 +40,9 @@ public interface AddEditVehicleContract {
 
         void onDatePicked(int year, int month, int day);
 
-        void saveVehicle(String name, String make, String model, String manufactureDate, String odometer, String horsePower, String notes/*photo and fuel tanks*/);
+        void onFuelTankPicked(String fuelType, int fuelTankCapacity, double fuelConsumption);
+
+        void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note);
 
         boolean isDataMissing();
     }

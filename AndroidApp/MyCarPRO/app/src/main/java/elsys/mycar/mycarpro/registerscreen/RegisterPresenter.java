@@ -32,7 +32,7 @@ public class RegisterPresenter implements RegisterContract.Presenter{
                 @Override
                 public void onSuccess(User user) {
                     mView.hideAuthenticating();
-                    mView.registered(user.getUserName());
+                    mView.registered(user.getUsername());
                 }
 
                 @Override
@@ -41,33 +41,35 @@ public class RegisterPresenter implements RegisterContract.Presenter{
                     mView.showRegisterFailed();
                 }
             });
+        }else {
+            mView.hideAuthenticating();
         }
     }
 
     private boolean validate(User user) {
         boolean valid = true;
 
-        if (StringUtils.checkNotNullOrEmpty(user.getFirstName())) {
+        if (!StringUtils.checkNotNullOrEmpty(user.getFirstname())) {
             valid = false;
             mView.showFirstNameError("Invalid email");
         }
 
-        if (StringUtils.checkNotNullOrEmpty(user.getPassword())) {
+        if (!StringUtils.checkNotNullOrEmpty(user.getPassword())) {
             valid = false;
             mView.showLastNameError("Invalid password");
         }
 
-        if (StringUtils.checkNotNullOrEmpty(user.getEmail())) {
+        if (!StringUtils.checkNotNullOrEmpty(user.getEmail())) {
             valid = false;
             mView.showEmailError("Invalid email");
         }
 
-        if (StringUtils.checkNotNullOrEmpty(user.getUserName())) {
+        if (!StringUtils.checkNotNullOrEmpty(user.getUsername())) {
             valid = false;
             mView.showPasswordError("Invalid username");
         }
 
-        if (StringUtils.checkNotNullOrEmpty(user.getLastName())) {
+        if (!StringUtils.checkNotNullOrEmpty(user.getLastname())) {
             valid = false;
             mView.showLastNameError("Invalid last name");
         }

@@ -22,6 +22,15 @@ public class Data {
         MAKES.add("Citroen");
     }
 
+    private static final SortedSet<String> FUEL_TYPES = new TreeSet<>();
+
+    static {
+        FUEL_TYPES.add("Gas");
+        FUEL_TYPES.add("Petrol");
+        FUEL_TYPES.add("Diesel");
+        FUEL_TYPES.add("Electric");
+    }
+
     private static final SortedSet<String> SERVICE_TYPES = new TreeSet<>();
 
     static {
@@ -78,5 +87,9 @@ public class Data {
 
     public static List<String> getGasStationCompanies() {
         return new ArrayList<>(GAS_STATION_COMPANIES);
+    }
+
+    public static List<String> getFuelTypes() {
+        return new ArrayList<>(FUEL_TYPES);
     }
 }

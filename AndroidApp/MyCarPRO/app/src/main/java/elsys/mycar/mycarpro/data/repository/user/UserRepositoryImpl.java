@@ -8,6 +8,8 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import cz.msebera.android.httpclient.Header;
 import elsys.mycar.mycarpro.data.api.UserApi;
 import elsys.mycar.mycarpro.model.SimpleUser;
@@ -31,6 +33,12 @@ public class UserRepositoryImpl implements UserRepository {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                try {
+                    System.out.println(response.errorBody().string() + " ,! " + response.message());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(response.isSuccessful());
                 if (response.isSuccessful()) {
                     User responseUser = response.body();
                     callback.onSuccess(responseUser);
@@ -43,6 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
             public void onFailure(Call<User> call, Throwable t) {
                 callback.onFailure();
                 t.printStackTrace();
+                System.out.println(t.getLocalizedMessage());
             }
         });
     }

@@ -161,4 +161,8 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="already_a_member_login">Alread a member? Sign in</string>
     <string name="username">Username</string>
+    <string name="new_fuel_tank">New fuel tank</string>
+    <string name="capacity">Capacity</string>
+    <string name="consumption">consumption</string>
+    <string name="ok">Ok</string>
 </resources>

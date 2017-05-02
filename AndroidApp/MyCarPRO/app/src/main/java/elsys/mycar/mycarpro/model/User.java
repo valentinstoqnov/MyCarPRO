@@ -1,45 +1,60 @@
 package elsys.mycar.mycarpro.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
     private String id;
-    private String userName;
-    private String firstName;
-    private String lastName;
+    @SerializedName("username")
+    private String username;
+    @SerializedName("first_name")
+    private String firstname;
+    @SerializedName("last_name")
+    private String lastname;
+    @SerializedName("email")
     private String email;
+    @SerializedName("password")
     private String password;
 
-    public User(String userName, String firstName, String lastName, String email, String password) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String username, String firstname, String lastname, String email, String password) {
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getId() {
+        return id;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {
