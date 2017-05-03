@@ -64,8 +64,12 @@ public class VehicleApiRepositoryImpl implements VehicleRepository.IDK{
     }
 
     @Override
-    public void updateVehicle(final Vehicle vehicle) {
-        Call<Vehicle> vehicleCall = mVehicleApi.updateVehicle(vehicle);
+    public void updateVehicle(Vehicle vehicle) {
+
+    }
+
+    public void updateVehicle(String vehicleId, final Vehicle vehicle) {
+        Call<Vehicle> vehicleCall = mVehicleApi.updateVehicle(vehicleId, vehicle);
         vehicleCall.enqueue(new Callback<Vehicle>() {
             @Override
             public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
@@ -118,66 +122,20 @@ public class VehicleApiRepositoryImpl implements VehicleRepository.IDK{
     }
 
     @Override
-    public void saveRefueling(String vehicleId, final Refueling refueling) {
-        Call<Refueling> refuelingCall = mVehicleApi.saveRefueling(vehicleId, refueling);
-        refuelingCall.enqueue(new Callback<Refueling>() {
-            @Override
-            public void onResponse(Call<Refueling> call, Response<Refueling> response) {
-                if (response.isSuccessful()) {
-                    Refueling responseBody = response.body();
-                    mRefuelingsCallback.onRefuelingSaved(responseBody);
-                }else {
-                    mRefuelingsCallback.onFailure();
-                }
-            }
+    public void saveRefueling(String vehicleId, Refueling refueling) {
 
-            @Override
-            public void onFailure(Call<Refueling> call, Throwable t) {
-                mRefuelingsCallback.onFailure();
-                t.printStackTrace();
-            }
-        });
     }
 
     @Override
     public void updateRefueling(String vehicleId, Refueling refueling) {
-        Call<Refueling> refuelingCall = mVehicleApi.updateRefueling(vehicleId, refueling);
-        refuelingCall.enqueue(new Callback<Refueling>() {
-            @Override
-            public void onResponse(Call<Refueling> call, Response<Refueling> response) {
-                if (response.isSuccessful()) {
-                    Refueling responseBody = response.body();
-                    mRefuelingsCallback.onRefuelingSaved(responseBody);
-                }else {
-                    mRefuelingsCallback.onFailure();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Refueling> call, Throwable t) {
-                mRefuelingsCallback.onFailure();
-                t.printStackTrace();
-            }
-        });
     }
 
     @Override
-    public void saveService(String vehicleId, final Service service) {
-        Call<Service> serviceCall = mVehicleApi.saveService(vehicleId, service);
-        serviceCall.enqueue(new Callback<Service>() {
-            @Override
-            public void onResponse(Call<Service> call, Response<Service> response) {
-                if (response.isSuccessful()) {
-                    mServicesCallback.onServiceSaved(service);
-                }
-            }
+    public void saveService(String vehicleId, Service service) {
 
-            @Override
-            public void onFailure(Call<Service> call, Throwable t) {
-
-            }
-        });
     }
+
 
     @Override
     public void updateService(String vehicleId, Service service) {

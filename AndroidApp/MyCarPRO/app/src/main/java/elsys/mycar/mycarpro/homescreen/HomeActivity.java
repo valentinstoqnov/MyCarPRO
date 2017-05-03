@@ -42,11 +42,15 @@ import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
+import elsys.mycar.mycarpro.loginscreen.LoginActivity;
 import elsys.mycar.mycarpro.model.Service;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 import elsys.mycar.mycarpro.util.FragmentManagingUtils;
+import elsys.mycar.mycarpro.util.ProviderUtils;
+import elsys.mycar.mycarpro.util.StringUtils;
+import elsys.mycar.mycarpro.util.TokenUtils;
 
 public class HomeActivity extends AppCompatActivity implements MainContract.View {
 
@@ -66,10 +70,13 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
 
     private FragmentManagingUtils fragmentManagingUtils;
     private MainContract.Presenter mPresenter;
+    private TokenUtils mTokenUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mTokenUtils = new TokenUtils(this);
 
         setContentView(R.layout.activity_main);
 
@@ -104,7 +111,9 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.start();
+        if (mTokenUtils.checkToken()) {
+            mPresenter.start();
+        }
     }
 
     @Override
@@ -154,7 +163,11 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
     public void showVehiclesUi() {
         Fragment fragment = fragmentManagingUtils.addOrShowFragment(ListVehicleFragment.TAG);
         ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
-        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
+
+        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(
+                ProviderUtils.getVehicleRepository(mTokenUtils.getToken()), listVehicleFragment
+        );
+
         listVehicleFragment.setPresenter(listVehiclePresenter);
     }
 
@@ -198,34 +211,37 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                int primaryColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
-                int primaryDarkColor = activitiesDarkTabColor;
 
-                switch (tabId) {
-                    case R.id.tab_vehicles:
-                        mPresenter.openVehicles();
-                        //onVehiclesTabSelected();
-                        primaryDarkColor = vehicleDarkTabColor;
-                        break;
-                    case R.id.tab_activities:
-                        mPresenter.openActivities();
-                        //onActivitiesTabSelected();
-                        break;
-                    case R.id.tab_statistics:
-                        mPresenter.openStatistics();
-                        //onStatisticsTabSelected();
-                        primaryDarkColor = statisticsDarkTabColor;
-                        break;
-                    case R.id.tab_user_profile:
-                        mPresenter.openProfile();
-                        //onProfileTabSelected();
-                        primaryDarkColor = profileDarkTabColor;
-                        break;
+               // if (manageToken()) {
+                    int primaryColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
+                    int primaryDarkColor = activitiesDarkTabColor;
+
+                    switch (tabId) {
+                        case R.id.tab_vehicles:
+                            mPresenter.openVehicles();
+                            //onVehiclesTabSelected();
+                            primaryDarkColor = vehicleDarkTabColor;
+                            break;
+                        case R.id.tab_activities:
+                            mPresenter.openActivities();
+                            //onActivitiesTabSelected();
+                            break;
+                        case R.id.tab_statistics:
+                            mPresenter.openStatistics();
+                            //onStatisticsTabSelected();
+                            primaryDarkColor = statisticsDarkTabColor;
+                            break;
+                        case R.id.tab_user_profile:
+                            mPresenter.openProfile();
+                            //onProfileTabSelected();
+                            primaryDarkColor = profileDarkTabColor;
+                            break;
+                    }
+
+                    setUiColor(primaryDarkColor, primaryColor);
+                    switchUiComponents(tabId);
                 }
-
-                setUiColor(primaryDarkColor, primaryColor);
-                switchUiComponents(tabId);
-            }
+       //     }
         });
     }
 

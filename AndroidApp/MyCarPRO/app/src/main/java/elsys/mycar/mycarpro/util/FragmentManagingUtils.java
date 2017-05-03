@@ -38,7 +38,7 @@ public class FragmentManagingUtils {
         throw new IllegalArgumentException("Unknown tag");
     }
 
-    private Fragment getFragmentByTag(String tag) {
+    public Fragment getFragmentByTag(String tag) {
         return mFragmentManager.findFragmentByTag(tag);
     }
 
@@ -55,13 +55,13 @@ public class FragmentManagingUtils {
         return fragment;
     }
 
-    private void addFragment(Fragment fragment, String tag) {
+    public void addFragment(Fragment fragment, String tag) {
         mFragmentManager.beginTransaction()
                 .add(mContainerId, fragment, tag)
                 .commit();
     }
 
-    private void showFragment(Fragment fragmentToShow) {
+    public void showFragment(Fragment fragmentToShow) {
         if (fragmentToShow != null && !fragmentToShow.isVisible()) {
             mFragmentManager.beginTransaction()
                     .show(fragmentToShow)

@@ -24,14 +24,14 @@
             android:text="@string/manufacture_date"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/btn_add_vehicle_photo"/>
+            app:layout_constraintRight_toLeftOf="@+id/btn_add_vehicle_color"/>
 
         <Button
             android:padding="16dp"
-            android:drawableTop="@drawable/ic_add_a_photo"
+            android:drawableTop="@drawable/ic_color"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="@color/colorPrimary"
-            android:id="@+id/btn_add_vehicle_photo"
+            android:id="@+id/btn_add_vehicle_color"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/photo"
@@ -41,7 +41,7 @@
 
         <Button
             android:padding="16dp"
-            android:drawableTop="@drawable/ic_gas_station"
+            android:drawableTop="@drawable/ic_gas_station_black"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="@color/colorPrimary"
             android:id="@+id/btn_add_vehicle_fuel_tank"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:text="@string/fuel_tank"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/btn_add_vehicle_photo"
+            app:layout_constraintLeft_toRightOf="@+id/btn_add_vehicle_color"
             app:layout_constraintRight_toRightOf="parent" />
 
         <View

@@ -187,21 +187,21 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
     @Override
     public List<String> getMakes() {
-        return new ArrayList<>(Data.MAKES.keySet());
+        return Data.getMakes();
     }
 
     @Override
     public List<String> getCompanyNames() {
-        return new ArrayList<>(Data.INSURANCE_COMPANIES);
+        return Data.getInsuranceCompanies();
     }
 
     @Override
     public List<String> getServiceTypes() {
-        return new ArrayList<>(Data.SERVICE_TYPES);
+        return Data.getServiceTypes();
     }
 
     @Override
     public List<String> getGasStations() {
-        return new ArrayList<>(Data.GAS_STATION_COMPANIES);
+        return Data.getGasStationCompanies();
     }
 }

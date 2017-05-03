@@ -2,12 +2,16 @@ package elsys.mycar.mycarpro.list.vehicles;
 
 import com.google.common.base.Preconditions;
 
-import elsys.mycar.mycarpro.data.VehicleRepository;
+import java.util.List;
 
-public class ListVehiclePresenter implements ListVehicleContract.Presenter{
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
+import elsys.mycar.mycarpro.model.Vehicle;
+
+public class ListVehiclePresenter implements ListVehicleContract.Presenter, VehicleRepository.OnVehiclesFetchedCallback, VehicleRepository.OnDeleteCallback {
 
     private VehicleRepository mVehicleRepository;
     private ListVehicleContract.View mView;
+    private boolean mIsDataMissing;
 
     public ListVehiclePresenter(VehicleRepository mVehicleRepository, ListVehicleContract.View mView) {
         this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
@@ -16,11 +20,29 @@ public class ListVehiclePresenter implements ListVehicleContract.Presenter{
 
     @Override
     public void start() {
-        mView.addVehicles(mVehicleRepository.getAll());
+        if (mIsDataMissing && mView.isActive()) {
+            mVehicleRepository.getVehicles(this);
+        }
     }
 
     @Override
     public void deleteVehicle(String vehicleId) {
-        mVehicleRepository.delete(vehicleId);
+        mVehicleRepository.deleteVehicle(vehicleId, this);
+    }
+
+    @Override
+    public void onSuccess(List<Vehicle> vehicles) {
+        mView.showVehicles(vehicles);
+        mIsDataMissing = false;
+    }
+
+    @Override
+    public void onSuccess() {
+        mView.showMessage("Vehicle successfully deleted!");
+    }
+
+    @Override
+    public void onFailure() {
+        mView.showMessage("Failed to do this action, please try again");
     }
 }

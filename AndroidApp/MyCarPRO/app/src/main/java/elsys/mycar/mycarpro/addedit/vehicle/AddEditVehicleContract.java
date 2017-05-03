@@ -27,18 +27,22 @@ public interface AddEditVehicleContract {
 
         void setDate(String date);
 
-        void addMakes(List<String> items);
+        void showMakes(List<String> items);
 
-        void setPhoto(/*Drawable or Bitmap*/);
+        void setColor(int color);
 
-        void setFuelTank(/*some variables here*/);
+        void setFuelTank(String fuelTank);
+
+        boolean isActive();
     }
 
     interface Presenter extends BasePresenter {
 
         void onDatePicked(int year, int month, int day);
 
-        void saveVehicle(String name, String make, String model, String manufactureDate, String odometer, String horsePower, String notes/*photo and fuel tanks*/);
+        void onFuelTankPicked(String fuelType, int fuelTankCapacity, double fuelConsumption);
+
+        void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note);
 
         boolean isDataMissing();
     }

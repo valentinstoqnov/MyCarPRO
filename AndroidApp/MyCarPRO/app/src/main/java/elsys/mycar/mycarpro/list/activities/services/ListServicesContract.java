@@ -10,6 +10,8 @@ public interface ListServicesContract {
     interface View extends ListActivitiesContract.View<Presenter>{
 
         void showServices(List<Service> items);
+
+        void showMessage(String message);
     }
 
     interface Presenter extends ListActivitiesContract.Presenter {

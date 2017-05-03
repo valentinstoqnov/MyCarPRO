@@ -1,5 +1,6 @@
 package elsys.mycar.mycarpro.list.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -28,6 +29,10 @@ import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingsFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesPresenter;
 import elsys.mycar.mycarpro.list.activities.viewpager.ActivitiesViewPagerAdapter;
+import elsys.mycar.mycarpro.loginscreen.LoginActivity;
+import elsys.mycar.mycarpro.util.ProviderUtils;
+import elsys.mycar.mycarpro.util.StringUtils;
+import elsys.mycar.mycarpro.util.TokenUtils;
 
 public class ActivitiesFragment extends Fragment implements ActivitiesContract.View{
 
@@ -43,6 +48,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     private ListServicesPresenter mListServicesPresenter;
     private ListInsurancesPresenter mListInsurancesPresenter;
     private ListRefuelingPresenter mListRefuelingPresenter;
+    private TokenUtils mTokenUtils;
 
     public static ActivitiesFragment newInstance() {
         return new ActivitiesFragment();
@@ -51,6 +57,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mTokenUtils = new TokenUtils(getActivity());
         View view = inflater.inflate(R.layout.fragment_activities, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
@@ -59,8 +66,10 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.onVehicleChange(getSelectedVehicleName(mSpinner.getSelectedItemPosition()));
-        mPresenter.start();
+        if (mTokenUtils.checkToken()) {
+            mPresenter.onVehicleChange(getSelectedVehicleName(mSpinner.getSelectedItemPosition()));
+            mPresenter.start();
+        }
     }
 
     @Override
@@ -117,7 +126,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     private void setUpViewPager() {
         ActivitiesViewPagerAdapter adapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
 
-        VehicleRepositoryImpl vehicleRepository = VehicleRepositoryImpl.getInstance();
+        elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl vehicleRepository = ProviderUtils.getVehicleRepository(mTokenUtils.getToken());
 
         String vehicleName = getSelectedVehicleName(mSpinner.getSelectedItemPosition());
 

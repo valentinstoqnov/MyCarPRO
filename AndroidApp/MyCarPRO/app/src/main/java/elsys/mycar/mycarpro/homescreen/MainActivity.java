@@ -39,7 +39,7 @@ import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View{
+public class MainActivity extends AppCompatActivity{ /*implements MainContract.View{
 
     public static final String VEHICLE_ID = "VEHICLE_ID";
 
@@ -110,8 +110,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             intent.putExtra(VEHICLE_ID, mSelectedVehicleId);
             startActivity(intent);
         }
-    }*/
+    }*//*
 
+*/
+
+    /*
     @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
     public void onFabClick(FloatingActionButton button) {
         switch (button.getId()) {
@@ -143,8 +146,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });*/
-    }
+        });*//*
+    }*//*
+    /*
 
     private void setUpBottomBar() {
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -292,7 +296,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 R.layout.vehicles_spinner_item,
                 items);
        // spinner.setAdapter(mAdapter);
-    }*/
+    }*//**/
+    /*
 
     @Override
     public void setSelectedVehicleId(String vehicleId) {
@@ -353,4 +358,5 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     public void showProfileUi() {
 
     }
+    */
 }

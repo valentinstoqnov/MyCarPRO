@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="elsys.mycar.mycarpro.loginscreen.LoginActivity">
+
+    <ProgressBar
+        android:id="@+id/pb_login"
+        android:layout_width="match_parent"
+        android:layout_marginTop="24dp"
+        android:layout_height="2dp" />
+
+    <TextView
+        android:id="@+id/tv_sign_in"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:text="@string/sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/content_login"/>
+
+</android.support.design.widget.CoordinatorLayout>

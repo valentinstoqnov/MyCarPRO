@@ -10,7 +10,11 @@ public interface ListVehicleContract {
 
     interface View extends BaseView<Presenter>{
 
-        void addVehicles(List<Vehicle> vehicles);
+        void showVehicles(List<Vehicle> vehicles);
+
+        void showMessage(String message);
+
+        boolean isActive();
     }
 
     interface Presenter extends BasePresenter {

@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -7,20 +9,29 @@ import java.util.TreeSet;
 
 public class Data {
 
-    public static final SortedMap<String, String> MAKES = new TreeMap<>();
+    private static final SortedSet<String> MAKES = new TreeSet<>();
 
     static {
-        MAKES.put("Audi", "audi.com");
-        MAKES.put("BMW", "bmw.com");
-        MAKES.put("Mercedes", "mercedes-benz.com");
-        MAKES.put("Opel", "opel.com");
-        MAKES.put("Ford", "ford.com");
-        MAKES.put("Peugeot", "peugeot.com");
-        MAKES.put("Renault", "renault.com");
-        MAKES.put("Citroen", "citroen.com");
+        MAKES.add("Audi");
+        MAKES.add("BMW");
+        MAKES.add("Mercedes");
+        MAKES.add("Opel");
+        MAKES.add("Ford");
+        MAKES.add("Peugeot");
+        MAKES.add("Renault");
+        MAKES.add("Citroen");
     }
 
-    public static final SortedSet<String> SERVICE_TYPES = new TreeSet<>();
+    private static final SortedSet<String> FUEL_TYPES = new TreeSet<>();
+
+    static {
+        FUEL_TYPES.add("Gas");
+        FUEL_TYPES.add("Petrol");
+        FUEL_TYPES.add("Diesel");
+        FUEL_TYPES.add("Electric");
+    }
+
+    private static final SortedSet<String> SERVICE_TYPES = new TreeSet<>();
 
     static {
         SERVICE_TYPES.add("Lights");
@@ -33,7 +44,7 @@ public class Data {
         SERVICE_TYPES.add("Tyre change");
     }
 
-    public static final SortedSet<String> INSURANCE_COMPANIES = new TreeSet<>();
+    private static final SortedSet<String> INSURANCE_COMPANIES = new TreeSet<>();
 
     static {
         INSURANCE_COMPANIES.add("Armeec");
@@ -51,7 +62,7 @@ public class Data {
         INSURANCE_COMPANIES.add("Progressive");
     }
 
-    public static final SortedSet<String> GAS_STATION_COMPANIES = new TreeSet<>();
+    private static final SortedSet<String> GAS_STATION_COMPANIES = new TreeSet<>();
 
     static {
         GAS_STATION_COMPANIES.add("OMV");
@@ -60,5 +71,25 @@ public class Data {
         GAS_STATION_COMPANIES.add("Shell");
         GAS_STATION_COMPANIES.add("Gasprom");
         GAS_STATION_COMPANIES.add("EKO");
+    }
+
+    public static List<String> getMakes() {
+        return new ArrayList<>(MAKES);
+    }
+
+    public static List<String> getServiceTypes() {
+        return new ArrayList<>(SERVICE_TYPES);
+    }
+
+    public static List<String> getInsuranceCompanies() {
+        return new ArrayList<>(INSURANCE_COMPANIES);
+    }
+
+    public static List<String> getGasStationCompanies() {
+        return new ArrayList<>(GAS_STATION_COMPANIES);
+    }
+
+    public static List<String> getFuelTypes() {
+        return new ArrayList<>(FUEL_TYPES);
     }
 }

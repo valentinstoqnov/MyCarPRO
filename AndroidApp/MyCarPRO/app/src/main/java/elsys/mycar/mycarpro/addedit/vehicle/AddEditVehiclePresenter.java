@@ -3,18 +3,27 @@ package elsys.mycar.mycarpro.addedit.vehicle;
 import com.google.common.base.Preconditions;
 
 import java.text.ParseException;
+import java.util.Locale;
 
-import elsys.mycar.mycarpro.data.VehicleRepository;
+import elsys.mycar.mycarpro.data.Data;
+import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.model.Vehicle;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 
-public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter {
+public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter, OnSaveOrUpdateCallback<Vehicle> {
+
+    private static final String FUEL_TANK_FORMAT = "%s%nCap.:%d%nCons.:%f";
 
     private String mVehicleId;
     private VehicleRepository mVehicleRepository;
     private AddEditVehicleContract.View mView;
     private boolean mIsDataMissing;
+
+    private String mFuelType;
+    private int mCapacity;
+    private double mConsumption;
 
     public AddEditVehiclePresenter(String mVehicleId, VehicleRepository mVehicleRepository, AddEditVehicleContract.View mView, boolean mIsDataMissing) {
         this.mVehicleId = mVehicleId;
@@ -25,10 +34,27 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
 
     @Override
     public void start() {
-        if (mIsDataMissing && isNewVehicle()) {
-            mView.setDate(DateUtils.getTextCurrentDate());
+        if (mIsDataMissing) {
+            if (isNewVehicle()) {
+                mView.setDate(DateUtils.getTextCurrentDate());
+            }else {
+                mView.showProgress();
+                mVehicleRepository.getVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
+                    @Override
+                    public void onSuccess(Vehicle vehicle) {
+                        populateVehicle(vehicle);
+                        mView.hideProgress();
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        mView.showMessage("Failed to find such vehicle");
+                        mView.hideProgress();
+                    }
+                });
+            }
+            mView.showMakes(Data.getMakes());
         }
-        mView.addMakes(mVehicleRepository.getMakes());
     }
 
     @Override
@@ -37,17 +63,31 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
     }
 
     @Override
-    public void saveVehicle(String name, String make, String model, String manufactureDate, String odometer, String horsePower, String notes) {
-        if (StringUtils.checkNotNullOrEmpty(name, make, model, manufactureDate, odometer, horsePower, notes)) {
+    public void onFuelTankPicked(String fuelType, int fuelTankCapacity, double fuelConsumption) {
+        mFuelType = fuelType;
+        mCapacity = fuelTankCapacity;
+        mConsumption = fuelConsumption;
+
+        mView.setFuelTank(formatFuelTank(fuelType, fuelTankCapacity, fuelConsumption));
+    }
+
+    @Override
+    public void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note) {
+        mView.showProgress();
+        if (StringUtils.checkNotNullOrEmpty(name, make, model, manufactureDate, odometer, horsePower)) {
             try {
                 String parsedDate = DateUtils.parseValidTextDateFromText(manufactureDate);
                 int parsedOdometer = Integer.parseInt(odometer);
                 int parsedHorsePower = Integer.parseInt(horsePower);
 
-                Vehicle vehicle = new Vehicle(name, make, model, parsedDate, parsedOdometer, parsedHorsePower, notes);
-                mVehicleRepository.save(vehicle);
-                mView.showMessage("Vehicle saved!");
-                mView.exit();
+                Vehicle vehicle = new Vehicle(name, make, model, parsedDate, parsedHorsePower, parsedOdometer, mFuelType, mCapacity, mConsumption, color, note);
+
+                if (isNewVehicle()) {
+                    createVehicle(vehicle);
+                }else {
+                    updateVehicle(vehicle);
+                }
+
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 mView.showMessage("Odometer and horse power must be numeric");
@@ -65,7 +105,47 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
         return mIsDataMissing;
     }
 
+    private void createVehicle(Vehicle vehicle) {
+        mVehicleRepository.saveVehicle(vehicle, this);
+    }
+
+    private void updateVehicle(Vehicle vehicle) {
+        if (isNewVehicle()) {
+            throw new RuntimeException("updateVehicle(Vehicle vehicle) was called but vehicle is new");
+        }
+        mVehicleRepository.updateVehicle(mVehicleId, vehicle, this);
+    }
+
+    private void populateVehicle(Vehicle vehicle) {
+        if (mView.isActive()) {
+            mView.setName(vehicle.getName());
+            mView.setMake(vehicle.getMake());
+            mView.setDate(vehicle.getManufactureDate());
+            mView.setModel(vehicle.getModel());
+            mView.setFuelTank(formatFuelTank(vehicle.getFuelType(), vehicle.getFuelTankCapacity(), vehicle.getFuelConsumption()));
+            mView.setColor(vehicle.getColor());
+            mIsDataMissing = false;
+        }
+    }
+
     private boolean isNewVehicle() {
         return mVehicleId == null;
+    }
+
+    private String formatFuelTank(String fuelType, int capacity, double consumption) {
+        return String.format(Locale.US, FUEL_TANK_FORMAT, fuelType, capacity, consumption);
+    }
+
+    @Override
+    public void onSuccess(Vehicle item) {
+        mView.showMessage(item.getName() + " successfully saved!");
+        mView.hideProgress();
+        mView.exit();
+    }
+
+    @Override
+    public void onFailure() {
+        mView.showMessage("Something went wrong, please try again");
+        mView.hideProgress();
     }
 }
