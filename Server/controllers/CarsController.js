@@ -5,13 +5,13 @@ module.exports = {
         console.log("cretae")
         var car = req.body;
         car.carOwner = req.user.username;
-        cars.create(car, function (err, room) {
+        cars.create(car, function (err, car) {
             if (err) {
                 res.status(400);
                 return res.send({reason: err.toString()});
             }
 
-            return res.send(room);
+            return res.send(car);
         });
     },
 

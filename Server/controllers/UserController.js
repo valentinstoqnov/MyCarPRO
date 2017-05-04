@@ -16,17 +16,9 @@ module.exports = {
                 console.log('Failed to register new user: ' + err);
                 res.status(400);
                 return res.send({reason: err.toString()});
+            }else {
+                res.send(user);
             }
-
-            req.logIn(user, function(err) {
-                if (err) {
-                    res.status(400);
-                    return res.send({reason: err.toString()});
-                }
-                else {
-                    res.redirect('/');
-                }
-            });
         });
     },
 };

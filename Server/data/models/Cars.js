@@ -8,7 +8,7 @@ module.exports.init = function () {
         model: {type: String, required: true},
         color: {type: String, required: true},
         horse_power: {type: Number, required: true},
-        manufacture_date: {type: Number, required: true},
+        manufacture_date: {type: String, required: true},
         fuel_tank_capacity: {type: Number, required: true},
         fuel_consumption: {type: Number, required: true},
         fuel_type: {type: String, required: true},
