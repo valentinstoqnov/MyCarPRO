@@ -2,6 +2,8 @@ package elsys.mycar.mycarpro.model;
 
 import android.content.Intent;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import elsys.mycar.mycarpro.util.StringUtils;
@@ -12,11 +14,16 @@ public class Vehicle {
     private String name;
     private String make;
     private String model;
+    @SerializedName("manufacture_date")
     private String manufactureDate;
+    @SerializedName("horse_power")
     private int horsePower;
     private int odometer;
+    @SerializedName("fuel_type")
     private String fuelType;
+    @SerializedName("fuel_tank_capacity")
     private int fuelTankCapacity;
+    @SerializedName("fuel_consumption")
     private double fuelConsumption;
     private List<Insurance> insurances;
     private List<Service> services;

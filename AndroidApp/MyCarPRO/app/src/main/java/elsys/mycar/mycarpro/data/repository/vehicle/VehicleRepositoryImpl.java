@@ -1,5 +1,6 @@
 package elsys.mycar.mycarpro.data.repository.vehicle;
 
+import java.io.IOException;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.api.VehicleApi;
@@ -25,6 +26,12 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                 if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
                 }else {
+                    try {
+                        System.out.println("not successful: " + response.message() + " ,@@@ " + response.errorBody().string());
+                    } catch (IOException e) {
+
+                        e.printStackTrace();
+                    }
                     callback.onFailure();
                 }
             }
