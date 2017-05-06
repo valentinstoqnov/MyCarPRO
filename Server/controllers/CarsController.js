@@ -101,5 +101,15 @@ module.exports = {
     delete: function (req, res, next) {
         cars.delete(req.params.id);
         res.send(req.params.id);
+    },
+    getCar: function (req, res, next) {
+        cars.findOne(req.params.id, function (err, car) {
+            if (car){
+                res.send(car)
+            }else {
+                res.send({"reason" : "Car no found!!!!"})
+            }
+
+        })
     }
 };
