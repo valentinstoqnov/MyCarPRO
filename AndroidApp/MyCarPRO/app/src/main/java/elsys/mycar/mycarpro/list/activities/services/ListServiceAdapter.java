@@ -4,7 +4,7 @@ import java.util.List;
 
 import elsys.mycar.mycarpro.list.activities.recyclerview.BaseRecyclerViewAdapter;
 import elsys.mycar.mycarpro.list.activities.recyclerview.ItemViewHolder;
-import elsys.mycar.mycarpro.model.Service;
+import elsys.mycar.mycarpro.data.model.Service;
 
 public class ListServiceAdapter extends BaseRecyclerViewAdapter<Service> {
 

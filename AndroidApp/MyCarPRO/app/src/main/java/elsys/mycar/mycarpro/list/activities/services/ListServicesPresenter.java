@@ -1,16 +1,12 @@
 package elsys.mycar.mycarpro.list.activities.services;
 
-import android.util.Log;
-
 import com.google.common.base.Preconditions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
-import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
-import elsys.mycar.mycarpro.model.Service;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Service;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 
 public class ListServicesPresenter implements ListServicesContract.Presenter {
 

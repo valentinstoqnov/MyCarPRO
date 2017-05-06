@@ -5,7 +5,7 @@ import java.util.List;
 
 import elsys.mycar.mycarpro.data.api.VehicleApi;
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 import retrofit2.Call;
 import retrofit2.Response;
 

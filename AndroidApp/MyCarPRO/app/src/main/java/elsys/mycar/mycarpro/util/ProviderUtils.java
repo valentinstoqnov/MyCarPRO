@@ -12,7 +12,6 @@ import elsys.mycar.mycarpro.data.api.VehicleApi;
 import elsys.mycar.mycarpro.data.repository.activities.service.ServiceRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.user.UserRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl;
-import elsys.mycar.mycarpro.model.User;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -54,7 +53,7 @@ public class ProviderUtils {
         OkHttpClient httpClient = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder().addHeader(TokenUtils.TOKEN, token).build();
+                Request request = chain.request().newBuilder().addHeader(AuthenticationUtils.TOKEN, token).build();
                 return chain.proceed(request);
             }
         }).build();

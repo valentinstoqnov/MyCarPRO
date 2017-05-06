@@ -3,15 +3,12 @@ package elsys.mycar.mycarpro.loginscreen;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.common.base.Preconditions;
@@ -22,12 +19,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.homescreen.HomeActivity;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.registerscreen.RegisterActivity;
 import elsys.mycar.mycarpro.registerscreen.RegisterFragment;
 import elsys.mycar.mycarpro.util.TextInputUtils;
-import elsys.mycar.mycarpro.util.TokenUtils;
+import elsys.mycar.mycarpro.util.AuthenticationUtils;
 
 public class LoginFragment extends Fragment implements LoginContract.View {
 
@@ -55,6 +51,8 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         mUnbinder = ButterKnife.bind(this, view);
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setMessage(signingIn);
         return view;
     }
@@ -127,8 +125,8 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void loggedIn(String token) {
-        new TokenUtils(getActivity()).saveToken(token);
+    public void loggedIn(String token, String username, String firstName, String lastName, String email) {
+        new AuthenticationUtils(getActivity()).saveUser(token, username, firstName, lastName, email);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();

@@ -9,26 +9,24 @@ import com.google.common.base.Preconditions;
 
 import butterknife.ButterKnife;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 import elsys.mycar.mycarpro.util.ProviderUtils;
-import elsys.mycar.mycarpro.util.StringUtils;
-import elsys.mycar.mycarpro.util.TokenUtils;
+import elsys.mycar.mycarpro.util.AuthenticationUtils;
 
 public class AddEditVehicleActivity extends AppCompatActivity {
 
     private ActionBar mActionBar;
-    private TokenUtils mTokenUtils;
+    private AuthenticationUtils mAuthenticationUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTokenUtils = new TokenUtils(this);
+        mAuthenticationUtils = new AuthenticationUtils(this);
         setContentView(R.layout.activity_add_edit_vehicle);
         setUpToolbar();
 
         AddEditVehicleFragment addEditVehicleFragment = AddEditVehicleFragment.newInstance();
-        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(null, ProviderUtils.getVehicleRepository(mTokenUtils.getToken()), addEditVehicleFragment, true);
+        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(null, ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), addEditVehicleFragment, true);
         addEditVehicleFragment.setPresenter(addEditVehiclePresenter);
 
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
@@ -39,7 +37,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mTokenUtils.checkToken();
+        mAuthenticationUtils.checkUser();
     }
 
     private void setUpToolbar() {

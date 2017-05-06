@@ -1,6 +1,6 @@
 package elsys.mycar.mycarpro.data.repository.activities.insurance;
 
-import elsys.mycar.mycarpro.model.Insurance;
+import elsys.mycar.mycarpro.data.model.Insurance;
 
 public interface InsuranceRepository {
 

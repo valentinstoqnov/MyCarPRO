@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.model;
+package elsys.mycar.mycarpro.data.model;
 
 public class Insurance {
 

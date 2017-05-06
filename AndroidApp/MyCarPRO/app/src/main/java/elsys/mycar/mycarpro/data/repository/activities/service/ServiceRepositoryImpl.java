@@ -3,13 +3,11 @@ package elsys.mycar.mycarpro.data.repository.activities.service;
 import elsys.mycar.mycarpro.data.api.ServiceApi;
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
-import elsys.mycar.mycarpro.model.Service;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Service;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 import elsys.mycar.mycarpro.util.ActivitiesRepositoryUtils;
 import elsys.mycar.mycarpro.util.ProviderUtils;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ServiceRepositoryImpl implements ServiceRepository {
 
@@ -23,7 +21,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
     @Override
     public void saveService(final String vehicleId, final Service service, final OnSaveOrUpdateCallback<Service> callback) {
-        ProviderUtils.getVehicleRepository(mToken)
+        /*ProviderUtils.getVehicleRepository(mToken)
                 .getVehicleById(vehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
                     @Override
                     public void onSuccess(Vehicle vehicle) {
@@ -35,12 +33,14 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                     public void onFailure() {
                         callback.onFailure();
                     }
-                });
+                });*/
+        Call<Service> call = mServiceApi.saveService(vehicleId, service);
+        call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(callback));
     }
 
     @Override
     public void updateService(final String vehicleId, String serviceId, final Service service, final OnSaveOrUpdateCallback<Service> callback) {
-        ProviderUtils.getVehicleRepository(mToken)
+        /*ProviderUtils.getVehicleRepository(mToken)
                 .getVehicleById(vehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
                     @Override
                     public void onSuccess(Vehicle vehicle) {
@@ -52,7 +52,9 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                     public void onFailure() {
                         callback.onFailure();
                     }
-                });
+                });*/
+        Call<Service> call = mServiceApi.updateService(vehicleId, service);
+        call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(callback));
     }
 
     @Override

@@ -3,13 +3,12 @@ package elsys.mycar.mycarpro.addedit.service;
 import com.google.common.base.Preconditions;
 
 import java.text.ParseException;
-import java.util.UUID;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.data.repository.activities.service.ServiceRepository;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
-import elsys.mycar.mycarpro.model.Service;
+import elsys.mycar.mycarpro.data.model.Service;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.PriceUtils;
 import elsys.mycar.mycarpro.util.StringUtils;

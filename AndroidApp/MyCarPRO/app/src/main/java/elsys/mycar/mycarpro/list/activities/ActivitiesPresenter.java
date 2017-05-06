@@ -1,27 +1,32 @@
 package elsys.mycar.mycarpro.list.activities;
 
-import elsys.mycar.mycarpro.data.VehicleRepository;
+import com.google.common.base.Preconditions;
+
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 
 public class ActivitiesPresenter implements ActivitiesContract.Presenter{
 
+    private Vehicle mVehicle;
     private VehicleRepository mVehicleRepository;
     private ActivitiesContract.View mView;
-    private String mVehicleName;
+    private boolean mIsDataMissing = true;
 
     public ActivitiesPresenter(VehicleRepository mVehicleRepository, ActivitiesContract.View mView) {
-        this.mVehicleRepository = mVehicleRepository;
-        this.mView = mView;
+        this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
+        this.mView = Preconditions.checkNotNull(mView);
     }
 
     @Override
     public void start() {
-        String id = mVehicleRepository.getVehicleIdByName(mVehicleName);
-        mView.showVehicleContent(id);
+        if (mIsDataMissing) {
+
+        }
     }
 
     @Override
     public void onVehicleChange(String vehicleName) {
-        mVehicleName = vehicleName;
-        start();
+        /*mVehicleName = vehicleName;
+        start();*/
     }
 }

@@ -3,11 +3,9 @@ package elsys.mycar.mycarpro.addedit.refueling;
 import com.google.common.base.Preconditions;
 
 import java.text.ParseException;
-import java.util.Date;
 
-import elsys.mycar.mycarpro.data.VehicleRepository;
-import elsys.mycar.mycarpro.model.Refueling;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Refueling;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.PriceUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
@@ -34,7 +32,7 @@ public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Prese
             mView.setDate(DateUtils.getTextCurrentDate());
             mView.setTime(DateUtils.getTextCurrentTime());
         }
-        mView.addGasStations(mVehicleRepository.getGasStations());
+       // mView.addGasStations(mVehicleRepository.getGasStations());
     }
 
     @Override
@@ -47,7 +45,7 @@ public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Prese
                 String dateTime = DateUtils.getTextDateTime(date, time);
 
                 Refueling refueling = new Refueling(companyName, dateTime, parsedQuantity, parsedPrice, parsedOdometer, note);
-                mVehicleRepository.addRefueling(mVehicleId, refueling);
+            //    mVehicleRepository.addRefueling(mVehicleId, refueling);
 
                 mView.showMessage("Insurance successfully saved!");
                 mView.exit();

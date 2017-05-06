@@ -11,10 +11,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -36,17 +34,15 @@ import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceActivity;
 import elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity;
 import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
-import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
-import elsys.mycar.mycarpro.util.ActivityUtils;
 import elsys.mycar.mycarpro.util.FragmentManagingUtils;
 import elsys.mycar.mycarpro.util.ProviderUtils;
-import elsys.mycar.mycarpro.util.TokenUtils;
+import elsys.mycar.mycarpro.util.AuthenticationUtils;
 
 public class MainActivity extends AppCompatActivity implements MainContract.HomewView {
 
@@ -67,35 +63,37 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
 
     private FragmentManagingUtils fragmentManagingUtils;
     private MainContract.HomePresenter mPresenter;
-    private TokenUtils mTokenUtils;
+    private AuthenticationUtils mAuthenticationUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTokenUtils = new TokenUtils(this);
+        mAuthenticationUtils = new AuthenticationUtils(this);
 
-        setContentView(R.layout.activity_main);
+        if (mAuthenticationUtils.checkUser()) {
+            setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        ButterKnife.bind(this);
+            ButterKnife.bind(this);
 
-        fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
+            HomePresenter homePresenter = new HomePresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), this);
+            setPresenter(homePresenter);
 
-        HomePresenter homePresenter = new HomePresenter(ProviderUtils.getVehicleRepository(mTokenUtils.getToken()), this);
-        setPresenter(homePresenter);
+            fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
 
-        fabMenu.setClosedOnTouchOutside(true);
+            fabMenu.setClosedOnTouchOutside(true);
 
-        setUpBottomBar();
+            setUpBottomBar();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mTokenUtils.checkToken()) {
+        if (mAuthenticationUtils.checkUser()) {
             mPresenter.start();
         }
     }
@@ -157,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
         ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
 
         ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(
-                ProviderUtils.getVehicleRepository(mTokenUtils.getToken()), listVehicleFragment
+                ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), listVehicleFragment
         );
 
         listVehicleFragment.setPresenter(listVehiclePresenter);
@@ -167,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
     public void showActivitiesUi() {
         Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
-        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(VehicleRepositoryImpl.getInstance(), activitiesFragment);
+        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), activitiesFragment);
         activitiesFragment.setPresenter(activitiesPresenter);
     }
 

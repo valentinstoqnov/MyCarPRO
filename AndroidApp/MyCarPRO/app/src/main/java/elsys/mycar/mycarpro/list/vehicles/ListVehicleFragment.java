@@ -18,7 +18,7 @@ import java.util.List;
 
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.detail.DetailVehicleActivity;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 
 public class ListVehicleFragment extends Fragment implements ListVehicleContract.View {
 

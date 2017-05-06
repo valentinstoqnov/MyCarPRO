@@ -1,18 +1,12 @@
 package elsys.mycar.mycarpro.homescreen;
 
-import android.util.Log;
-
 import com.google.common.base.Preconditions;
-import com.google.common.collect.HashBiMap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 import elsys.mycar.mycarpro.util.DataUtils;
-import elsys.mycar.mycarpro.util.StringUtils;
 
 public class MainPresenter implements MainContract.Presenter {
 

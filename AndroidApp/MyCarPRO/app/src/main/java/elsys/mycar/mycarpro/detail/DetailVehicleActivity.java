@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.util.ActivityUtils;
+import elsys.mycar.mycarpro.util.ProviderUtils;
 
 public class DetailVehicleActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class DetailVehicleActivity extends AppCompatActivity {
         String vehicleId = getIntent().getStringExtra(DETAIL_VEHICLE_ID);
 
         DetailVehiclePresenter detailVehiclePresenter = new DetailVehiclePresenter(
-                detailVehicleFragment, VehicleRepositoryImpl.getInstance(),
+                detailVehicleFragment, ProviderUtils.getVehicleRepository(""),
                 vehicleId, true
         );
 

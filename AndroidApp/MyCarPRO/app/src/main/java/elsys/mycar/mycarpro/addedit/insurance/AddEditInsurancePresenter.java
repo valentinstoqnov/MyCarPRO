@@ -5,8 +5,8 @@ import com.google.common.base.Preconditions;
 import java.text.ParseException;
 import java.util.UUID;
 
-import elsys.mycar.mycarpro.data.VehicleRepository;
-import elsys.mycar.mycarpro.model.Insurance;
+import elsys.mycar.mycarpro.data.model.Insurance;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.PriceUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
@@ -32,7 +32,7 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
         if (mIsDataMissing && isNewInsurance()) {
             mView.setDate(DateUtils.getTextCurrentDate());
         }
-        mView.addCompanies(mVehicleRepository.getCompanyNames());
+        //mView.addCompanies(mVehicleRepository.getCompanyNames());
     }
 
     @Override
@@ -43,7 +43,7 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
                 long parsedPrice = PriceUtils.stringToLong(price);
                 Insurance insurance = new Insurance(companyName, parsedPrice, parsedOdometer, DateUtils.parseValidTextDateFromText(date), DateUtils.parseValidTextDateFromText(expirationDate), note);
                 insurance.setId(UUID.randomUUID().toString());
-                mVehicleRepository.addInsurance(mVehicleId, insurance);
+              //  mVehicleRepository.addInsurance(mVehicleId, insurance);
                 mView.showMessage("Insurance successfully saved!");
                 mView.exit();
             }catch (NumberFormatException e) {

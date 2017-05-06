@@ -5,7 +5,7 @@ import com.google.common.base.Preconditions;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 import elsys.mycar.mycarpro.util.DataUtils;
 
 public class HomePresenter implements MainContract.HomePresenter {

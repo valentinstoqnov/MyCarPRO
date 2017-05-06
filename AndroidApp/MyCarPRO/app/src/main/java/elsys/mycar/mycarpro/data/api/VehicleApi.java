@@ -1,7 +1,7 @@
 package elsys.mycar.mycarpro.data.api;
 
 import java.util.List;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;

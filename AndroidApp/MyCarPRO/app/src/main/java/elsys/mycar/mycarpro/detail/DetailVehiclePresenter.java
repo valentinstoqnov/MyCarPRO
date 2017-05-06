@@ -2,8 +2,8 @@ package elsys.mycar.mycarpro.detail;
 
 import com.google.common.base.Preconditions;
 
-import elsys.mycar.mycarpro.data.VehicleRepository;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 
 public class DetailVehiclePresenter implements DetailVehicleContract.Presenter {
 
@@ -27,8 +27,8 @@ public class DetailVehiclePresenter implements DetailVehicleContract.Presenter {
     }
 
     private void populateVehicle() {
-        Vehicle vehicle = mVehicleRepository.getById(mVehicleId);
-        if (vehicle != null) {
+        //Vehicle vehicle = mVehicleRepository.getById(mVehicleId);
+    /*    if (vehicle != null) {
             mView.setMake(vehicle.getMake());
             mView.setModel(vehicle.getModel());
             mView.setManufactureDate(vehicle.getManufactureDate());
@@ -37,7 +37,7 @@ public class DetailVehiclePresenter implements DetailVehicleContract.Presenter {
             mView.setName(vehicle.getName());
         }else {
             mView.showNoSuchVehicleError();
-        }
+        }*/
     }
 
     @Override

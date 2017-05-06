@@ -1,7 +1,7 @@
 package elsys.mycar.mycarpro.data.repository.activities.service;
 
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
-import elsys.mycar.mycarpro.model.Service;
+import elsys.mycar.mycarpro.data.model.Service;
 
 public interface ServiceRepository {
 

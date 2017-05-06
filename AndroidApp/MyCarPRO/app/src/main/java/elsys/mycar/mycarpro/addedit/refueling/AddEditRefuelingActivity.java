@@ -9,8 +9,8 @@ import android.view.View;
 
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceFragment;
-import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.util.ActivityUtils;
+import elsys.mycar.mycarpro.util.ProviderUtils;
 
 import static elsys.mycar.mycarpro.homescreen.HomeActivity.VEHICLE_ID;
 
@@ -33,7 +33,7 @@ public class AddEditRefuelingActivity extends AppCompatActivity {
 
         String vehicleId = getIntent().getStringExtra(VEHICLE_ID);
 
-        AddEditRefuelingPresenter addEditRefuelingPresenter = new AddEditRefuelingPresenter(vehicleId, null, addEditRefuelingFragment, VehicleRepositoryImpl.getInstance(), true);
+        AddEditRefuelingPresenter addEditRefuelingPresenter = new AddEditRefuelingPresenter(vehicleId, null, addEditRefuelingFragment, ProviderUtils.getVehicleRepository(""), true);
 
         addEditRefuelingFragment.setPresenter(addEditRefuelingPresenter);
     }

@@ -1,6 +1,6 @@
 package elsys.mycar.mycarpro.data.repository.user;
 
-import elsys.mycar.mycarpro.model.User;
+import elsys.mycar.mycarpro.data.model.User;
 
 public interface UserRepository {
 
@@ -17,7 +17,7 @@ public interface UserRepository {
 
     interface OnUserLoggedInCallback {
 
-        void onSuccess(String token);
+        void onSuccess(String token, User user);
 
         void onFailure();
     }

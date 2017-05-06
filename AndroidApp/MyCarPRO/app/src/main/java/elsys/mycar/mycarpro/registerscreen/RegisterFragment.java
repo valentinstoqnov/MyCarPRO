@@ -51,6 +51,8 @@ public class RegisterFragment extends Fragment implements RegisterContract.View{
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setIndeterminate(true);
         return view;
     }

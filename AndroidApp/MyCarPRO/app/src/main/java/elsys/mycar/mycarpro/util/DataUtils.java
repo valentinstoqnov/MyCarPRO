@@ -2,13 +2,12 @@ package elsys.mycar.mycarpro.util;
 
 import android.util.Log;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.HashBiMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 
 public class DataUtils {
 

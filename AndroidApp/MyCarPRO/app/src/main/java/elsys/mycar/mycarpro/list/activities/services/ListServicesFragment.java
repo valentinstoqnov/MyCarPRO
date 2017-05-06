@@ -27,7 +27,7 @@ import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.list.activities.recyclerview.BaseRecyclerViewAdapter;
 import elsys.mycar.mycarpro.list.activities.recyclerview.RecyclerViewDivider;
-import elsys.mycar.mycarpro.model.Service;
+import elsys.mycar.mycarpro.data.model.Service;
 
 public class ListServicesFragment extends Fragment implements ListServicesContract.View{
 
