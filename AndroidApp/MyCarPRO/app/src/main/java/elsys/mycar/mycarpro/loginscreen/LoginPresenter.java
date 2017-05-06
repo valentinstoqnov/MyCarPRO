@@ -42,9 +42,11 @@ public class LoginPresenter implements LoginContract.Presenter{
                 });
             }else {
                 mView.showPasswordError("Password not filled in");
+                mView.hideProgress();
             }
         }else {
             mView.showUsernameError("Username not filled in");
+            mView.hideProgress();
         }
     }
 }

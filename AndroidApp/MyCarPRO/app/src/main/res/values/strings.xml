@@ -15,7 +15,7 @@
     </string>
 
     <string name="authenticating">Authenticating…</string>
-    
+    <string name="signing_in">Signing in…</string>
     <string name="account_already_exists">The account already exists</string>
 
     <string name="error_chars_only">Characters only</string>

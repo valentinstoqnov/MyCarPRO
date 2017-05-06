@@ -28,8 +28,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                 }else {
                     try {
                         System.out.println("not successful: " + response.message() + " ,@@@ " + response.errorBody().string());
-                    } catch (IOException e) {
-
+                    } catch (IOException | NullPointerException e) {
                         e.printStackTrace();
                     }
                     callback.onFailure();
@@ -100,6 +99,12 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                 if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
                 }else {
+                    try {
+                        System.out.println("not successful: " + response.message());
+                        System.out.println(" ,@@@ " + response.errorBody().string());
+                    } catch (IOException | NullPointerException e) {
+                        e.printStackTrace();
+                    }
                     callback.onFailure();
                 }
             }

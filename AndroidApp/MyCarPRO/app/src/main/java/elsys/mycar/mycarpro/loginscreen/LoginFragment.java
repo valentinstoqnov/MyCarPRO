@@ -1,6 +1,7 @@
 package elsys.mycar.mycarpro.loginscreen;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -15,30 +16,31 @@ import android.widget.Toast;
 
 import com.google.common.base.Preconditions;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.homescreen.HomeActivity;
+import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.registerscreen.RegisterActivity;
 import elsys.mycar.mycarpro.registerscreen.RegisterFragment;
 import elsys.mycar.mycarpro.util.TextInputUtils;
 import elsys.mycar.mycarpro.util.TokenUtils;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class LoginFragment extends Fragment implements LoginContract.View {
 
     public static final String TAG = "LoginFragment";
 
     @BindView(R.id.til_login_username) TextInputLayout tilUsername;
     @BindView(R.id.til_login_password) TextInputLayout tilPassword;
-    private ProgressBar progressBar;
+
+    @BindString(R.string.signing_in) String signingIn;
 
     private LoginContract.Presenter mPresenter;
     private Unbinder mUnbinder;
+    private ProgressDialog mProgressDialog;
 
     public static final int REGISTER_REQUEST_CODE = 13;
 
@@ -51,7 +53,9 @@ public class LoginFragment extends Fragment implements LoginContract.View {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         mUnbinder = ButterKnife.bind(this, view);
-
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage(signingIn);
         return view;
     }
 
@@ -61,18 +65,11 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         mUnbinder.unbind();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        progressBar = (ProgressBar) getActivity().findViewById(R.id.pb_login);
-    }
-
     @OnClick(R.id.btn_login)
     public void onLoginButtonClick() {
         String username = TextInputUtils.getTextFromTil(tilUsername);
         String password = TextInputUtils.getTextFromTil(tilPassword);
 
-        Log.d("asdad", username);
         mPresenter.login(username, password);
     }
 
@@ -116,12 +113,12 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void showProgress() {
-        progressBar.setIndeterminate(true);
+        mProgressDialog.show();
     }
 
     @Override
     public void hideProgress() {
-        progressBar.setIndeterminate(false);
+        mProgressDialog.dismiss();
     }
 
     @Override
@@ -131,10 +128,8 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void loggedIn(String token) {
-        Log.d("on logged in", "token = " + token);
-        System.out.println("on logged in token = " + token);
         new TokenUtils(getActivity()).saveToken(token);
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();
     }

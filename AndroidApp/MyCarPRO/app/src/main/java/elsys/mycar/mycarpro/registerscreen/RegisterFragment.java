@@ -36,7 +36,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View{
     @BindView(R.id.til_register_password) TextInputLayout tilPassword;
 
     @BindString(R.string.authenticating) String authenticating;
-    //@BindString(R.string.account_already_exists) String accountExists;
 
     private ProgressDialog mProgressDialog;
     private Unbinder mUnbinder;
@@ -52,6 +51,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View{
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setIndeterminate(true);
         return view;
     }
 
@@ -109,15 +109,8 @@ public class RegisterFragment extends Fragment implements RegisterContract.View{
         tilPassword.setError(error);
     }
 
-   /* @Override
-    public void showAccountExistsError() {
-        Toast.makeText(getContext(), accountExists, Toast.LENGTH_SHORT).show();
-    }*/
-
     @Override
     public void showAuthenticating() {
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage(authenticating);
         mProgressDialog.show();
     }
 

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.common.collect.HashBiMap;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -87,8 +88,7 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
 
         fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
 
-        VehicleRepositoryImpl vehicleRepository = VehicleRepositoryImpl.getInstance();
-        MainPresenter mainPresenter = new MainPresenter(vehicleRepository, this);
+        MainPresenter mainPresenter = new MainPresenter(ProviderUtils.getVehicleRepository(mTokenUtils.getToken()), this);
         setPresenter(mainPresenter);
 
         fabMenu.setClosedOnTouchOutside(true);
@@ -98,7 +98,7 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.onSelectedVehicleChanged(spinner.getItemAtPosition(position).toString());
+                //mPresenter.onSelectedVehicleChanged(spinner.getItemAtPosition(position).toString());
             }
 
             @Override
@@ -119,6 +119,11 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void setPresenter(MainContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -211,29 +216,23 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-
-               // if (manageToken()) {
                     int primaryColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
                     int primaryDarkColor = activitiesDarkTabColor;
 
                     switch (tabId) {
                         case R.id.tab_vehicles:
                             mPresenter.openVehicles();
-                            //onVehiclesTabSelected();
                             primaryDarkColor = vehicleDarkTabColor;
                             break;
                         case R.id.tab_activities:
                             mPresenter.openActivities();
-                            //onActivitiesTabSelected();
                             break;
                         case R.id.tab_statistics:
                             mPresenter.openStatistics();
-                            //onStatisticsTabSelected();
                             primaryDarkColor = statisticsDarkTabColor;
                             break;
                         case R.id.tab_user_profile:
                             mPresenter.openProfile();
-                            //onProfileTabSelected();
                             primaryDarkColor = profileDarkTabColor;
                             break;
                     }
@@ -244,28 +243,6 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
        //     }
         });
     }
-
-  /*  private void onStatisticsTabSelected() {
-        fragmentManagingUtils.addOrShowFragment(StatisticsFragment.TAG);
-    }
-
-    private void onProfileTabSelected() {
-        fragmentManagingUtils.addOrShowFragment(ProfileFragment.TAG);
-    }
-
-    private void onActivitiesTabSelected() {
-        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
-        ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
-        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(VehicleRepositoryImpl.getInstance(), activitiesFragment);
-        activitiesFragment.setPresenter(activitiesPresenter);
-    }
-
-    private void onVehiclesTabSelected() {
-        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ListVehicleFragment.TAG);
-        ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
-        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
-        listVehicleFragment.setPresenter(listVehiclePresenter);
-    }*/
 
     private void setUiColor(int primaryDarkColor, int primaryColor) {
         final Window window = getWindow();
