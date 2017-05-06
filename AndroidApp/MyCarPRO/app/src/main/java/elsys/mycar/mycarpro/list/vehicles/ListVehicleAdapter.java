@@ -46,6 +46,7 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
         Log.d("ADAPTER REMOVE POS =", " " + position);
         Log.d("DATASET SIZE", "BEFORE DELETION = " + mVehicles.size());
         mVehicles.remove(position);
+        notifyDataSetChanged();
         Log.d("DATASET SIZE", "AFRER DELETION = " + mVehicles.size());
         //this.notifyItemRemoved(position);
         //this.notifyDataSetChanged();
@@ -106,11 +107,13 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
 
         public void setContent(Vehicle vehicle) {
 
-            //TODO: wait api photo support
+      /*      //TODO: wait api photo support
             Picasso p = Picasso.with(imgPhoto.getContext());
                     p.setLoggingEnabled(true);
                     p.setIndicatorsEnabled(true);
-                    p.load("http://i.imgur.com/DvpvklR.png").into(imgPhoto);
+                    p.load("http://i.imgur.com/DvpvklR.png").into(imgPhoto);*/
+
+            imgPhoto.setBackgroundColor(vehicle.getColor());
 
             tvName.setText(vehicle.getName());
 

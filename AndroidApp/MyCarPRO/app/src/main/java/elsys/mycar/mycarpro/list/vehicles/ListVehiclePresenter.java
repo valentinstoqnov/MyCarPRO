@@ -11,7 +11,7 @@ public class ListVehiclePresenter implements ListVehicleContract.Presenter, Vehi
 
     private VehicleRepository mVehicleRepository;
     private ListVehicleContract.View mView;
-    private boolean mIsDataMissing;
+    private boolean mIsDataMissing = true;
 
     public ListVehiclePresenter(VehicleRepository mVehicleRepository, ListVehicleContract.View mView) {
         this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
