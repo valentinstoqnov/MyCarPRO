@@ -1,26 +1,29 @@
-package elsys.mycar.mycarpro.model;
+package elsys.mycar.mycarpro.data.model;
 
-public class Service {
+public class Refueling {
 
     private String id;
-    private String type;
+    private String companyName;
     private String date;
+    private double quantity;
     private long price;
     private long odometer;
     private String note;
 
-    public Service(String id, String type, String date, long price, long odometer, String note) {
+    public Refueling(String id, String companyName, String date, double quantity, long price, long odometer, String note) {
         this.id = id;
-        this.type = type;
+        this.companyName = companyName;
         this.date = date;
+        this.quantity = quantity;
         this.price = price;
         this.odometer = odometer;
         this.note = note;
     }
 
-    public Service(String type, String date, long price, long odometer, String note) {
-        this.type = type;
+    public Refueling(String companyName, String date, double quantity, long price, long odometer, String note) {
+        this.companyName = companyName;
         this.date = date;
+        this.quantity = quantity;
         this.price = price;
         this.odometer = odometer;
         this.note = note;
@@ -34,12 +37,12 @@ public class Service {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getDate() {
@@ -48,6 +51,14 @@ public class Service {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
     public long getPrice() {

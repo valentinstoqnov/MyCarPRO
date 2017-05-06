@@ -8,15 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 import elsys.mycar.mycarpro.util.DateUtils;
 
 public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.ViewHolder> implements ListVehicleContract.Adapter{
@@ -27,6 +25,9 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
     public ListVehicleAdapter(OnCardActionListener mListener) {
         this.mVehicles = new ArrayList<>();
         this.mListener = mListener;
+
+        //TODO : remove all view actions like view and delete. On click the hole item will be opened the Detail Vehicle Activity
+        //TODO : make item Ui look more beautiful
     }
 
     @Override
@@ -46,6 +47,7 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
         Log.d("ADAPTER REMOVE POS =", " " + position);
         Log.d("DATASET SIZE", "BEFORE DELETION = " + mVehicles.size());
         mVehicles.remove(position);
+        notifyDataSetChanged();
         Log.d("DATASET SIZE", "AFRER DELETION = " + mVehicles.size());
         //this.notifyItemRemoved(position);
         //this.notifyDataSetChanged();
@@ -106,11 +108,13 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
 
         public void setContent(Vehicle vehicle) {
 
-            //TODO: wait api photo support
+      /*      //TODO: wait api photo support
             Picasso p = Picasso.with(imgPhoto.getContext());
                     p.setLoggingEnabled(true);
                     p.setIndicatorsEnabled(true);
-                    p.load("http://i.imgur.com/DvpvklR.png").into(imgPhoto);
+                    p.load("http://i.imgur.com/DvpvklR.png").into(imgPhoto);*/
+
+            imgPhoto.setBackgroundColor(vehicle.getColor());
 
             tvName.setText(vehicle.getName());
 

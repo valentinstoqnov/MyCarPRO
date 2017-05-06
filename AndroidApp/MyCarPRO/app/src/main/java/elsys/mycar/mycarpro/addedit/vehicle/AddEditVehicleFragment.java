@@ -1,6 +1,8 @@
 package elsys.mycar.mycarpro.addedit.vehicle;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +32,7 @@ import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.addedit.vehicle.fueltank.AddEditFuelTankDialog;
 import elsys.mycar.mycarpro.addedit.vehicle.fueltank.AddEditFuelTankPresenter;
 import elsys.mycar.mycarpro.addedit.vehicle.fueltank.FuelTankCallback;
+import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.DatePickerUtils;
 import me.priyesh.chroma.ChromaDialog;
 import me.priyesh.chroma.ColorMode;
@@ -226,7 +230,9 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
 
     @Override
     public void exit() {
-        getActivity().finish();
+        FragmentActivity activity = getActivity();
+        activity.setResult(Activity.RESULT_OK);
+        activity.finish();
     }
 
     @Override

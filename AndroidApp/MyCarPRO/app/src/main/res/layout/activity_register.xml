@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
     tools:context="elsys.mycar.mycarpro.registerscreen.RegisterActivity">
 
     <TextView
         android:layout_marginTop="32dp"
-        android:textSize="36sp"
-        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        android:textColor="@color/colorAccent"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_up"/>
-
-    <include layout="@layout/content_register" />
 
     <include layout="@layout/content_register" />
 

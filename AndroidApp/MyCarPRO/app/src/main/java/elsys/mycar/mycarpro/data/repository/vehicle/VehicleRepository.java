@@ -3,8 +3,7 @@ package elsys.mycar.mycarpro.data.repository.vehicle;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
-import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 
 public interface VehicleRepository {
 

@@ -5,9 +5,8 @@ import com.google.common.base.Preconditions;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
-import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
-import elsys.mycar.mycarpro.model.Insurance;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Insurance;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 
 public class ListInsurancesPresenter implements ListInsurancesContract.Presenter{
 

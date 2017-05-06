@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.util;
 
+import java.io.IOException;
+
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,6 +16,12 @@ public class ActivitiesRepositoryUtils {
                 if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
                 }else {
+                    System.out.println("msg=" + response.message());
+                    try {
+                        System.out.println("err body=" + response.errorBody().string());
+                    } catch (IOException | NullPointerException e) {
+                        e.printStackTrace();
+                    }
                     callback.onFailure();
                 }
             }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.base.BaseView;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 
 public interface ListVehicleContract {
 

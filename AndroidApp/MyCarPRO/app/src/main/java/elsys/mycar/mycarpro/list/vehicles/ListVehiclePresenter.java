@@ -5,13 +5,13 @@ import com.google.common.base.Preconditions;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 
 public class ListVehiclePresenter implements ListVehicleContract.Presenter, VehicleRepository.OnVehiclesFetchedCallback, VehicleRepository.OnDeleteCallback {
 
     private VehicleRepository mVehicleRepository;
     private ListVehicleContract.View mView;
-    private boolean mIsDataMissing;
+    private boolean mIsDataMissing = true;
 
     public ListVehiclePresenter(VehicleRepository mVehicleRepository, ListVehicleContract.View mView) {
         this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);

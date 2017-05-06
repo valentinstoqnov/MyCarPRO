@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.model;
+package elsys.mycar.mycarpro.data.model;
 
 /**
  * Created by valio_stoyanov on 02.05.17.

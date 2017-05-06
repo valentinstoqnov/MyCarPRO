@@ -1,7 +1,7 @@
 package elsys.mycar.mycarpro.registerscreen;
 
 import elsys.mycar.mycarpro.data.repository.user.UserRepository;
-import elsys.mycar.mycarpro.model.User;
+import elsys.mycar.mycarpro.data.model.User;
 import elsys.mycar.mycarpro.util.StringUtils;
 
 
@@ -49,7 +49,7 @@ public class RegisterPresenter implements RegisterContract.Presenter{
     private boolean validate(User user) {
         boolean valid = true;
 
-        if (!StringUtils.checkNotNullOrEmpty(user.getFirstname())) {
+        if (!StringUtils.checkNotNullOrEmpty(user.getFirstName())) {
             valid = false;
             mView.showFirstNameError("Invalid email");
         }
@@ -69,7 +69,7 @@ public class RegisterPresenter implements RegisterContract.Presenter{
             mView.showPasswordError("Invalid username");
         }
 
-        if (!StringUtils.checkNotNullOrEmpty(user.getLastname())) {
+        if (!StringUtils.checkNotNullOrEmpty(user.getLastName())) {
             valid = false;
             mView.showLastNameError("Invalid last name");
         }

@@ -8,7 +8,7 @@ import java.util.Locale;
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
-import elsys.mycar.mycarpro.model.Vehicle;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 

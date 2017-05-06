@@ -2,7 +2,6 @@ package elsys.mycar.mycarpro.loginscreen;
 
 import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.base.BaseView;
-import elsys.mycar.mycarpro.model.User;
 
 public interface LoginContract {
 
@@ -21,7 +20,7 @@ public interface LoginContract {
 
         void hideProgress();
 
-        void loggedIn(String token);
+        void loggedIn(String token, String username, String firstName, String lastName, String email);
 
     }
 

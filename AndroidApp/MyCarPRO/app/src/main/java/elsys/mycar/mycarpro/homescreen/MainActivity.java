@@ -1,19 +1,22 @@
 package elsys.mycar.mycarpro.homescreen;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.common.base.Preconditions;
@@ -31,291 +34,98 @@ import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceActivity;
 import elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity;
 import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
-import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
+import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
-import elsys.mycar.mycarpro.util.ActivityUtils;
+import elsys.mycar.mycarpro.util.FragmentManagingUtils;
+import elsys.mycar.mycarpro.util.ProviderUtils;
+import elsys.mycar.mycarpro.util.AuthenticationUtils;
 
-public class MainActivity extends AppCompatActivity{ /*implements MainContract.View{
+public class MainActivity extends AppCompatActivity implements MainContract.HomewView {
 
     public static final String VEHICLE_ID = "VEHICLE_ID";
+    public static final int REQUEST_CODE_NEW_VEHICLE = 1232;
 
     @BindView(R.id.bottom_bar_main) BottomBar bottomBar;
     @BindView(R.id.fab_main) FloatingActionButton fab;
     @BindView(R.id.fab_menu_main) FloatingActionMenu fabMenu;
     @BindView(R.id.tab_layout_statistics) TabLayout tabLayoutStatistics;
     @BindView(R.id.tab_layout_activities) TabLayout tabLayoutActivities;
+    @BindView(R.id.spn_main_vehicles) Spinner spinner;
+
     @BindColor(R.color.colorDarkVehicleTabSelected) int vehicleDarkTabColor;
     @BindColor(R.color.colorDarkActivitiesTabSelected) int activitiesDarkTabColor;
     @BindColor(R.color.colorDarkStatisticsTabSelected) int statisticsDarkTabColor;
     @BindColor(R.color.colorDarkProfileTabSelected) int profileDarkTabColor;
 
-    //@BindView(R.id.spn_main_vehicles) Spinner spinner;
-
-    private MainContract.Presenter mPresenter;
-    private String mSelectedVehicleId;
+    private FragmentManagingUtils fragmentManagingUtils;
+    private MainContract.HomePresenter mPresenter;
+    private AuthenticationUtils mAuthenticationUtils;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        VehicleRepositoryImpl v = VehicleRepositoryImpl.getInstance();
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ButterKnife.bind(this);
 
-        bottomBar.setDefaultTabPosition(1);
+        mAuthenticationUtils = new AuthenticationUtils(this);
 
-        MainPresenter mainPresenter = new MainPresenter(VehicleRepositoryImpl.getInstance(), this);
-        setPresenter(mainPresenter);
+        if (mAuthenticationUtils.checkUser()) {
+            setContentView(R.layout.activity_main);
 
-        //setUpSpinner();
-        mainPresenter.start();
-       // spinner.setSelection(0);
-        //TODO: Activities and Statistics Fragments should findById the spinner and subscribe to select events
-        setUpBottomBar();
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            ButterKnife.bind(this);
+
+            HomePresenter homePresenter = new HomePresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), this);
+            setPresenter(homePresenter);
+
+            fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
+
+            fabMenu.setClosedOnTouchOutside(true);
+
+            setUpBottomBar();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("onResume: ", "main activity");
-        mPresenter.start();
-    }
-
-/*    @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
-    public void onFabClick(FloatingActionButton button) {
-        Class aClass = null;
-
-        switch (button.getId()) {
-            case R.id.fab_main:
-                aClass = AddEditVehicleActivity.class;
-                break;
-            case R.id.fab_main_insurance:
-                aClass = AddEditInsuranceActivity.class;
-                break;
-            case R.id.fab_main_refueling:
-                aClass = AddEditRefuelingActivity.class;
-                break;
-            case R.id.fab_main_service:
-                aClass = AddEditServiceActivity.class;
-                break;
+        if (mAuthenticationUtils.checkUser()) {
+            mPresenter.start();
         }
-
-        if (aClass != null) {
-            Intent intent = new Intent(this, aClass);
-            intent.putExtra(VEHICLE_ID, mSelectedVehicleId);
-            startActivity(intent);
-        }
-    }*//*
-
-*/
-
-    /*
-    @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
-    public void onFabClick(FloatingActionButton button) {
-        switch (button.getId()) {
-            case R.id.fab_main:
-                mPresenter.openAddEditVehicle();
-                break;
-            case R.id.fab_main_insurance:
-                mPresenter.openAddEditInsurance();
-                break;
-            case R.id.fab_main_refueling:
-                mPresenter.openAddEditRefueling();
-                break;
-            case R.id.fab_main_service:
-                mPresenter.openAddEditService();
-                break;
-        }
-    }
-
-    private void setUpSpinner() {
-/*        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedVehicleName = spinner.getItemAtPosition(position).toString();
-                Log.d("onItemSelected: ", "name === " + selectedVehicleName);
-                mPresenter.onSelectedVehicleChanged(selectedVehicleName);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*//*
-    }*//*
-    /*
-
-    private void setUpBottomBar() {
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
-                int actionBarColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
-                int statusBarColor = activitiesDarkTabColor;
-
-                switch (tabId) {
-                    case R.id.tab_vehicles:
-                        onVehiclesTabSelected();
-                        statusBarColor = vehicleDarkTabColor;
-                        break;
-                    case R.id.tab_activities:
-                        onActivitiesTabSelected();
-                        break;
-                    case R.id.tab_statistics:
-                        onStatisticsTabSelected();
-                        statusBarColor = statisticsDarkTabColor;
-                        break;
-                    case R.id.tab_user_profile:
-                        onProfileTabSelected();
-                        statusBarColor = profileDarkTabColor;
-                        break;
-                }
-                setBarsColor(statusBarColor, actionBarColor);
-            }
-        });
-    }
-
-    private void onVehiclesTabSelected() {
-        ActivityUtils.hideFragments(getSupportFragmentManager(), StatisticsFragment.TAG, ProfileFragment.TAG, ActivitiesFragment.TAG);
-        tabLayoutActivities.setVisibility(View.GONE);
-        tabLayoutStatistics.setVisibility(View.GONE);
-
-        ListVehicleFragment listVehicleFragment = (ListVehicleFragment) getSupportFragmentManager().findFragmentByTag(ListVehicleFragment.TAG);
-
-        if (listVehicleFragment == null) {
-            listVehicleFragment = ListVehicleFragment.newInstance();
-            ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), listVehicleFragment, R.id.frame_layout_main_content, ListVehicleFragment.TAG);
-        }else {
-            ActivityUtils.showFragment(getSupportFragmentManager(), listVehicleFragment);
-        }
-        setFabVisible();
-
-        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(VehicleRepositoryImpl.getInstance(), listVehicleFragment);
-        listVehicleFragment.setPresenter(listVehiclePresenter);
-
-        //spinner.setVisibility(View.GONE);
-    }
-
-    private void onActivitiesTabSelected() {
-        ActivityUtils.hideFragments(getSupportFragmentManager(), StatisticsFragment.TAG, ListVehicleFragment.TAG, ProfileFragment.TAG);
-
-        setFabMenuVisible();
-        tabLayoutStatistics.setVisibility(View.GONE);
-        tabLayoutActivities.setVisibility(View.VISIBLE);
-
-        ActivitiesFragment activitiesFragment = (ActivitiesFragment) getSupportFragmentManager().findFragmentByTag(ActivitiesFragment.TAG);
-
-        if (activitiesFragment == null) {
-            activitiesFragment = ActivitiesFragment.newInstance();
-            ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), activitiesFragment, R.id.frame_layout_main_content, ActivitiesFragment.TAG);
-        }else {
-            ActivityUtils.showFragment(getSupportFragmentManager(), activitiesFragment);
-        }
-
-        Log.d("onActivitiesTabSelected", "vehicleId = " + mSelectedVehicleId);
-
-        //activitiesFragment.setVehicleId(mSelectedVehicleId);
-       // spinner.setVisibility(View.VISIBLE);
-    }
-
-    private void onStatisticsTabSelected() {
-        ActivityUtils.hideFragments(getSupportFragmentManager(), ListVehicleFragment.TAG, ProfileFragment.TAG, ActivitiesFragment.TAG);
-
-        hideFabsAndTabActivities();
-        tabLayoutStatistics.setVisibility(View.VISIBLE);
-
-        StatisticsFragment statisticsFragment = (StatisticsFragment) getSupportFragmentManager().findFragmentByTag(StatisticsFragment.TAG);
-
-        if (statisticsFragment == null) {
-            statisticsFragment = new StatisticsFragment();
-            ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), statisticsFragment, R.id.frame_layout_main_content, StatisticsFragment.TAG);
-        }else {
-            ActivityUtils.showFragment(getSupportFragmentManager(), statisticsFragment);
-        }
-
-        //spinner.setVisibility(View.VISIBLE);
-    }
-
-    private void onProfileTabSelected() {
-        hideFabsAndTabActivities();
-        tabLayoutStatistics.setVisibility(View.GONE);
-
-        ActivityUtils.hideFragments(getSupportFragmentManager(), StatisticsFragment.TAG, ListVehicleFragment.TAG, ActivitiesFragment.TAG);
-
-        ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(ProfileFragment.TAG);
-
-        if (profileFragment == null) {
-            profileFragment = ProfileFragment.newInstance();
-            ActivityUtils.addFragmentToActivityWithTag(getSupportFragmentManager(), profileFragment, R.id.frame_layout_main_content, ProfileFragment.TAG);
-        }else {
-            ActivityUtils.showFragment(getSupportFragmentManager(), profileFragment);
-        }
-        //spinner.setVisibility(View.GONE);
-    }
-
-    private void setFabVisible() {
-        fabMenu.hideMenu(true);
-        fab.show(true);
-    }
-
-    private void setFabMenuVisible() {
-        fab.hide(true);
-        fabMenu.showMenu(true);
-    }
-
-    private void hideFabsAndTabActivities() {
-        fabMenu.hideMenu(true);
-        fab.hide(true);
-        tabLayoutActivities.setVisibility(View.GONE);
-    }
-
-    private void setBarsColor(int statusBarColor, int actionBarColor) {
-        final Window window = getWindow();
-        final ActionBar actionBar = getSupportActionBar();
-
-        window.setNavigationBarColor(actionBarColor);
-        window.setStatusBarColor(statusBarColor);
-        ColorDrawable colorDrawable = new ColorDrawable(actionBarColor);
-        actionBar.setBackgroundDrawable(colorDrawable);
-       // spinner.setBackgroundColor(actionBarColor);
-        //spinner.setPopupBackgroundDrawable(colorDrawable);
     }
 
     @Override
-    public void setPresenter(MainContract.Presenter presenter) {
-        this.mPresenter = Preconditions.checkNotNull(presenter);
+    public void setPresenter(MainContract.HomePresenter presenter) {
+        mPresenter = Preconditions.checkNotNull(presenter);
     }
-
-/*    @Override
-    public void setVehicleNames(List<String> items) {
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
-                R.layout.vehicles_spinner_item,
-                items);
-       // spinner.setAdapter(mAdapter);
-    }*//**/
-    /*
 
     @Override
-    public void setSelectedVehicleId(String vehicleId) {
-        Log.d("activity vehicleId", "id = " + vehicleId);
-        this.mSelectedVehicleId = vehicleId;
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-
 
     @Override
     public void showVehicleNames(List<String> items) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.vehicles_spinner_item, items);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.vehicles_spinner_item, items);
+        spinner.setAdapter(adapter);
     }
 
     @Override
     public void showAddEditVehicleUi() {
-        startActivity(new Intent(this, AddEditVehicleActivity.class));
+        Intent intent = new Intent(this, AddEditVehicleActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_NEW_VEHICLE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_NEW_VEHICLE) {
+            mPresenter.setDataMissing();
+        }
     }
 
     @Override
@@ -341,22 +151,193 @@ public class MainActivity extends AppCompatActivity{ /*implements MainContract.V
 
     @Override
     public void showVehiclesUi() {
+        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ListVehicleFragment.TAG);
+        ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
 
+        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(
+                ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), listVehicleFragment
+        );
+
+        listVehicleFragment.setPresenter(listVehiclePresenter);
     }
 
     @Override
     public void showActivitiesUi() {
-
+        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
+        ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
+        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), activitiesFragment);
+        activitiesFragment.setPresenter(activitiesPresenter);
     }
 
     @Override
     public void showStatisticsUi() {
-
+        fragmentManagingUtils.addOrShowFragment(StatisticsFragment.TAG);
     }
 
     @Override
     public void showProfileUi() {
-
+        fragmentManagingUtils.addOrShowFragment(ProfileFragment.TAG);
     }
-    */
+
+    @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})
+    public void onFabClick(FloatingActionButton button) {
+        switch (button.getId()) {
+            case R.id.fab_main:
+                mPresenter.openAddEditVehicle();
+                break;
+            case R.id.fab_main_insurance:
+                mPresenter.openAddEditInsurance(getSelectedVehiclePosition());
+                break;
+            case R.id.fab_main_refueling:
+                mPresenter.openAddEditRefueling(getSelectedVehiclePosition());
+                break;
+            case R.id.fab_main_service:
+                mPresenter.openAddEditService(getSelectedVehiclePosition());
+                break;
+        }
+    }
+
+    private int getSelectedVehiclePosition() {
+        return spinner.getSelectedItemPosition();
+    }
+
+    private void setUpBottomBar() {
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+                int primaryColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
+                int primaryDarkColor = activitiesDarkTabColor;
+
+                switch (tabId) {
+                    case R.id.tab_vehicles:
+                        mPresenter.openVehicles();
+                        primaryDarkColor = vehicleDarkTabColor;
+                        break;
+                    case R.id.tab_activities:
+                        mPresenter.openActivities();
+                        break;
+                    case R.id.tab_statistics:
+                        mPresenter.openStatistics();
+                        primaryDarkColor = statisticsDarkTabColor;
+                        break;
+                    case R.id.tab_user_profile:
+                        mPresenter.openProfile();
+                        primaryDarkColor = profileDarkTabColor;
+                        break;
+                }
+
+                setUiColor(primaryDarkColor, primaryColor);
+                switchUiComponents(tabId);
+            }
+            //     }
+        });
+    }
+
+    private void setUiColor(int primaryDarkColor, int primaryColor) {
+        final Window window = getWindow();
+        final ActionBar actionBar = getSupportActionBar();
+
+        window.setNavigationBarColor(primaryColor);
+        window.setStatusBarColor(primaryDarkColor);
+        ColorDrawable colorDrawable = new ColorDrawable(primaryColor);
+        actionBar.setBackgroundDrawable(colorDrawable);
+    }
+
+    private void switchUiComponents(int tabId) {
+        switchFabs(tabId);
+        switchTabs(tabId);
+        switchSpinnerVisibility(tabId);
+    }
+
+    private void switchFabs(int tabId) {
+        switch (tabId) {
+            case R.id.tab_activities:
+                showFabMenu();
+                break;
+            case R.id.tab_vehicles:
+                showFab();
+                break;
+            default:
+                hideFabs();
+                break;
+        }
+    }
+
+    private void switchTabs(int tabId) {
+        switch (tabId) {
+            case R.id.tab_activities:
+                showActivitiesTabLayout();
+                break;
+            case R.id.tab_statistics:
+                showStatisticsTabLayout();
+                break;
+            default:
+                hideTabs();
+                break;
+        }
+    }
+
+    private void switchSpinnerVisibility(int tabId) {
+        if (tabId == R.id.tab_activities || tabId == R.id.tab_statistics) {
+            if (!spinner.isShown()) {
+                spinner.setVisibility(View.VISIBLE);
+            }
+        }else {
+            if (spinner.isShown()) {
+                spinner.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void showFab() {
+        if (fabMenu.isShown()) {
+            fabMenu.hideMenu(true);
+        }
+        if (fab.isHidden()) {
+            fab.show(true);
+        }
+    }
+
+    private void showFabMenu() {
+        if (fab.isShown()) {
+            fab.hide(true);
+        }
+        if (fabMenu.isMenuHidden()) {
+            fabMenu.showMenu(true);
+        }
+    }
+
+    private void hideFabs() {
+        if (fabMenu.isShown()) {
+            fabMenu.hideMenu(true);
+        }
+
+        if (fab.isShown()) {
+            fab.hide(true);
+        }
+    }
+
+    private void showActivitiesTabLayout() {
+        if (!tabLayoutActivities.isShown()) {
+            tabLayoutStatistics.setVisibility(View.GONE);
+            tabLayoutActivities.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showStatisticsTabLayout() {
+        if (!tabLayoutStatistics.isShown()) {
+            tabLayoutActivities.setVisibility(View.GONE);
+            tabLayoutStatistics.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideTabs() {
+        if (tabLayoutActivities.isShown()) {
+            tabLayoutActivities.setVisibility(View.GONE);
+        }
+
+        if (tabLayoutStatistics.isShown()) {
+            tabLayoutStatistics.setVisibility(View.GONE);
+        }
+    }
 }

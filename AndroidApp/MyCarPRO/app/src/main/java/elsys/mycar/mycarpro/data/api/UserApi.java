@@ -1,7 +1,7 @@
 package elsys.mycar.mycarpro.data.api;
 
-import elsys.mycar.mycarpro.model.SimpleUser;
-import elsys.mycar.mycarpro.model.User;
+import elsys.mycar.mycarpro.data.model.SimpleUser;
+import elsys.mycar.mycarpro.data.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;

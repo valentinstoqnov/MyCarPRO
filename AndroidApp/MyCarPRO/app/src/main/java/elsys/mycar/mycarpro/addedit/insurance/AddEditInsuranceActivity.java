@@ -9,8 +9,8 @@ import android.view.View;
 import com.github.clans.fab.FloatingActionButton;
 
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.data.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.util.ActivityUtils;
+import elsys.mycar.mycarpro.util.ProviderUtils;
 
 import static elsys.mycar.mycarpro.homescreen.HomeActivity.VEHICLE_ID;
 
@@ -32,7 +32,7 @@ public class AddEditInsuranceActivity extends AppCompatActivity {
 
         String vehicleId = getIntent().getStringExtra(VEHICLE_ID);
 
-        AddEditInsurancePresenter addEditInsurancePresenter = new AddEditInsurancePresenter(vehicleId, null, VehicleRepositoryImpl.getInstance(), addEditInsuranceFragment, true);
+        AddEditInsurancePresenter addEditInsurancePresenter = new AddEditInsurancePresenter(vehicleId, null, ProviderUtils.getVehicleRepository(""), addEditInsuranceFragment, true);
 
         addEditInsuranceFragment.setPresenter(addEditInsurancePresenter);
     }

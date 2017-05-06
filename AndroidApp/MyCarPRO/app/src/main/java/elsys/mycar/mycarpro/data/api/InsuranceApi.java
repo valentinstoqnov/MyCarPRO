@@ -1,6 +1,6 @@
 package elsys.mycar.mycarpro.data.api;
 
-import elsys.mycar.mycarpro.model.Insurance;
+import elsys.mycar.mycarpro.data.model.Insurance;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
