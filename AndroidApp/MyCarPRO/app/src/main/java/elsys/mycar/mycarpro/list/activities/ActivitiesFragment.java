@@ -127,8 +127,8 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         String vehicleName = getSelectedVehicleName(mSpinner.getSelectedItemPosition());
 
         ListServicesFragment listServicesFragment = ListServicesFragment.newInstance();
-        mListServicesPresenter = new ListServicesPresenter(vehicleName, vehicleRepository, listServicesFragment, true);
-        listServicesFragment.setPresenter(mListServicesPresenter);
+        mListServicesPresenter = new ListServicesPresenter(/*vehicleName, vehicleRepository, listServicesFragment, true*/);
+        //listServicesFragment.setPresenter(mListServicesPresenter);
         adapter.addFragment(listServicesFragment);
 
         ListInsurancesFragment listInsurancesFragment = ListInsurancesFragment.newInstance();

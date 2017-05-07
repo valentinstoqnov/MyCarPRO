@@ -1,5 +1,6 @@
 package elsys.mycar.mycarpro.list.vehicles;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,13 +22,12 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
 
     private List<Vehicle> mVehicles;
     private OnCardActionListener mListener;
+    private String mVehicleInfoFormat;
 
-    public ListVehicleAdapter(OnCardActionListener mListener) {
-        this.mVehicles = new ArrayList<>();
+    public ListVehicleAdapter(List<Vehicle> mVehicles, OnCardActionListener mListener, String mVehicleInfoFormat) {
+        this.mVehicles = mVehicles;
         this.mListener = mListener;
-
-        //TODO : remove all view actions like view and delete. On click the hole item will be opened the Detail Vehicle Activity
-        //TODO : make item Ui look more beautiful
+        this.mVehicleInfoFormat = mVehicleInfoFormat;
     }
 
     @Override
@@ -44,14 +44,8 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
 
     @Override
     public void removeVehicle(int position) {
-        Log.d("ADAPTER REMOVE POS =", " " + position);
-        Log.d("DATASET SIZE", "BEFORE DELETION = " + mVehicles.size());
         mVehicles.remove(position);
         notifyDataSetChanged();
-        Log.d("DATASET SIZE", "AFRER DELETION = " + mVehicles.size());
-        //this.notifyItemRemoved(position);
-        //this.notifyDataSetChanged();
-        Log.d("DATASET SIZE", "AFTER NOTIFY DELETION = " + mVehicles.size());
     }
 
     @Override
@@ -63,83 +57,42 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Vehicle vehicle = mVehicles.get(position);
-        holder.setContent(vehicle);
-        setCardActionClickListeners(holder, vehicle.getId(), position);
+        final Vehicle vehicle = mVehicles.get(position);
+        holder.setContent(vehicle, mVehicleInfoFormat);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               mListener.onItemViewClick(vehicle);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mVehicles.size();
     }
-
-    private void setCardActionClickListeners(final ViewHolder holder, final String vehicleId, final int position) {
-        holder.btnView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onViewClick(vehicleId);
-            }
-        });
-
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onDeleteClick(vehicleId, position);
-            }
-        });
-    }
     
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.img_view_card_vehicle_photo) ImageView imgPhoto;
-        @BindView(R.id.tv_card_vehicle_name) TextView tvName;
-        @BindView(R.id.tv_card_vehicle_make_and_model) TextView tvMakeModel;
-        @BindView(R.id.tv_card_vehicle_day) TextView tvDay;
-        @BindView(R.id.tv_card_vehicle_month) TextView tvMonth;
-        @BindView(R.id.tv_card_vehicle_year) TextView tvYear;
-        @BindView(R.id.btn_card_vehicle_delete) TextView btnDelete;
-        @BindView(R.id.btn_card_vehicle_view) TextView btnView;
-        @BindView(R.id.tv_card_vehicle_odometer) TextView tvOdometer;
+        @BindView(R.id.card_view_list_view) CardView cardView;
+        @BindView(R.id.tv_card_vehicle_info) TextView tvVehicleInfo;
+        @BindView(R.id.tv_card_vehicle_name) TextView tvVehicleName;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void setContent(Vehicle vehicle) {
-
-      /*      //TODO: wait api photo support
-            Picasso p = Picasso.with(imgPhoto.getContext());
-                    p.setLoggingEnabled(true);
-                    p.setIndicatorsEnabled(true);
-                    p.load("http://i.imgur.com/DvpvklR.png").into(imgPhoto);*/
-
-            imgPhoto.setBackgroundColor(vehicle.getColor());
-
-            tvName.setText(vehicle.getName());
-
-            String makeModel = String.format("%s %s", vehicle.getMake(), vehicle.getModel());
-            tvMakeModel.setText(makeModel);
-
-            tvOdometer.setText(String.valueOf(vehicle.getOdometer()));
-
-            String date = vehicle.getManufactureDate();
-
-            String day = DateUtils.getTextDayFromTextDate(date);
-            tvDay.setText(day);
-
-            String month = DateUtils.getTextDayFromTextMonth(date);
-            tvMonth.setText(month);
-
-            String year = DateUtils.getTextDayFromTextYear(date);
-            tvYear.setText(year);
+        public void setContent(Vehicle vehicle, String format) {
+            cardView.setCardBackgroundColor(vehicle.getColor());
+            tvVehicleName.setText(vehicle.getName());
+            String info = String.format(format, vehicle.getMake(), vehicle.getModel(), vehicle.getManufactureDate(), vehicle.getOdometer(), "km");
+            tvVehicleInfo.setText(info);
         }
     }
 
     interface OnCardActionListener {
 
-        void onViewClick(String vehicleId);
-
-        void onDeleteClick(String id, int position);
+        void onItemViewClick(Vehicle vehicle);
     }
 }

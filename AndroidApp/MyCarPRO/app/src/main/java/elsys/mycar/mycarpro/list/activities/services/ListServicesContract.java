@@ -16,6 +16,8 @@ public interface ListServicesContract {
 
     interface Presenter extends ListActivitiesContract.Presenter {
 
+        void start(List<Service> asd);
+
         void openServiceDetails(Service service);
     }
 }

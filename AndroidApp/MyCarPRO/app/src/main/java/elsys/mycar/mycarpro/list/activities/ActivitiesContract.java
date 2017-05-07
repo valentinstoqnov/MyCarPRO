@@ -14,4 +14,12 @@ public interface ActivitiesContract {
 
         void onVehicleChange(String vehicleName);
     }
+
+    interface View1 extends BaseView<Presenter1> {
+
+    }
+
+    interface Presenter1 extends BasePresenter {
+
+    }
 }

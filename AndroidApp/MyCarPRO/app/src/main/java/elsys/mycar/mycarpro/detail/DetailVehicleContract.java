@@ -11,7 +11,9 @@ public interface DetailVehicleContract {
 
         void showNoSuchVehicleError();
 
-        void setPhoto(Bitmap bitmap);
+        void showMessage(String message);
+
+        void setColor(int color);
 
         void setName(String name);
 
@@ -23,11 +25,7 @@ public interface DetailVehicleContract {
 
         void setHorsePower(String horsePower);
 
-        void setFuelType(String fuelType);
-
-        void setFuelTankCapacity(String capacity);
-
-        void setFuelConsumption(String consumption);
+        void setFuelTank(String fuelTank);
 
         void setNote(String note);
     }

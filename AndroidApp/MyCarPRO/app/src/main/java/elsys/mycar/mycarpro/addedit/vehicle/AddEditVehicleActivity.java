@@ -22,16 +22,18 @@ public class AddEditVehicleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuthenticationUtils = new AuthenticationUtils(this);
-        setContentView(R.layout.activity_add_edit_vehicle);
-        setUpToolbar();
+        if (mAuthenticationUtils.checkUser()) {
+            setContentView(R.layout.activity_add_edit_vehicle);
+            setUpToolbar();
 
-        AddEditVehicleFragment addEditVehicleFragment = AddEditVehicleFragment.newInstance();
-        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(null, ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), addEditVehicleFragment, true);
-        addEditVehicleFragment.setPresenter(addEditVehiclePresenter);
+            AddEditVehicleFragment addEditVehicleFragment = AddEditVehicleFragment.newInstance();
+            AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(null, ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), addEditVehicleFragment, true);
+            addEditVehicleFragment.setPresenter(addEditVehiclePresenter);
 
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-                addEditVehicleFragment,
-                R.id.frame_layout_add_vehicle);
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                    addEditVehicleFragment,
+                    R.id.frame_layout_add_vehicle);
+        }
     }
 
     @Override

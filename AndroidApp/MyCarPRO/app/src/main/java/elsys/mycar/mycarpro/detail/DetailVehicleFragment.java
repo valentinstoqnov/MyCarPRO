@@ -1,10 +1,12 @@
 package elsys.mycar.mycarpro.detail;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +26,13 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
     @BindView(R.id.tv_detail_vehicle_manufacture_date) TextView tvManufactureDate;
     @BindView(R.id.tv_detail_vehicle_horse_power) TextView tvHorsePower;
     @BindView(R.id.tv_detail_vehicle_odometer) TextView tvOdometer;
+    @BindView(R.id.tv_detail_vehicle_fuel_tank) TextView tvFuelTank;
     @BindView(R.id.tv_detail_vehicle_note) TextView tvNote;
 
+    private AppBarLayout mAppBarLayout;
     private DetailVehicleContract.Presenter mPresenter;
     private Unbinder mUnbinder;
+    private Toolbar mToolbar;
 
     public static DetailVehicleFragment newInstance() {
         return new DetailVehicleFragment();
@@ -39,6 +44,13 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
         View view = inflater.inflate(R.layout.fragment_detail_vehicle, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mAppBarLayout = (AppBarLayout) getActivity().findViewById(R.id.app_bar_detail_vehicle);
+        mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
     }
 
     @Override
@@ -59,12 +71,13 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
     }
 
     @Override
-    public void setPhoto(Bitmap bitmap) {
+    public void setColor(int color) {
+        mAppBarLayout.setBackgroundColor(color);
     }
 
     @Override
     public void setName(String name) {
-
+        mToolbar.setTitle(name);
     }
 
     @Override
@@ -88,18 +101,8 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
     }
 
     @Override
-    public void setFuelType(String fuelType) {
-
-    }
-
-    @Override
-    public void setFuelTankCapacity(String capacity) {
-
-    }
-
-    @Override
-    public void setFuelConsumption(String consumption) {
-
+    public void setFuelTank(String fuelTank) {
+        tvFuelTank.setText(fuelTank);
     }
 
     @Override
@@ -109,6 +112,11 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
 
     @Override
     public void showNoSuchVehicleError() {
-        Snackbar.make(tvNote, "Vehicle not found, please retry", Snackbar.LENGTH_INDEFINITE);
+        Snackbar.make(getView(), "Vehicle not found, please retry", Snackbar.LENGTH_INDEFINITE).show();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 }

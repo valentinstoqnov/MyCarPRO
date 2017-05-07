@@ -1,6 +1,7 @@
 package elsys.mycar.mycarpro.list.activities.services;
 
 import com.google.common.base.Preconditions;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 
 import java.util.List;
 
@@ -10,7 +11,63 @@ import elsys.mycar.mycarpro.data.model.Vehicle;
 
 public class ListServicesPresenter implements ListServicesContract.Presenter {
 
-    private String mVehicleId;
+    private ListServicesContract.View mView;
+    private boolean mIsDataMissing = true;
+
+   /* @Override
+    public void start() {
+        if (mIsDataMissing) {
+
+        }
+    }*/
+
+
+    @Override
+    public void start(List<Service> asd) {
+
+    }
+
+    @Override
+    public void openServiceDetails(Service service) {
+
+    }
+
+    @Override
+    public boolean isDataMissing() {
+        return mIsDataMissing;
+    }
+
+    public void setDataset(List<Service> services) {
+        if (mView.isActive()) {
+            mView.showServices(services);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void loadItems() {
+
+    }
+
+    @Override
+    public void onVehicleChanged(String vehicleId) {
+
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+   /* private String mVehicleId;
     private VehicleRepository mVehicleRepository;
     private ListServicesContract.View mView;
     private boolean mIsDataMissing;
@@ -74,5 +131,5 @@ public class ListServicesPresenter implements ListServicesContract.Presenter {
             mIsDataMissing = false;
         }
         mView.hideProgress();
-    }
+    }*/
 }
