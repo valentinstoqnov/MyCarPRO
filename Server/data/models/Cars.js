@@ -6,7 +6,7 @@ module.exports.init = function () {
         name: {type: String, required: true},
         make: {type: String, required: true},
         model: {type: String, required: true},
-        color: {type: String, required: true},
+        color: {type: Number, required: true},
         horse_power: {type: Number, required: true},
         manufacture_date: {type: String, required: true},
         fuel_tank_capacity: {type: Number, required: true},
