@@ -32,7 +32,10 @@ module.exports = {
         cars.findOne(req.params.id, function (err, car) {
             car.refuelings
                 .push(fuel);
-            car.save();
+            car.save(function (err) {
+                console.log(err)
+            });
+            console.log(fuel)
             res.send(fuel);
         })
     },
@@ -44,6 +47,7 @@ module.exports = {
                 .pop();
             car.refuelings.push(fuel);
             car.save();
+            console.log(fuel)
 
             res.send(fuel);
         })
