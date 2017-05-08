@@ -27,14 +27,11 @@ module.exports = {
         res.send();
     },
     isAuthenticated: function (req, res, next) {
-        console.log(req.headers.token)
         if (!hashMap.get(req.headers.token)) {
             res.status(400);
-            console.log("0")
             res.send({reason: "User is not logged in."});
         }
         else {
-            console.log("1")
             req.user = hashMap.get(req.headers.token)
             next();
         }

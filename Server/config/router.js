@@ -17,7 +17,7 @@ module.exports = function functionName(app) {
     app.get('/car/:id', controllers.cars.getCar);
 
 
-    app.post('/cars/fuil/:id', auth.isAuthenticated, controllers.cars.postAddFuil);
+    app.post('/cars/fuil/:id', controllers.cars.postAddFuil);
     app.put('/cars/fuil/:id', auth.isAuthenticated, controllers.cars.putEditFuel);
 
     app.post('/cars/services/:id', auth.isAuthenticated, controllers.cars.postAddService);
