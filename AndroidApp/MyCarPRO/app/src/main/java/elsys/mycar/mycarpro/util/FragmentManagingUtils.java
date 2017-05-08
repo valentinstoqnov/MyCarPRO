@@ -9,6 +9,7 @@ import java.util.List;
 import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.base.BaseView;
 import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
+import elsys.mycar.mycarpro.list.activities.viewpager.ActFr;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
@@ -27,8 +28,8 @@ public class FragmentManagingUtils {
         switch (tag) {
             case ListVehicleFragment.TAG:
                 return ListVehicleFragment.newInstance();
-            case ActivitiesFragment.TAG:
-                return ActivitiesFragment.newInstance();
+            case ActFr.TAG:
+                return ActFr.newInstance();
             case StatisticsFragment.TAG:
                 return StatisticsFragment.newInstance();
             case ProfileFragment.TAG:

@@ -22,7 +22,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
-import java.util.List;
+import java.util.HashMap;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -122,9 +122,9 @@ public class HomeActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void showVehicleNames(List<String> items) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.vehicles_spinner_item, items);
-        spinner.setAdapter(adapter);
+    public void showVehicleNames(HashMap<String, String> items) {
+       // ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.vehicles_spinner_item, items);
+       // spinner.setAdapter(adapter);
     }
 
     @Override

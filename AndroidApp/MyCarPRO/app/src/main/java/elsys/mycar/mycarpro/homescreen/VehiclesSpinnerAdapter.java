@@ -19,12 +19,19 @@ public class VehiclesSpinnerAdapter extends ArrayAdapter<String> {
 
     private List<String> mVehicleIds;
 
-    public VehiclesSpinnerAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull HashMap<String, String> hashMap) {
-        super(context, resource, new ArrayList<>(hashMap.values()));
-        mVehicleIds = new ArrayList<>(hashMap.keySet());
+    public VehiclesSpinnerAdapter(@NonNull Context context, @LayoutRes int resource, List<String> vehicleIds) {
+        super(context, resource);
+        mVehicleIds = vehicleIds;
     }
 
-    public String getVehicleIdByPosition(int position) {
+    public void replaceData(@NonNull HashMap<String, String> hashMap) {
+        mVehicleIds = new ArrayList<>(hashMap.keySet());
+        clear();
+        addAll(hashMap.values());
+        notifyDataSetChanged();
+    }
+
+    public String getVehicleIdAtPosition(int position) {
         return mVehicleIds.get(position);
     }
 }

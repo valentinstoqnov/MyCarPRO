@@ -169,4 +169,5 @@
     <string name="consumption">consumption</string>
     <string name="ok">Ok</string>
     <string name="sign_out">Sign out</string>
+    <string name="card_vehicle_info_placeholder" formatted="false">%s %s, manufactured in %s and current odometer value is %s %s</string>
 </resources>

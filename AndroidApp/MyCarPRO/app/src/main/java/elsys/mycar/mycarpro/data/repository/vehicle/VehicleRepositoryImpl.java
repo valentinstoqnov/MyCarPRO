@@ -7,6 +7,7 @@ import elsys.mycar.mycarpro.data.api.VehicleApi;
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.data.model.Vehicle;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VehicleRepositoryImpl implements VehicleRepository {
@@ -86,8 +87,48 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
-    public void getVehicleById(String id, OnVehicleFetchedCallback callback) {
+    public void getVehicleById(final String id, final OnVehicleFetchedCallback callback) {
+        Call<Vehicle> call = mVehicleApi.getVehicleById(id);
+        call.enqueue(new retrofit2.Callback<Vehicle>() {
+            @Override
+            public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
+                }else {
+                    callback.onFailure();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Vehicle> call, Throwable t) {
+                t.printStackTrace();
+                callback.onFailure();
+            }
+        });
+        /*Call<List<Vehicle>> call = mVehicleApi.getVehicles();
+        call.enqueue(new retrofit2.Callback<List<Vehicle>>() {
+            @Override
+            public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
+                if (response.isSuccessful()) {
+                    List<Vehicle> vehicles = response.body();
+                    for (Vehicle vehicle : vehicles) {
+                        if (vehicle.getId().equals(id)) {
+                            callback.onSuccess(vehicle);
+                            return;
+                        }
+                    }
+                    callback.onFailure();
+                }else {
+                    callback.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Vehicle>> call, Throwable t) {
+                t.printStackTrace();
+                callback.onFailure();
+            }
+        });*/
     }
 
     @Override
@@ -97,7 +138,8 @@ public class VehicleRepositoryImpl implements VehicleRepository {
             @Override
             public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess(response.body());
+                    List<Vehicle> vehicles = response.body();
+                    callback.onSuccess(vehicles);
                 }else {
                     try {
                         System.out.println("not successful: " + response.message());

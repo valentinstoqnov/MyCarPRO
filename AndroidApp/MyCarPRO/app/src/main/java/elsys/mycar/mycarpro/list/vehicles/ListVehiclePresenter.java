@@ -25,10 +25,10 @@ public class ListVehiclePresenter implements ListVehicleContract.Presenter, Vehi
         }
     }
 
-    @Override
+    /*@Override
     public void deleteVehicle(String vehicleId) {
         mVehicleRepository.deleteVehicle(vehicleId, this);
-    }
+    }*/
 
     @Override
     public void onSuccess(List<Vehicle> vehicles) {
@@ -44,5 +44,11 @@ public class ListVehiclePresenter implements ListVehicleContract.Presenter, Vehi
     @Override
     public void onFailure() {
         mView.showMessage("Failed to do this action, please try again");
+    }
+
+    @Override
+    public void openVehicleDetails(Vehicle vehicle) {
+        vehicle = Preconditions.checkNotNull(vehicle, "Vehicle cannot be null");
+        mView.showDetailVehicleUi(vehicle.getId());
     }
 }

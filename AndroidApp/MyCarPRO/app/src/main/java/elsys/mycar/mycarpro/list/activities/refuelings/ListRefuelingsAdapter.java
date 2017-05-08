@@ -9,8 +9,8 @@ import elsys.mycar.mycarpro.util.PriceUtils;
 
 public class ListRefuelingsAdapter extends BaseRecyclerViewAdapter<Refueling> {
 
-    public ListRefuelingsAdapter(List<Refueling> items, ActivitiesItemListener<Refueling> itemListener, int resId, String datePriceFormat, String currency) {
-        super(items, itemListener, resId, datePriceFormat, currency);
+    public ListRefuelingsAdapter(List<Refueling> items, int resId) {
+        super(items, resId);
     }
 
     @Override

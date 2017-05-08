@@ -22,17 +22,20 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
     private AddEditServiceContract.View mView;
     private boolean mIsDataMissing;
 
-    public AddEditServicePresenter(String mVehicleId, String mServiceId, VehicleRepository mVehicleRepository, AddEditServiceContract.View mView, boolean mIsDataMissing) {
-        this.mVehicleId = Preconditions.checkNotNull(mVehicleId);
-        this.mServiceId = mServiceId;
-        this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
-        this.mView = Preconditions.checkNotNull(mView);
-        this.mIsDataMissing = mIsDataMissing;
+    public AddEditServicePresenter(String vehicleId, String serviceId, ServiceRepository serviceRepository, VehicleRepository vehicleRepository, AddEditServiceContract.View view, boolean isDataMissing) {
+        mVehicleId = Preconditions.checkNotNull(vehicleId);
+        mServiceId = serviceId;
+        mServiceRepository = Preconditions.checkNotNull(serviceRepository);
+        mVehicleRepository = Preconditions.checkNotNull(vehicleRepository);
+        mView = Preconditions.checkNotNull(view);
+        mIsDataMissing = isDataMissing;
     }
 
     @Override
     public void start() {
         if (isVehicleNull()) {
+            mView.showMessage("No such vehicle");
+        }else {
             if (mIsDataMissing) {
                 if (isNewService()) {
                     mView.setDate(DateUtils.getTextCurrentDate());
@@ -42,8 +45,6 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
                 }
                 mView.showServiceTypes(Data.getServiceTypes());
             }
-        }else {
-            mView.showMessage("No such vehicle");
         }
     }
 

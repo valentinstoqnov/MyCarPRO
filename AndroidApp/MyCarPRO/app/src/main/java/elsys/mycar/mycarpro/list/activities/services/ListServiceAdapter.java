@@ -8,8 +8,8 @@ import elsys.mycar.mycarpro.data.model.Service;
 
 public class ListServiceAdapter extends BaseRecyclerViewAdapter<Service> {
 
-    public ListServiceAdapter(List<Service> items, ActivitiesItemListener<Service> itemListener, int resId, String datePriceFormat, String currency) {
-        super(items, itemListener, resId, datePriceFormat, currency);
+    public ListServiceAdapter(List<Service> items, int resId) {
+        super(items, resId);
     }
 
     @Override

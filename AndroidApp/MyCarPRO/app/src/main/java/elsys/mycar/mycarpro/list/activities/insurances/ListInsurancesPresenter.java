@@ -29,16 +29,16 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
         }
     }
 
-    @Override
+  //  @Override
     public void onVehicleChanged(String vehicleId) {
         mVehicleId = vehicleId;
         mIsDataMissing = true;
     }
 
-    @Override
+   // @Override
     public void loadItems() {
         if (mVehicleId == null) {
-            mView.showNoSuchVehicle();
+           // mView.showNoSuchVehicle();
         }else {
             mView.showProgress();
             mVehicleRepository.getVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
@@ -59,6 +59,16 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
     @Override
     public void openInsuranceDetails(Insurance insurance) {
         mView.showDetailItemUi(Preconditions.checkNotNull(insurance).getId());
+    }
+
+    @Override
+    public void openItemDetails(Object item) {
+
+    }
+
+    @Override
+    public void swapDataSet(List items) {
+
     }
 
     @Override

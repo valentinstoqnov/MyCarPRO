@@ -10,7 +10,7 @@ import elsys.mycar.mycarpro.util.DataUtils;
 
 public class HomePresenter implements MainContract.HomePresenter {
 
-    private List<String> mVehicleIds;
+    //private List<String> mVehicleIds;
     private VehicleRepository mVehicleRepository;
     private MainContract.HomewView mView;
     private boolean mIsDataMissing = true;
@@ -26,8 +26,8 @@ public class HomePresenter implements MainContract.HomePresenter {
             mVehicleRepository.getVehicles(new VehicleRepository.OnVehiclesFetchedCallback() {
                 @Override
                 public void onSuccess(List<Vehicle> vehicles) {
-                    mVehicleIds = DataUtils.getVehicleIds(vehicles);
-                    mView.showVehicleNames(DataUtils.getVehicleNames(vehicles));
+                   // mVehicleIds = DataUtils.getVehicleIds(vehicles);
+                    mView.showVehicleItemsInDropdown(DataUtils.getVehicleIdsAndNames(vehicles));
                     mIsDataMissing = false;
                 }
 
@@ -45,18 +45,18 @@ public class HomePresenter implements MainContract.HomePresenter {
     }
 
     @Override
-    public void openAddEditService(int position) {
-        mView.showAddEditServiceUi(getVehicleIdByPosition(position));
+    public void openAddEditService(String vehicleId) {
+        mView.showAddEditServiceUi(vehicleId);
     }
 
     @Override
-    public void openAddEditInsurance(int position) {
-        mView.showAddEditInsuranceUi(getVehicleIdByPosition(position));
+    public void openAddEditInsurance(String vehicleId) {
+        mView.showAddEditInsuranceUi(vehicleId);
     }
 
     @Override
-    public void openAddEditRefueling(int position) {
-        mView.showAddEditRefuelingUi(getVehicleIdByPosition(position));
+    public void openAddEditRefueling(String vehicleId) {
+        mView.showAddEditRefuelingUi(vehicleId);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class HomePresenter implements MainContract.HomePresenter {
         mIsDataMissing = true;
     }
 
-    private String getVehicleIdByPosition(int position) {
+   /* private String getVehicleIdByPosition(int position) {
         return mVehicleIds.get(position);
-    }
+    }*/
 }

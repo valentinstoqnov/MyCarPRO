@@ -14,12 +14,14 @@ public interface ListVehicleContract {
 
         void showMessage(String message);
 
+        void showDetailVehicleUi(String vehicleId);
+
         boolean isActive();
     }
 
     interface Presenter extends BasePresenter {
 
-        void deleteVehicle(String vehicleId);
+        void openVehicleDetails(Vehicle vehicle);
     }
 
     interface Adapter {

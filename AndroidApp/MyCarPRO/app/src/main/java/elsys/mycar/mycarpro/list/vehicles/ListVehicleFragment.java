@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.common.base.Preconditions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import elsys.mycar.mycarpro.R;
@@ -74,26 +75,33 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
     }
 
     @Override
+    public void showDetailVehicleUi(String vehicleId) {
+        Intent intent = new Intent(getContext(), DetailVehicleActivity.class);
+        if (vehicleId == null) {
+            System.out.println("list vehicle id = null");
+        }
+        intent.putExtra(DetailVehicleActivity.DETAIL_VEHICLE_ID, vehicleId);
+        startActivity(intent);
+    }
+
+    @Override
     public boolean isActive() {
         return isAdded();
     }
 
     private void setUpRecyclerView() {
+        String format = getString(R.string.card_vehicle_info_placeholder);
 
-        mAdapter = new ListVehicleAdapter(new ListVehicleAdapter.OnCardActionListener() {
+        mAdapter = new ListVehicleAdapter(new ArrayList<Vehicle>(0), new ListVehicleAdapter.OnCardActionListener() {
             @Override
-            public void onViewClick(String vehicleId) {
-                Intent intent = new Intent(getContext(), DetailVehicleActivity.class);
-                intent.putExtra(DetailVehicleActivity.DETAIL_VEHICLE_ID, vehicleId);
-                startActivity(intent);
+            public void onItemViewClick(Vehicle vehicle) {
+                if (vehicle.getId() == null) {
+                    System.out.println("on itemViewClick vehicle id = null");
+                    System.out.println(vehicle);
+                }
+                mPresenter.openVehicleDetails(vehicle);
             }
-
-            @Override
-            public void onDeleteClick(String id, int position) {
-                mPresenter.deleteVehicle(id);
-                mAdapter.removeVehicle(position);
-            }
-        });
+        }, format);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter);

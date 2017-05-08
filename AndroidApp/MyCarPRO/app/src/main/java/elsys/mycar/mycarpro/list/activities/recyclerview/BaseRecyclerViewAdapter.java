@@ -25,6 +25,23 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<It
         this.currency = currency;
     }
 
+    public BaseRecyclerViewAdapter(List<T> items, int resId) {
+        this.items = items;
+        this.resId = resId;
+    }
+
+    public void setItemListener(ActivitiesItemListener<T> itemListener) {
+        this.itemListener = itemListener;
+    }
+
+    public void setDatePriceFormat(String datePriceFormat) {
+        this.datePriceFormat = datePriceFormat;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     public void replaceData(List<T> items) {
         setItems(items);
         notifyDataSetChanged();

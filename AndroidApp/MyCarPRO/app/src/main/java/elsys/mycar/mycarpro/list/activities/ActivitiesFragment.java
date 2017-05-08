@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.google.common.base.Preconditions;
 
@@ -20,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.homescreen.VehiclesSpinnerAdapter;
 import elsys.mycar.mycarpro.list.activities.insurances.ListInsurancesFragment;
 import elsys.mycar.mycarpro.list.activities.insurances.ListInsurancesPresenter;
 import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingPresenter;
@@ -74,22 +76,28 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
 
         mSpinner = (Spinner) getActivity().findViewById(R.id.spn_main_vehicles);
 
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //mPresenter.onVehicleChange(getSelectedVehicleName(position));
-            }
+        SpinnerAdapter spinnerAdapter = mSpinner.getAdapter();
+        if (spinnerAdapter instanceof VehiclesSpinnerAdapter) {
+            mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    //mPresenter.onVehicleChange(getSelectedVehicleName(position));
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                }
 
-            }
-        });
-        
-        setUpViewPager();
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-        tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout_activities);
-        setUpTabLayout();
+                }
+            });
+
+            setUpViewPager();
+
+            tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout_activities);
+            setUpTabLayout();
+        }else {
+            throw new RuntimeException("spinner adapter must be instance of VehiclesSpinnerAdapter");
+        }
     }
 
     private String getSelectedVehicleName(int position) {
@@ -126,20 +134,20 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
 
         String vehicleName = getSelectedVehicleName(mSpinner.getSelectedItemPosition());
 
-        ListServicesFragment listServicesFragment = ListServicesFragment.newInstance();
-        mListServicesPresenter = new ListServicesPresenter(vehicleName, vehicleRepository, listServicesFragment, true);
-        listServicesFragment.setPresenter(mListServicesPresenter);
-        adapter.addFragment(listServicesFragment);
+       // ListServicesFragment listServicesFragment = null;// = ListServicesFragment.newInstance();
+        mListServicesPresenter = new ListServicesPresenter(/*vehicleName, vehicleRepository, listServicesFragment, true*/);
+        //listServicesFragment.setPresenter(mListServicesPresenter);
+        //adapter.addFragment(listServicesFragment);
 
-        ListInsurancesFragment listInsurancesFragment = ListInsurancesFragment.newInstance();
-        mListInsurancesPresenter = new ListInsurancesPresenter(vehicleName, vehicleRepository, listInsurancesFragment, true);
-        listInsurancesFragment.setPresenter(mListInsurancesPresenter);
-        adapter.addFragment(listInsurancesFragment);
+        //ListInsurancesFragment listInsurancesFragment;// = ListInsurancesFragment.newInstance();
+        mListInsurancesPresenter = new ListInsurancesPresenter(vehicleName, vehicleRepository, null, true);
+       // listInsurancesFragment.setPresenter(mListInsurancesPresenter);
+       // adapter.addFragment(listInsurancesFragment);
 
-        ListRefuelingsFragment listRefuelingsFragment = ListRefuelingsFragment.newInstance();
-        mListRefuelingPresenter = new ListRefuelingPresenter(vehicleName, vehicleRepository, listRefuelingsFragment, true);
-        listRefuelingsFragment.setPresenter(mListRefuelingPresenter);
-        adapter.addFragment(listRefuelingsFragment);
+        //ListRefuelingsFragment listRefuelingsFragment;// = ListRefuelingsFragment.newInstance();
+        mListRefuelingPresenter = new ListRefuelingPresenter(vehicleName, vehicleRepository, null, true);
+        //listRefuelingsFragment.setPresenter(mListRefuelingPresenter);
+        //adapter.addFragment(listRefuelingsFragment);
 
         viewPager.setAdapter(adapter);
 
@@ -186,9 +194,9 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
 
     @Override
     public void showVehicleContent(String vehicleId) {
-        mListServicesPresenter.onVehicleChanged(vehicleId);
+      //  mListServicesPresenter.onVehicleChanged(vehicleId);
         mListInsurancesPresenter.onVehicleChanged(vehicleId);
-        mListRefuelingPresenter.onVehicleChanged(vehicleId);
+        //mListRefuelingPresenter.onVehicleChanged(vehicleId);
         refreshFragmentAtPosition(viewPager.getCurrentItem());
     }
 }

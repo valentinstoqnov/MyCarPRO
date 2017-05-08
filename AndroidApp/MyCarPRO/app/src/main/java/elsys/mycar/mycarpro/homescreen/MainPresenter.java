@@ -30,7 +30,7 @@ public class MainPresenter implements MainContract.Presenter {
                 public void onSuccess(List<Vehicle> vehicles) {
                   //  mVehicleIdsToNames = DataUtils.getVehicleIdsAndNamesToHash(vehicles);
                     mVehicleIds = DataUtils.getVehicleIds(vehicles);
-                    mView.showVehicleNames(DataUtils.getVehicleNames(vehicles));
+                    mView.showVehicleNames(DataUtils.getVehicleIdsAndNames(vehicles));
                     mIsDataMissing = false;
                 }
 

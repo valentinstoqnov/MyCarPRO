@@ -7,7 +7,7 @@ import elsys.mycar.mycarpro.data.model.Refueling;
 
 public interface ListRefuelingsContract {
 
-    interface View extends ListActivitiesContract.View<Presenter> {
+    interface View extends ListActivitiesContract.View<Presenter, Presenter> {
 
         void showRefuelings(List<Refueling> items);
     }

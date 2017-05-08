@@ -21,7 +21,7 @@ public interface VehicleApi {
     @DELETE("/cars/{vehicle_id}")
     Call<String> deleteVehicle(@Path("vehicle_id") String vehicleId);
 
-    @GET("/cars/{vehicle_id}")
+    @GET("/car/{vehicle_id}")
     Call<Vehicle> getVehicleById(@Path("vehicle_id") String vehicleId);
 
     @GET("/cars")
