@@ -25,122 +25,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.data.model.Refueling;
 import elsys.mycar.mycarpro.list.activities.recyclerview.BaseRecyclerViewAdapter;
 import elsys.mycar.mycarpro.list.activities.recyclerview.RecyclerViewDivider;
 import elsys.mycar.mycarpro.data.model.Insurance;
+import elsys.mycar.mycarpro.list.idk.IDKFragment;
 
-public class ListInsurancesFragment extends Fragment implements ListInsurancesContract.View{
-
-    @BindView(R.id.rv_list) RecyclerView recyclerView;
-    @BindView(R.id.textView_list) TextView textViewMessage;
-    @BindView(R.id.progress_bar_list) ProgressBar progressBar;
-    @BindString(R.string.date_price_placeholder) String placeholder;
-
-    private ListInsurancesAdapter mAdapter;
-    private ListInsurancesContract.Presenter mPresenter;
-    private Unbinder mUnbinder;
-
-    public static ListInsurancesFragment newInstance() {
-        return new ListInsurancesFragment();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-        mUnbinder = ButterKnife.bind(this, view);
-        setUpRecyclerView();
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mUnbinder.unbind();
-    }
-
-    @Override
-    public void setPresenter(ListInsurancesContract.Presenter presenter) {
-        this.mPresenter = Preconditions.checkNotNull(presenter);
-    }
-
-    @Override
-    public void showInsurances(List<Insurance> items) {
-        if (recyclerView.getVisibility() == View.GONE) {
-            recyclerView.setVisibility(View.VISIBLE);
-            textViewMessage.setVisibility(View.GONE);
-        }
-        mAdapter.replaceData(items);
-    }
+public class ListInsurancesFragment extends IDKFragment<Insurance> {
 
     @Override
     public void showDetailItemUi(String itemId) {
-        Snackbar.make(getView(), "item click", Snackbar.LENGTH_SHORT).show();
+        showMessage("detail item " + itemId);
     }
 
     @Override
-    public void showNoItemsFound() {
-        recyclerView.setVisibility(View.GONE);
-        String message = getString(R.string.no_items_found);
-        textViewMessage.setVisibility(View.VISIBLE);
-        textViewMessage.setText(message);
-    }
-
-    @Override
-    public void showNoSuchVehicle() {
-        recyclerView.setVisibility(View.GONE);
-        String message = getString(R.string.no_vehicle_found);
-        textViewMessage.setVisibility(View.VISIBLE);
-        textViewMessage.setText(message);
-    }
-
-    @Override
-    public void showProgress() {
-        if (progressBar.getVisibility() != View.VISIBLE) {
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        progressBar.setIndeterminate(true);
-    }
-
-    @Override
-    public void hideProgress() {
-        progressBar.setIndeterminate(false);
-
-        if (progressBar.getVisibility() != View.GONE) {
-            progressBar.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
-    }
-
-    private void setUpRecyclerView() {
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.line_divider);
-        RecyclerViewDivider divider = new RecyclerViewDivider(drawable);
-        recyclerView.addItemDecoration(divider);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        mAdapter = new ListInsurancesAdapter(new ArrayList<Insurance>(0), new BaseRecyclerViewAdapter.ActivitiesItemListener<Insurance>() {
-            @Override
-            public void onItemClick(Insurance insurance) {
-                mPresenter.openInsuranceDetails(insurance);
-            }
-        }, R.drawable.ic_gas_station, placeholder, "lv.");
-
-        recyclerView.setAdapter(mAdapter);
+    protected void initRecyclerViewAdapter() {
+        recyclerViewAdapter = new ListInsurancesAdapter(new ArrayList<Insurance>(0), R.drawable.ic_gas_station);
     }
 }

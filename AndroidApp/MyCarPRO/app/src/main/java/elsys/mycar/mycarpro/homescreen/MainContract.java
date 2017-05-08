@@ -1,6 +1,6 @@
 package elsys.mycar.mycarpro.homescreen;
 
-import java.util.List;
+import java.util.HashMap;
 
 import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.base.BaseView;
@@ -13,7 +13,7 @@ public interface MainContract {
 
         void setSelectedVehicleId(String vehicleId);
 
-        void showVehicleNames(List<String> items);
+        void showVehicleNames(HashMap<String, String> items);
 
         void showAddEditVehicleUi();
 
@@ -57,7 +57,7 @@ public interface MainContract {
 
         void showMessage(String message);
 
-        void showVehicleNames(List<String> items);
+        void showVehicleItemsInDropdown(HashMap<String, String> items);
 
         void showAddEditVehicleUi();
 
@@ -80,11 +80,11 @@ public interface MainContract {
 
         void openAddEditVehicle();
 
-        void openAddEditService(int position);
+        void openAddEditService(String vehicleId);
 
-        void openAddEditInsurance(int position);
+        void openAddEditInsurance(String vehicleId);
 
-        void openAddEditRefueling(int position);
+        void openAddEditRefueling(String vehicleId);
 
         void openVehicles();
 

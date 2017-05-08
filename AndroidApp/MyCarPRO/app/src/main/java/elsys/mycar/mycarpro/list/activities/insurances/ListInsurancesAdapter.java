@@ -8,8 +8,8 @@ import elsys.mycar.mycarpro.data.model.Insurance;
 
 public class ListInsurancesAdapter extends BaseRecyclerViewAdapter<Insurance> {
 
-    public ListInsurancesAdapter(List<Insurance> items, ActivitiesItemListener<Insurance> itemListener, int resId, String datePriceFormat, String currency) {
-        super(items, itemListener, resId, datePriceFormat, currency);
+    public ListInsurancesAdapter(List<Insurance> items, int resId) {
+        super(items, resId);
     }
 
     @Override

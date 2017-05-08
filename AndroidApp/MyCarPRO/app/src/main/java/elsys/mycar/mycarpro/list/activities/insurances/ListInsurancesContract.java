@@ -7,7 +7,7 @@ import elsys.mycar.mycarpro.data.model.Insurance;
 
 public interface ListInsurancesContract {
 
-    interface View extends ListActivitiesContract.View<Presenter> {
+    interface View extends ListActivitiesContract.View<Presenter, Presenter> {
 
         void showInsurances(List<Insurance> items);
     }

@@ -9,9 +9,9 @@ import retrofit2.http.Path;
 
 public interface ServiceApi {
 
-    @POST("/cars/service/{vehicle_id}")
+    @POST("/cars/services/{vehicle_id}")
     Call<Service> saveService(@Path("vehicle_id") String vehicleId, @Body Service service);
 
-    @PUT("/cars/service/{vehicle_id}")
+    @PUT("/cars/services/{vehicle_id}")
     Call<Service> updateService(@Path("vehicle_id") String vehicleId, @Body Service service);
 }

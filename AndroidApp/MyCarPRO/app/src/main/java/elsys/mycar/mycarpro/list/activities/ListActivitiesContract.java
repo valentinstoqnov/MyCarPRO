@@ -1,17 +1,19 @@
 package elsys.mycar.mycarpro.list.activities;
 
+import java.util.List;
+
 import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.base.BaseView;
 
 public interface ListActivitiesContract {
 
-    interface View<T> extends BaseView<T> {
+    interface View<P, E> extends BaseView<P> {
 
         void showDetailItemUi(String itemId);
 
         void showNoItemsFound();
 
-        void showNoSuchVehicle();
+        void showItems(List<E> items);
 
         void showProgress();
 
@@ -22,11 +24,11 @@ public interface ListActivitiesContract {
         boolean isActive();
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter<T> extends BasePresenter{
 
-        void loadItems();
+        void openItemDetails(T item);
 
-        void onVehicleChanged(String vehicleId);
+        void swapDataSet(List<T> items);
 
         boolean isDataMissing();
     }

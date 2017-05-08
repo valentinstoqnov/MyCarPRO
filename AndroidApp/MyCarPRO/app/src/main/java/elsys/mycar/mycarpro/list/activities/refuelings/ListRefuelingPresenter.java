@@ -26,14 +26,14 @@ public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
     @Override
     public void start() {
         if (mIsDataMissing && mView.isActive()) {
-            loadItems();
+           // loadItems();
         }
     }
-
+/*
     @Override
     public void loadItems() {
         if (mVehicleId == null) {
-            mView.showNoSuchVehicle();
+          //  mView.showNoSuchVehicle();
         }else {
             mView.showProgress();
             mVehicleRepository.getVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
@@ -55,11 +55,21 @@ public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
     public void onVehicleChanged(String vehicleId) {
         mVehicleId = vehicleId;
         mIsDataMissing = true;
-    }
+    }*/
 
     @Override
     public void openRefuelingDetails(Refueling refueling) {
         mView.showDetailItemUi(Preconditions.checkNotNull(refueling).getId());
+    }
+
+    @Override
+    public void openItemDetails(Object item) {
+
+    }
+
+    @Override
+    public void swapDataSet(List items) {
+
     }
 
     @Override

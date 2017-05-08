@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,7 +22,8 @@ import com.google.common.base.Preconditions;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -34,8 +34,10 @@ import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceActivity;
 import elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity;
 import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
+import elsys.mycar.mycarpro.list.activities.ActPresenter;
 import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
+import elsys.mycar.mycarpro.list.activities.viewpager.ActFr;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
     private FragmentManagingUtils fragmentManagingUtils;
     private MainContract.HomePresenter mPresenter;
     private AuthenticationUtils mAuthenticationUtils;
+    private VehiclesSpinnerAdapter mSpinnerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
             setSupportActionBar(toolbar);
 
             ButterKnife.bind(this);
+
+            mSpinnerAdapter = new VehiclesSpinnerAdapter(this, R.layout.vehicles_spinner_item, new ArrayList<String>(0));
 
             HomePresenter homePresenter = new HomePresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), this);
             setPresenter(homePresenter);
@@ -109,9 +114,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
     }
 
     @Override
-    public void showVehicleNames(List<String> items) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.vehicles_spinner_item, items);
-        spinner.setAdapter(adapter);
+    public void showVehicleItemsInDropdown(HashMap<String, String> items) {
+        mSpinnerAdapter.replaceData(items);
+        spinner.setAdapter(mSpinnerAdapter);
     }
 
     @Override
@@ -163,10 +168,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
 
     @Override
     public void showActivitiesUi() {
-        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
+        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActFr.TAG);
+        ActFr actFr = (ActFr) fragment;
+        ActPresenter actPresenter = new ActPresenter(getSelectedVehicleId(), actFr, ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), true);
+        actFr.setPresenter(actPresenter);
+       /* Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
         ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), activitiesFragment);
-        activitiesFragment.setPresenter(activitiesPresenter);
+        activitiesFragment.setPresenter(activitiesPresenter);*/
     }
 
     @Override
@@ -186,19 +195,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
                 mPresenter.openAddEditVehicle();
                 break;
             case R.id.fab_main_insurance:
-                mPresenter.openAddEditInsurance(getSelectedVehiclePosition());
+                mPresenter.openAddEditInsurance(getSelectedVehicleId());
                 break;
             case R.id.fab_main_refueling:
-                mPresenter.openAddEditRefueling(getSelectedVehiclePosition());
+                mPresenter.openAddEditRefueling(getSelectedVehicleId());
                 break;
             case R.id.fab_main_service:
-                mPresenter.openAddEditService(getSelectedVehiclePosition());
+                mPresenter.openAddEditService(getSelectedVehicleId());
                 break;
         }
     }
 
-    private int getSelectedVehiclePosition() {
-        return spinner.getSelectedItemPosition();
+    private String getSelectedVehicleId() {
+        return mSpinnerAdapter.getVehicleIdAtPosition(spinner.getSelectedItemPosition());
     }
 
     private void setUpBottomBar() {
