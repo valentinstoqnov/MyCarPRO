@@ -53,6 +53,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                         callback.onFailure();
                     }
                 });*/
+        service.setId(serviceId);
         Call<Service> call = mServiceApi.updateService(vehicleId, service);
         call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(callback));
     }

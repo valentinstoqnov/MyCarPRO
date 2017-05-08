@@ -65,12 +65,15 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
 
             }catch (NumberFormatException e) {
                 mView.showMessage("Price and odometer fields expect numbers only");
+                mView.hideProgress();
             }catch (ParseException | IllegalArgumentException e) {
                 e.printStackTrace();
                 mView.showMessage("Incorrect date");
+                mView.hideProgress();
             }
         }else {
             mView.showMessage("Please, make sure everything is filled!");
+            mView.hideProgress();
         }
     }
 

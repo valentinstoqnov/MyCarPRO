@@ -41,6 +41,7 @@ public class IDKPresenter<T> implements ListActivitiesContract.Presenter<T> {
 
     @Override
     public void swapDataSet(List<T> items) {
+        System.out.print("!!!!!! !!!! !!! idk items size = " + items.size());
         if (mView.isActive()) {
             processDataSet(items);
         }else {

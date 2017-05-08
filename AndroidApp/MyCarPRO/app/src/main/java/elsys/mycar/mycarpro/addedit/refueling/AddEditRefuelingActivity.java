@@ -9,7 +9,9 @@ import android.view.View;
 
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceFragment;
+import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
+import elsys.mycar.mycarpro.util.AuthenticationUtils;
 import elsys.mycar.mycarpro.util.ProviderUtils;
 
 import static elsys.mycar.mycarpro.homescreen.HomeActivity.VEHICLE_ID;
@@ -17,9 +19,12 @@ import static elsys.mycar.mycarpro.homescreen.HomeActivity.VEHICLE_ID;
 
 public class AddEditRefuelingActivity extends AppCompatActivity {
 
+    private AuthenticationUtils mAuthenticationUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuthenticationUtils = new AuthenticationUtils(this);
         setContentView(R.layout.activity_add_edit_refueling);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -31,11 +36,17 @@ public class AddEditRefuelingActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditRefuelingFragment, R.id.frame_layout_add_refueling);
         }
 
-        String vehicleId = getIntent().getStringExtra(VEHICLE_ID);
+        String vehicleId = getIntent().getStringExtra(MainActivity.VEHICLE_ID);
 
-        AddEditRefuelingPresenter addEditRefuelingPresenter = new AddEditRefuelingPresenter(vehicleId, null, addEditRefuelingFragment, ProviderUtils.getVehicleRepository(""), true);
+        String token = mAuthenticationUtils.getToken();
+        AddEditRefuelingPresenter addEditRefuelingPresenter = new AddEditRefuelingPresenter(vehicleId, null, ProviderUtils.getRefuelingRepository(token), addEditRefuelingFragment, ProviderUtils.getVehicleRepository(token), true);
 
         addEditRefuelingFragment.setPresenter(addEditRefuelingPresenter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAuthenticationUtils.checkUser();
+    }
 }

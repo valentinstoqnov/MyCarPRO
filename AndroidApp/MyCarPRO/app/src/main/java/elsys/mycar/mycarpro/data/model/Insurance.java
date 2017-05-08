@@ -1,13 +1,22 @@
 package elsys.mycar.mycarpro.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Insurance {
 
+    @SerializedName("_id")
     private String id;
+    @SerializedName("company_name")
     private String companyName;
+    @SerializedName("price")
     private long price;
+    @SerializedName("odometer")
     private long odometer;
+    @SerializedName("date")
     private String date;
+    @SerializedName("expiration_date")
     private String expirationDate;
+    @SerializedName("note")
     private String note;
 
     public Insurance() {}

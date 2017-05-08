@@ -200,11 +200,31 @@ public class ActFr extends Fragment implements ActivitiesContract.View1 {
 
     @Override
     public void showInsurances(List<Insurance> insurances) {
+        List<Insurance> i = new ArrayList<>();
+        i.add(new Insurance("asd", "asdadawqe", 123, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("asasdasdasdd", "asdadasdawqe", 1232, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("agergsd", "asdadaawdaswqe", 1223, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("aasdaxassd", "asdadawdawqe", 1323, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("afsdsd", "asdadaawdwqe", 123, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("a342sd", "asdawaddawqe", 1223, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("assdfd", "asdaasdddawqe", 1323, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("ahhsd", "asdadaawdwqe", 1232, 312, "asdasda", "1232asda", "asdasda"));
+        insurances.addAll(i);
         mNestedPresenters.get(1).swapDataSet(insurances);
     }
 
     @Override
     public void showRefueling(List<Refueling> refuelings) {
+        List<Refueling> r = new ArrayList<>();
+        r.add(new Refueling("asd", "sadsad", "dasd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("asdasda", "sadasdsad", "daergsd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("asdqwre", "sadasdsad", "dagersd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("asasdd", "sadasdsad", "dasasdd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("ashrfgd", "saasddsad", "dsadasd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("aswerd", "sasdadsad", "dasadsd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("ascvxd", "sadasdsad", "daasdsd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("assdfd", "sadasdsad", "daasdsd", 2.1, 23, 23, "asda"));
+        refuelings.addAll(r);
         mNestedPresenters.get(2).swapDataSet(refuelings);
     }
 }

@@ -4,13 +4,17 @@ import com.google.gson.annotations.SerializedName;
 
 public class Service {
 
+    @SerializedName("_id")
     private String id;
     @SerializedName("type")
     private String type;
     @SerializedName("date_time")
     private String date;
+    @SerializedName("price")
     private long price;
+    @SerializedName("odometer")
     private long odometer;
+    @SerializedName("note")
     private String note;
 
     public Service(String id, String type, String date, long price, long odometer, String note) {

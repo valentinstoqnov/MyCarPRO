@@ -5,10 +5,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.io.IOException;
+import java.sql.Ref;
 
+import elsys.mycar.mycarpro.data.api.InsuranceApi;
+import elsys.mycar.mycarpro.data.api.RefuelingApi;
 import elsys.mycar.mycarpro.data.api.ServiceApi;
 import elsys.mycar.mycarpro.data.api.UserApi;
 import elsys.mycar.mycarpro.data.api.VehicleApi;
+import elsys.mycar.mycarpro.data.model.Refueling;
+import elsys.mycar.mycarpro.data.repository.activities.insurance.InsuranceRepositoryImpl;
+import elsys.mycar.mycarpro.data.repository.activities.refueling.RefuelingRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.activities.service.ServiceRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.user.UserRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl;
@@ -27,6 +33,22 @@ public class ProviderUtils {
 
     public static ServiceRepositoryImpl getServiceRepository(String token) {
         return new ServiceRepositoryImpl(getServiceApi(getRetrofit(token)), token);
+    }
+
+    public static InsuranceRepositoryImpl getInsuranceRepository(String token) {
+        return new InsuranceRepositoryImpl(getInsuranceApi(getRetrofit(token)), token);
+    }
+
+    public static RefuelingRepositoryImpl getRefuelingRepository(String token) {
+        return new RefuelingRepositoryImpl(getRefuelingApi(getRetrofit(token)), token);
+    }
+
+    private static RefuelingApi getRefuelingApi(Retrofit retrofit) {
+        return retrofit.create(RefuelingApi.class);
+    }
+
+    private static InsuranceApi getInsuranceApi(Retrofit retrofit) {
+        return retrofit.create(InsuranceApi.class);
     }
 
     public static UserRepositoryImpl getUserRepository() {

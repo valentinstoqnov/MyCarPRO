@@ -46,6 +46,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
     @Override
     public void updateVehicle(String vehicleId, Vehicle vehicle, final OnSaveOrUpdateCallback<Vehicle> callback) {
+        vehicle.setId(vehicleId);
         Call<Vehicle> call = mVehicleApi.updateVehicle(vehicleId, vehicle);
         call.enqueue(new retrofit2.Callback<Vehicle>() {
             @Override

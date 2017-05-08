@@ -9,17 +9,23 @@ import retrofit2.Call;
 public class RefuelingRepositoryImpl implements RefuelingRepository {
 
     private RefuelingApi mRefuelingApi;
-    private OnSaveOrUpdateCallback<Refueling> mCallback;
+    private String mToken;
 
-    @Override
-    public void saveRefueling(String vehicleId, final Refueling refueling) {
-        Call<Refueling> call = mRefuelingApi.saveRefueling(vehicleId, refueling);
-        call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(mCallback));
+    public RefuelingRepositoryImpl(RefuelingApi mRefuelingApi, String mToken) {
+        this.mRefuelingApi = mRefuelingApi;
+        this.mToken = mToken;
     }
 
     @Override
-    public void updateRefueling(String vehicleId, Refueling refueling) {
+    public void saveRefueling(String vehicleId, final Refueling refueling, OnSaveOrUpdateCallback<Refueling> callback) {
+        Call<Refueling> call = mRefuelingApi.saveRefueling(vehicleId, refueling);
+        call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(callback));
+    }
+
+    @Override
+    public void updateRefueling(String vehicleId, String refuelingId, Refueling refueling, OnSaveOrUpdateCallback<Refueling> callback) {
+        refueling.setId(refuelingId);
         Call<Refueling> call = mRefuelingApi.updateRefueling(vehicleId, refueling);
-        call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(mCallback));
+        call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(callback));
     }
 }

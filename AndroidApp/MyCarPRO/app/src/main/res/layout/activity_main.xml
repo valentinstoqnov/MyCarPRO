@@ -78,18 +78,18 @@
             android:layout_height="wrap_content" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_main_refueling"
-            fab:fab_label="Refueling"
-            fab:fab_size="mini"
-            android:src="@drawable/ic_gas_station"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_main_insurance"
             fab:fab_label="Insurance"
             fab:fab_size="mini"
             android:src="@drawable/ic_insurance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_main_refueling"
+            fab:fab_label="Refueling"
+            fab:fab_size="mini"
+            android:src="@drawable/ic_gas_station"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.github.clans.fab.FloatingActionMenu>
