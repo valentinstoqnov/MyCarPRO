@@ -1,5 +1,6 @@
 package elsys.mycar.mycarpro.list.idk;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.List;
 
@@ -42,6 +45,23 @@ public abstract class IDKFragment<T> extends Fragment implements ListActivitiesC
         mUnbinder = ButterKnife.bind(this, view);
         setUpRecyclerView();
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        final FloatingActionMenu fabMenu = (FloatingActionMenu) getActivity().findViewById(R.id.fab_menu_main);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && fabMenu.getVisibility() == View.VISIBLE) {
+                    fabMenu.hideMenu(true);
+                } else if (dy < 0 && fabMenu.getVisibility() != View.VISIBLE) {
+                    fabMenu.showMenu(true);
+                }
+            }
+        });
     }
 
     @Override

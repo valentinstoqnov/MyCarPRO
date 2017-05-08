@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.list.activities.viewpager.ActivitiesViewPagerAdapter;
+import elsys.mycar.mycarpro.statistics.table.TableFragment;
 
 public class StatisticsFragment extends Fragment {
 
@@ -23,9 +24,10 @@ public class StatisticsFragment extends Fragment {
 
     @BindView(R.id.view_pager_activities) ViewPager viewPager;
 
-    private TabLayout tabLayout;
+    private TabLayout mTabLayout;
     private Unbinder mUnbinder;
-    private TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+
+    private TabLayout.OnTabSelectedListener mTabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             tab.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
@@ -56,7 +58,7 @@ public class StatisticsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout_statistics);
+        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout_statistics);
         setUpTabLayout();
     }
 
@@ -69,13 +71,13 @@ public class StatisticsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        tabLayout.addOnTabSelectedListener(onTabSelectedListener);
+        mTabLayout.addOnTabSelectedListener(mTabSelectedListener);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        tabLayout.removeOnTabSelectedListener(onTabSelectedListener);
+        mTabLayout.removeOnTabSelectedListener(mTabSelectedListener);
     }
 
     private void setUpTabLayout() {
@@ -86,9 +88,9 @@ public class StatisticsFragment extends Fragment {
 
         viewPager.setAdapter(adapter);
 
-        tabLayout.setupWithViewPager(viewPager);
+        mTabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_stats_table).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_statistics).getIcon().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+        mTabLayout.getTabAt(0).setIcon(R.drawable.ic_stats_table).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.ic_statistics).getIcon().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
     }
 }

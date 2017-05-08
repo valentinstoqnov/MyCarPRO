@@ -29,7 +29,7 @@
 
             <android.support.design.widget.TextInputEditText
                 android:textColorLink="@android:color/white"
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@android:color/white"
                 android:inputType="textPersonName"
                 android:maxLength="254"
                 android:maxLines="1"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@android:color/white"
                 android:inputType="textPassword"
                 android:maxLength="32"
                 android:textColorHighlight="@android:color/white"

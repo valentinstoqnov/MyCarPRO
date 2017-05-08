@@ -13,15 +13,16 @@ public class ActivitiesRepositoryUtils {
         return new Callback<T>() {
             @Override
             public void onResponse(Call<T> call, Response<T> response) {
+                System.out.println("msg=" + response.message());
+                try {
+                    System.out.println("err body=" + response.errorBody().string());
+                } catch (IOException | NullPointerException e) {
+                    e.printStackTrace();
+                }
                 if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
                 }else {
-                    System.out.println("msg=" + response.message());
-                    try {
-                        System.out.println("err body=" + response.errorBody().string());
-                    } catch (IOException | NullPointerException e) {
-                        e.printStackTrace();
-                    }
+
                     callback.onFailure();
                 }
             }

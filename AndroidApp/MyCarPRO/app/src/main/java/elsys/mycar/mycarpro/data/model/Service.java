@@ -1,9 +1,13 @@
 package elsys.mycar.mycarpro.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Service {
 
     private String id;
+    @SerializedName("type")
     private String type;
+    @SerializedName("date_time")
     private String date;
     private long price;
     private long odometer;

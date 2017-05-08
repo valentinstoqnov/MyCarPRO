@@ -186,8 +186,16 @@ public class ActFr extends Fragment implements ActivitiesContract.View1 {
         List<Service> s = new ArrayList<>();
         s.add(new Service("asd", "asdadsdsa", "asdsd", 213, 2132, "asdsda"));
         s.add(new Service("asasdd", "asdaasdasddsdsa", "asdsd", 213, 2132, "asdsda"));
-        s.add(new Service("asgsfd", "asdaawqeqdsdsa", "asdsd", 213, 2132, "asdsda"));
-        mNestedPresenters.get(0).swapDataSet(s);
+        s.add(new Service("asgsfd", "asdaawqe2qdsdsa", "asdsd", 213, 2132, "asdsda"));
+        s.add(new Service("asdasda", "asdads2dsa", "asdsd", 213, 2132, "asdsda"));
+        s.add(new Service("asasdd", "asdaasd12asddsdsa", "asdsd", 213, 2132, "asdsda"));
+        s.add(new Service("asggersfd", "asdaawq123eqdsdsa", "asdsd", 213, 2132, "asdsda"));
+        s.add(new Service("asadwqdad", "asdadsqwedsa", "asdsd", 213, 2132, "asdsda"));
+        s.add(new Service("asaasdasdd", "asdaasd12asddsdsa", "asdsd", 213, 2132, "asdsda"));
+        s.add(new Service("asgasdbsfd", "asdaaw123qeqdsdsa", "asdsd", 213, 2132, "asdsda"));
+        System.out.println("services size = " + services.size());
+        services.addAll(s);
+        mNestedPresenters.get(0).swapDataSet(services);
     }
 
     @Override

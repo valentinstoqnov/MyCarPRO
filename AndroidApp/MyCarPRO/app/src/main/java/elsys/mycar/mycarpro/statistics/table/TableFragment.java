@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.statistics;
+package elsys.mycar.mycarpro.statistics.table;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -12,8 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@drawable/ic_service"
-        app:civ_fill_color="@android:color/holo_purple" />
+        app:civ_fill_color="#757575" />
 
     <TextView
         android:text="Lights"

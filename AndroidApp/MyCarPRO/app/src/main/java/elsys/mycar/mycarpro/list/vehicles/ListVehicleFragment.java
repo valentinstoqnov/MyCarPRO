@@ -50,9 +50,9 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0 && fab.isShown()) {
+                if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
                     fab.hide(true);
-                } else if (dy < 0 && fab.isHidden()) {
+                } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
                     fab.show(true);
                 }
             }
@@ -95,10 +95,6 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
         mAdapter = new ListVehicleAdapter(new ArrayList<Vehicle>(0), new ListVehicleAdapter.OnCardActionListener() {
             @Override
             public void onItemViewClick(Vehicle vehicle) {
-                if (vehicle.getId() == null) {
-                    System.out.println("on itemViewClick vehicle id = null");
-                    System.out.println(vehicle);
-                }
                 mPresenter.openVehicleDetails(vehicle);
             }
         }, format);

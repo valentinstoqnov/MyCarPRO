@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#C8E6C9"
+    android:background="#BCAAA4"
     android:gravity="bottom|center_horizontal"
     android:padding="16dp"
     tools:context="elsys.mycar.mycarpro.profile.ProfileFragment">

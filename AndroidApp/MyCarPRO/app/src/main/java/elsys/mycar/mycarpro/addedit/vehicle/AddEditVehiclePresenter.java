@@ -90,13 +90,16 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
 
             } catch (NumberFormatException e) {
                 e.printStackTrace();
+                mView.hideProgress();
                 mView.showMessage("Odometer and horse power must be numeric");
             } catch (ParseException | IllegalArgumentException e) {
                 e.printStackTrace();
                 mView.showMessage("Incorrect date");
+                mView.hideProgress();
             }
         }else {
             mView.showMessage("Please, make sure everything is filled!");
+            mView.hideProgress();
         }
     }
 

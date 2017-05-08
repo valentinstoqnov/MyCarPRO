@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
+    android:background="#9E9E9E"
     tools:context="elsys.mycar.mycarpro.registerscreen.RegisterActivity">
 
     <TextView
         android:layout_marginTop="32dp"
         android:textSize="40sp"
         android:textColor="@color/colorAccent"
-        android:gravity="center"
+        android:layout_gravity="top"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_up"/>
