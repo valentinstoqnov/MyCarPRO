@@ -1,7 +1,6 @@
 package elsys.mycar.mycarpro.statistics.table;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import elsys.mycar.mycarpro.data.model.Insurance;
 import elsys.mycar.mycarpro.data.model.Refueling;
@@ -9,21 +8,14 @@ import elsys.mycar.mycarpro.data.model.Service;
 import elsys.mycar.mycarpro.data.model.Vehicle;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.PriceUtils;
-import io.reactivex.Maybe;
-import io.reactivex.MaybeObserver;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-import rx.observables.MathObservable;
 
 public class TablePresenter implements TableContract.Presenter, VehicleRepository.OnVehiclesFetchedCallback {
 

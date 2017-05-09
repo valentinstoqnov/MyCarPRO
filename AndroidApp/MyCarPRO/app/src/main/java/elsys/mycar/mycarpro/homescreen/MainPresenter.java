@@ -4,33 +4,30 @@ import com.google.common.base.Preconditions;
 
 import java.util.List;
 
-import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DataUtils;
 
 public class MainPresenter implements MainContract.Presenter {
 
-   // private HashBiMap<String, String> mVehicleIdsToNames;
-    private List<String> mVehicleIds;
+    //private List<String> mVehicleIds;
     private VehicleRepository mVehicleRepository;
     private MainContract.View mView;
-    private String mVehicleId;
     private boolean mIsDataMissing = true;
 
-    public MainPresenter(VehicleRepository vehicleRepository, MainContract.View view) {
-        mVehicleRepository = Preconditions.checkNotNull(vehicleRepository);
-        mView = Preconditions.checkNotNull(view);
+    public MainPresenter(VehicleRepository mVehicleRepository, MainContract.View mView) {
+        this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
+        this.mView = Preconditions.checkNotNull(mView);
     }
 
     @Override
     public void start() {
-        if (mIsDataMissing) {
+        //if (mIsDataMissing) {
             mVehicleRepository.getVehicles(new VehicleRepository.OnVehiclesFetchedCallback() {
                 @Override
                 public void onSuccess(List<Vehicle> vehicles) {
-                  //  mVehicleIdsToNames = DataUtils.getVehicleIdsAndNamesToHash(vehicles);
-                    mVehicleIds = DataUtils.getVehicleIds(vehicles);
-                    mView.showVehicleNames(DataUtils.getVehicleIdsAndNames(vehicles));
+                   // mVehicleIds = DataUtils.getVehicleIds(vehicles);
+                    mView.showVehicleItemsInDropdown(DataUtils.getVehicleIdsAndNames(vehicles));
                     mIsDataMissing = false;
                 }
 
@@ -39,7 +36,7 @@ public class MainPresenter implements MainContract.Presenter {
                     mView.showMessage("Couldn't get your vehicles");
                 }
             });
-        }
+       // }
     }
 
     @Override
@@ -48,18 +45,18 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void openAddEditService() {
-        mView.showAddEditServiceUi(mVehicleId);
+    public void openAddEditService(String vehicleId) {
+        mView.showAddEditServiceUi(vehicleId);
     }
 
     @Override
-    public void openAddEditInsurance() {
-        mView.showAddEditInsuranceUi(mVehicleId);
+    public void openAddEditInsurance(String vehicleId) {
+        mView.showAddEditInsuranceUi(vehicleId);
     }
 
     @Override
-    public void openAddEditRefueling() {
-        mView.showAddEditRefuelingUi(mVehicleId);
+    public void openAddEditRefueling(String vehicleId) {
+        mView.showAddEditRefuelingUi(vehicleId);
     }
 
     @Override
@@ -83,17 +80,11 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void onSelectedVehicleChanged(int position) {
-       // String vehicleId = mVehicleRepository.getVehicleIdByName(vehicleName);
-       // mView.setSelectedVehicleId(vehicleId);
-        //mVehicleId = vehicleId;
-
-        mVehicleId = mVehicleIds.get(position);
-        mView.setSelectedVehicleId(mVehicleId);
-
-
-        //TODO: SEE THIS TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //TODO: adding and removing or optimizing those spinner item selected listeners making sure those vehicle ids are requested at the right time build view ui for detail view of given item
-
+    public void setDataMissing() {
+        mIsDataMissing = true;
     }
+
+   /* private String getVehicleIdByPosition(int position) {
+        return mVehicleIds.get(position);
+    }*/
 }

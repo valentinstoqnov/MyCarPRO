@@ -1,10 +1,8 @@
-package elsys.mycar.mycarpro.list.idk;
+package elsys.mycar.mycarpro.list.base;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +25,7 @@ import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.list.activities.recyclerview.BaseRecyclerViewAdapter;
 import elsys.mycar.mycarpro.list.activities.recyclerview.RecyclerViewDivider;
 
-public abstract class IDKFragment<T> extends Fragment implements ListActivitiesContract.View<ListActivitiesContract.Presenter<T>, T> {
+public abstract class BaseActivitiesFragment<T> extends Fragment implements ListActivitiesContract.View<ListActivitiesContract.Presenter<T>, T> {
 
     @BindView(R.id.rv_list) RecyclerView recyclerView;
     @BindView(R.id.progress_bar_list) ProgressBar progressBar;

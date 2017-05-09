@@ -34,7 +34,7 @@
             android:id="@+id/btn_add_vehicle_color"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/photo"
+            android:text="@string/color"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/btn_add_vehicle_manufacture_date"
             app:layout_constraintRight_toLeftOf="@+id/btn_add_vehicle_fuel_tank" />
@@ -55,7 +55,7 @@
         <View
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_add_vehicle_manufacture_date"
+            app:layout_constraintTop_toBottomOf="@id/btn_add_vehicle_fuel_tank"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/colorPrimary"/>

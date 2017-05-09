@@ -2,21 +2,17 @@ package elsys.mycar.mycarpro.list.vehicles;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.data.model.Vehicle;
-import elsys.mycar.mycarpro.util.DateUtils;
 
 public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.ViewHolder> implements ListVehicleContract.Adapter{
 
@@ -32,6 +28,7 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
 
     @Override
     public void addVehicles(List<Vehicle> vehicles) {
+        mVehicles.clear();
         mVehicles.addAll(vehicles);
         this.notifyDataSetChanged();
     }

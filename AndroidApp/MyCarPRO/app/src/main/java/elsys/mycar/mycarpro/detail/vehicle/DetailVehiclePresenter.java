@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.detail;
+package elsys.mycar.mycarpro.detail.vehicle;
 
 import com.google.common.base.Preconditions;
 
@@ -9,7 +9,7 @@ import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 
 public class DetailVehiclePresenter implements DetailVehicleContract.Presenter, VehicleRepository.OnVehicleFetchedCallback {
 
-    private static final String FUEL_TANK_FORMAT = "Fuel tank: \n\tType: %s,\n\tCapacity: %d L,\n\tConsumption: %f";
+    private static final String FUEL_TANK_FORMAT = "Fuel tank: \nType: %s,\nCapacity: %d L,\nConsumption: %f";
 
     private DetailVehicleContract.View mView;
     private VehicleRepository mVehicleRepository;
@@ -45,6 +45,11 @@ public class DetailVehiclePresenter implements DetailVehicleContract.Presenter, 
     }
 
     @Override
+    public void openEditVehicleUi() {
+        mView.showEditVehicleUi(mVehicleId);
+    }
+
+    @Override
     public boolean isDataMissing() {
         return mIsDataMissing;
     }
@@ -57,12 +62,12 @@ public class DetailVehiclePresenter implements DetailVehicleContract.Presenter, 
         vehicle = Preconditions.checkNotNull(vehicle, "attempt to populate null vehicle");
 
         mView.setColor(vehicle.getColor());
-        mView.setName(vehicle.getName());
-        mView.setMake(vehicle.getMake());
-        mView.setModel(vehicle.getModel());
-        mView.setManufactureDate(vehicle.getManufactureDate());
-        mView.setHorsePower(String.valueOf(vehicle.getHorsePower()));
-
+        mView.setName("Name: " + vehicle.getName());
+        mView.setMake("Make: " + vehicle.getMake());
+        mView.setModel("Model: " + vehicle.getModel());
+        mView.setManufactureDate("Manufacture date: " + vehicle.getManufactureDate());
+        mView.setHorsePower("Horse power" + String.valueOf(vehicle.getHorsePower()));
+        mView.setOdometer("Odometer: " + vehicle.getOdometer());
         String fuelTank = String.format(Locale.US, FUEL_TANK_FORMAT, vehicle.getFuelType(), vehicle.getFuelTankCapacity(), vehicle.getFuelConsumption());
         mView.setFuelTank(fuelTank);
 

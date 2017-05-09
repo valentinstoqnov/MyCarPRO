@@ -2,9 +2,9 @@ package elsys.mycar.mycarpro.list.activities.insurances;
 
 import java.util.List;
 
+import elsys.mycar.mycarpro.data.model.Insurance;
 import elsys.mycar.mycarpro.list.activities.recyclerview.BaseRecyclerViewAdapter;
 import elsys.mycar.mycarpro.list.activities.recyclerview.ItemViewHolder;
-import elsys.mycar.mycarpro.data.model.Insurance;
 
 public class ListInsurancesAdapter extends BaseRecyclerViewAdapter<Insurance> {
 

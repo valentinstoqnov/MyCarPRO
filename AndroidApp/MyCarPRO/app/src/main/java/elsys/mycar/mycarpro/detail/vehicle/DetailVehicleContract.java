@@ -1,6 +1,4 @@
-package elsys.mycar.mycarpro.detail;
-
-import android.graphics.Bitmap;
+package elsys.mycar.mycarpro.detail.vehicle;
 
 import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.base.BaseView;
@@ -27,10 +25,16 @@ public interface DetailVehicleContract {
 
         void setFuelTank(String fuelTank);
 
+        void setOdometer(String odometer);
+
         void setNote(String note);
+
+        void showEditVehicleUi(String id);
     }
 
     interface Presenter extends BasePresenter {
+
+        void openEditVehicleUi();
 
         boolean isDataMissing();
     }

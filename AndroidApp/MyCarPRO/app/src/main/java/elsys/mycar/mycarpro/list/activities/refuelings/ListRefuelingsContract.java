@@ -2,8 +2,8 @@ package elsys.mycar.mycarpro.list.activities.refuelings;
 
 import java.util.List;
 
-import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.data.model.Refueling;
+import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 
 public interface ListRefuelingsContract {
 

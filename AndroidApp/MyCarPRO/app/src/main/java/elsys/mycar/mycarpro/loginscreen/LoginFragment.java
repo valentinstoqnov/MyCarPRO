@@ -3,9 +3,9 @@ package elsys.mycar.mycarpro.loginscreen;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +22,8 @@ import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.registerscreen.RegisterActivity;
 import elsys.mycar.mycarpro.registerscreen.RegisterFragment;
-import elsys.mycar.mycarpro.util.TextInputUtils;
 import elsys.mycar.mycarpro.util.AuthenticationUtils;
+import elsys.mycar.mycarpro.util.TextInputUtils;
 
 public class LoginFragment extends Fragment implements LoginContract.View {
 

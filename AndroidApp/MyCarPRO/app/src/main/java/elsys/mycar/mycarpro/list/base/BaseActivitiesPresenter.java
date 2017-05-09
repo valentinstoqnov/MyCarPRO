@@ -1,4 +1,4 @@
-package elsys.mycar.mycarpro.list.idk;
+package elsys.mycar.mycarpro.list.base;
 
 import com.google.common.base.Preconditions;
 
@@ -9,12 +9,12 @@ import elsys.mycar.mycarpro.data.model.Refueling;
 import elsys.mycar.mycarpro.data.model.Service;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 
-public class IDKPresenter<T> implements ListActivitiesContract.Presenter<T> {
+public class BaseActivitiesPresenter<T> implements ListActivitiesContract.Presenter<T> {
 
     private ListActivitiesContract.View<ListActivitiesContract.Presenter<T>, T> mView;
     private boolean mIsDataMissing;
 
-    public IDKPresenter(ListActivitiesContract.View<ListActivitiesContract.Presenter<T>, T> mView, boolean mIsDataMissing) {
+    public BaseActivitiesPresenter(ListActivitiesContract.View<ListActivitiesContract.Presenter<T>, T> mView, boolean mIsDataMissing) {
         this.mView = mView;
         this.mIsDataMissing = mIsDataMissing;
     }

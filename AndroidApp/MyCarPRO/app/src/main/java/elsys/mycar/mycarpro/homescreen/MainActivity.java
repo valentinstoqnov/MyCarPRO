@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Window;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -34,19 +33,17 @@ import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceActivity;
 import elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity;
 import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
-import elsys.mycar.mycarpro.list.activities.ActPresenter;
 import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
-import elsys.mycar.mycarpro.list.activities.viewpager.ActFr;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
+import elsys.mycar.mycarpro.util.AuthenticationUtils;
 import elsys.mycar.mycarpro.util.FragmentManagingUtils;
 import elsys.mycar.mycarpro.util.ProviderUtils;
-import elsys.mycar.mycarpro.util.AuthenticationUtils;
 
-public class MainActivity extends AppCompatActivity implements MainContract.HomewView {
+public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     public static final String VEHICLE_ID = "VEHICLE_ID";
     public static final int REQUEST_CODE_NEW_VEHICLE = 1232;
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
     @BindColor(R.color.colorDarkProfileTabSelected) int profileDarkTabColor;
 
     private FragmentManagingUtils fragmentManagingUtils;
-    private MainContract.HomePresenter mPresenter;
+    private MainContract.Presenter mPresenter;
     private AuthenticationUtils mAuthenticationUtils;
     private VehiclesSpinnerAdapter mSpinnerAdapter;
 
@@ -84,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
 
             mSpinnerAdapter = new VehiclesSpinnerAdapter(this, R.layout.vehicles_spinner_item, new ArrayList<String>(0));
 
-            HomePresenter homePresenter = new HomePresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), this);
-            setPresenter(homePresenter);
+            MainPresenter mainPresenter = new MainPresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), this);
+            setPresenter(mainPresenter);
 
             fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
 
@@ -104,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
     }
 
     @Override
-    public void setPresenter(MainContract.HomePresenter presenter) {
+    public void setPresenter(MainContract.Presenter presenter) {
         mPresenter = Preconditions.checkNotNull(presenter);
     }
 
@@ -168,10 +165,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
 
     @Override
     public void showActivitiesUi() {
-        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActFr.TAG);
-        ActFr actFr = (ActFr) fragment;
-        ActPresenter actPresenter = new ActPresenter(getSelectedVehicleId(), actFr, ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), true);
-        actFr.setPresenter(actPresenter);
+        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
+        ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
+        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(getSelectedVehicleId(), activitiesFragment, ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), true);
+        activitiesFragment.setPresenter(activitiesPresenter);
        /* Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
         ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), activitiesFragment);
@@ -289,11 +286,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
     private void switchSpinnerVisibility(int tabId) {
         if (tabId == R.id.tab_activities || tabId == R.id.tab_statistics) {
             if (!spinner.isShown()) {
-                spinner.setVisibility(View.VISIBLE);
+                spinner.setVisibility(android.view.View.VISIBLE);
             }
         }else {
             if (spinner.isShown()) {
-                spinner.setVisibility(View.GONE);
+                spinner.setVisibility(android.view.View.GONE);
             }
         }
     }
@@ -328,25 +325,25 @@ public class MainActivity extends AppCompatActivity implements MainContract.Home
 
     private void showActivitiesTabLayout() {
         if (!tabLayoutActivities.isShown()) {
-            tabLayoutStatistics.setVisibility(View.GONE);
-            tabLayoutActivities.setVisibility(View.VISIBLE);
+            tabLayoutStatistics.setVisibility(android.view.View.GONE);
+            tabLayoutActivities.setVisibility(android.view.View.VISIBLE);
         }
     }
 
     private void showStatisticsTabLayout() {
         if (!tabLayoutStatistics.isShown()) {
-            tabLayoutActivities.setVisibility(View.GONE);
-            tabLayoutStatistics.setVisibility(View.VISIBLE);
+            tabLayoutActivities.setVisibility(android.view.View.GONE);
+            tabLayoutStatistics.setVisibility(android.view.View.VISIBLE);
         }
     }
 
     private void hideTabs() {
         if (tabLayoutActivities.isShown()) {
-            tabLayoutActivities.setVisibility(View.GONE);
+            tabLayoutActivities.setVisibility(android.view.View.GONE);
         }
 
         if (tabLayoutStatistics.isShown()) {
-            tabLayoutStatistics.setVisibility(View.GONE);
+            tabLayoutStatistics.setVisibility(android.view.View.GONE);
         }
     }
 }

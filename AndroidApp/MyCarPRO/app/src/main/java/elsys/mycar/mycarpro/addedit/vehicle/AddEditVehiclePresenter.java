@@ -2,19 +2,20 @@ package elsys.mycar.mycarpro.addedit.vehicle;
 
 import com.google.common.base.Preconditions;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
 import elsys.mycar.mycarpro.data.Data;
+import elsys.mycar.mycarpro.data.model.Vehicle;
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
-import elsys.mycar.mycarpro.data.model.Vehicle;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 
 public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter, OnSaveOrUpdateCallback<Vehicle> {
 
-    private static final String FUEL_TANK_FORMAT = "%s%nCap.:%d%nCons.:%f";
+    private static final String FUEL_TANK_FORMAT = "%s%nCap.:%d%nCons.:%s";
 
     private String mVehicleId;
     private VehicleRepository mVehicleRepository;
@@ -74,7 +75,7 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
     @Override
     public void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note) {
         mView.showProgress();
-        if (StringUtils.checkNotNullOrEmpty(name, make, model, manufactureDate, odometer, horsePower)) {
+        if (StringUtils.checkNotNullOrEmpty(name, make, model, manufactureDate, odometer, horsePower, note, mFuelType)) {
             try {
                 String parsedDate = DateUtils.parseValidTextDateFromText(manufactureDate);
                 int parsedOdometer = Integer.parseInt(odometer);
@@ -127,6 +128,9 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
             mView.setModel(vehicle.getModel());
             mView.setFuelTank(formatFuelTank(vehicle.getFuelType(), vehicle.getFuelTankCapacity(), vehicle.getFuelConsumption()));
             mView.setColor(vehicle.getColor());
+            mView.setOdometer(String.valueOf(vehicle.getOdometer()));
+            mView.setHorsePower(String.valueOf(vehicle.getHorsePower()));
+            mView.setNote(vehicle.getNote());
             mIsDataMissing = false;
         }
     }
@@ -136,7 +140,8 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
     }
 
     private String formatFuelTank(String fuelType, int capacity, double consumption) {
-        return String.format(Locale.US, FUEL_TANK_FORMAT, fuelType, capacity, consumption);
+        DecimalFormat df = new DecimalFormat("###.#");
+        return String.format(Locale.US, FUEL_TANK_FORMAT, fuelType, capacity, df.format(consumption));
     }
 
     @Override

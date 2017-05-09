@@ -1,7 +1,7 @@
 package elsys.mycar.mycarpro.registerscreen;
 
-import elsys.mycar.mycarpro.data.repository.user.UserRepository;
 import elsys.mycar.mycarpro.data.model.User;
+import elsys.mycar.mycarpro.data.repository.user.UserRepository;
 import elsys.mycar.mycarpro.util.StringUtils;
 
 

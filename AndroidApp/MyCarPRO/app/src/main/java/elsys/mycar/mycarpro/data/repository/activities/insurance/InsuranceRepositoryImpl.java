@@ -3,8 +3,8 @@ package elsys.mycar.mycarpro.data.repository.activities.insurance;
 import com.google.gson.Gson;
 
 import elsys.mycar.mycarpro.data.api.InsuranceApi;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.data.model.Insurance;
+import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.util.ActivitiesRepositoryUtils;
 import retrofit2.Call;
 

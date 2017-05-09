@@ -12,16 +12,6 @@ public interface ActivitiesContract {
 
     interface View extends BaseView<Presenter> {
 
-        void showVehicleContent(String vehicleId);
-    }
-
-    interface Presenter extends BasePresenter {
-
-        void onVehicleChange(String vehicleName);
-    }
-
-    interface View1 extends BaseView<Presenter1> {
-
         void showMessage(String message);
 
         void showServices(List<Service> services);
@@ -30,10 +20,9 @@ public interface ActivitiesContract {
 
         void showRefueling(List<Refueling> refuelings);
 
-        //void showVehicleActivities(List<Service> services, List<Insurance> insurances, List<Refueling> refuelings);
     }
 
-    interface Presenter1 extends BasePresenter {
+    interface Presenter extends BasePresenter {
 
         void onVehicleChanged(String vehicleId);
 

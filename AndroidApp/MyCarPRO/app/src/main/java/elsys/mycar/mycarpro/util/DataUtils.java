@@ -1,9 +1,5 @@
 package elsys.mycar.mycarpro.util;
 
-import android.util.Log;
-
-import com.google.common.collect.HashBiMap;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

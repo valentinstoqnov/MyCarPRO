@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="elsys.mycar.mycarpro.detail.DetailVehicleActivity">
+    tools:context="elsys.mycar.mycarpro.detail.vehicle.DetailVehicleActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_detail_vehicle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
-        android:background="@color/colorAccent"
+        android:background="#33000000"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -32,7 +32,6 @@
                 android:layout_height="match_parent" />-->
 
             <android.support.v7.widget.Toolbar
-                android:background="#33000000"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -51,6 +50,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar_detail_vehicle"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        android:src="@drawable/ic_edit" />
 
 </android.support.design.widget.CoordinatorLayout>

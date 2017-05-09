@@ -1,20 +1,14 @@
 package elsys.mycar.mycarpro.addedit.insurance;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-
-import com.github.clans.fab.FloatingActionButton;
 
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 import elsys.mycar.mycarpro.util.AuthenticationUtils;
 import elsys.mycar.mycarpro.util.ProviderUtils;
-
-import static elsys.mycar.mycarpro.homescreen.HomeActivity.VEHICLE_ID;
 
 public class AddEditInsuranceActivity extends AppCompatActivity {
 

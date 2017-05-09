@@ -7,8 +7,8 @@ import android.support.v7.widget.Toolbar;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
-import elsys.mycar.mycarpro.util.ProviderUtils;
 import elsys.mycar.mycarpro.util.AuthenticationUtils;
+import elsys.mycar.mycarpro.util.ProviderUtils;
 
 public class AddEditServiceActivity extends AppCompatActivity {
 

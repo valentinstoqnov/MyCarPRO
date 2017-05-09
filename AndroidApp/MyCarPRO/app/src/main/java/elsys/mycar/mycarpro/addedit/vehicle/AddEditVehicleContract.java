@@ -31,6 +31,12 @@ public interface AddEditVehicleContract {
 
         void setColor(int color);
 
+        void setOdometer(String odometer);
+
+        void setHorsePower(String horsePower);
+
+        void setNote(String note);
+
         void setFuelTank(String fuelTank);
 
         boolean isActive();

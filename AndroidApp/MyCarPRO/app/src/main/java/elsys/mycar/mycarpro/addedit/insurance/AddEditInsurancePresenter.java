@@ -1,9 +1,6 @@
 package elsys.mycar.mycarpro.addedit.insurance;
 
-import com.google.common.base.Preconditions;
-
 import java.text.ParseException;
-import java.util.UUID;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.model.Insurance;

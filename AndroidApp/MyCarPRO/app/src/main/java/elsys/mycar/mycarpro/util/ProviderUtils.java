@@ -5,14 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.io.IOException;
-import java.sql.Ref;
 
 import elsys.mycar.mycarpro.data.api.InsuranceApi;
 import elsys.mycar.mycarpro.data.api.RefuelingApi;
 import elsys.mycar.mycarpro.data.api.ServiceApi;
 import elsys.mycar.mycarpro.data.api.UserApi;
 import elsys.mycar.mycarpro.data.api.VehicleApi;
-import elsys.mycar.mycarpro.data.model.Refueling;
 import elsys.mycar.mycarpro.data.repository.activities.insurance.InsuranceRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.activities.refueling.RefuelingRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.activities.service.ServiceRepositoryImpl;

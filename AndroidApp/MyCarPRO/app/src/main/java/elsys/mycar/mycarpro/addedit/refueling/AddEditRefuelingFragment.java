@@ -2,10 +2,10 @@ package elsys.mycar.mycarpro.addedit.refueling;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.addedit.service.AddEditServiceFragment;
 import elsys.mycar.mycarpro.util.DatePickerUtils;
-import elsys.mycar.mycarpro.util.StringUtils;
 import elsys.mycar.mycarpro.util.TextInputUtils;
 
 public class AddEditRefuelingFragment extends Fragment implements AddEditRefuelingContract.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {

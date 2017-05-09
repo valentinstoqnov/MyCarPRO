@@ -1,10 +1,10 @@
 package elsys.mycar.mycarpro.addedit.insurance;
 
 import android.app.DatePickerDialog;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +25,10 @@ import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.util.DatePickerUtils;
 
-import static elsys.mycar.mycarpro.util.TextInputUtils.getTextFromTil;
-import static elsys.mycar.mycarpro.util.TextInputUtils.setTextToTil;
 import static elsys.mycar.mycarpro.util.TextInputUtils.getTextFromAutoComplete;
+import static elsys.mycar.mycarpro.util.TextInputUtils.getTextFromTil;
 import static elsys.mycar.mycarpro.util.TextInputUtils.setTextToAutoComplete;
+import static elsys.mycar.mycarpro.util.TextInputUtils.setTextToTil;
 
 public class AddEditInsuranceFragment extends Fragment implements AddEditInsuranceContract.View {
 

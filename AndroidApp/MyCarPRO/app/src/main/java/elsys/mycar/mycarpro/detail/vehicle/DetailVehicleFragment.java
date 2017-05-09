@@ -1,9 +1,9 @@
-package elsys.mycar.mycarpro.detail;
+package elsys.mycar.mycarpro.detail.vehicle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
+import elsys.mycar.mycarpro.homescreen.MainActivity;
 
 public class DetailVehicleFragment extends Fragment implements DetailVehicleContract.View{
 
@@ -51,6 +53,12 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
         super.onActivityCreated(savedInstanceState);
         mAppBarLayout = (AppBarLayout) getActivity().findViewById(R.id.app_bar_detail_vehicle);
         mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        getActivity().findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.openEditVehicleUi();
+            }
+        });
     }
 
     @Override
@@ -106,8 +114,20 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
     }
 
     @Override
+    public void setOdometer(String odometer) {
+        tvOdometer.setText(odometer);
+    }
+
+    @Override
     public void setNote(String note) {
         tvNote.setText(note);
+    }
+
+    @Override
+    public void showEditVehicleUi(String id) {
+        Intent intent = new Intent(getActivity(), AddEditVehicleActivity.class);
+        intent.putExtra(MainActivity.VEHICLE_ID, id);
+        startActivity(intent);
     }
 
     @Override

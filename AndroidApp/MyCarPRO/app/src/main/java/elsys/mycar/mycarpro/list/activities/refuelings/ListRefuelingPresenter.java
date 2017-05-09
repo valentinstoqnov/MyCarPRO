@@ -4,9 +4,8 @@ import com.google.common.base.Preconditions;
 
 import java.util.List;
 
-import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.data.model.Refueling;
-import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 
 public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
 

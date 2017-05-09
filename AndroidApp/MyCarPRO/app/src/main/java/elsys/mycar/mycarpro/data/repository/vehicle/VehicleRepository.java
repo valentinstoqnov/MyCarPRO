@@ -2,8 +2,8 @@ package elsys.mycar.mycarpro.data.repository.vehicle;
 
 import java.util.List;
 
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 
 public interface VehicleRepository {
 

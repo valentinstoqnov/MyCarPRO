@@ -1,9 +1,7 @@
 package elsys.mycar.mycarpro.list.activities.services;
 
-import java.util.List;
-
-import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 import elsys.mycar.mycarpro.data.model.Service;
+import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 
 public interface ListServicesContract {
 

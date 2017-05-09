@@ -2,10 +2,10 @@ package elsys.mycar.mycarpro.addedit.service;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 import com.google.common.base.Preconditions;
 
 import java.util.List;
@@ -26,9 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceContract;
 import elsys.mycar.mycarpro.util.DatePickerUtils;
-import elsys.mycar.mycarpro.util.StringUtils;
 import elsys.mycar.mycarpro.util.TextInputUtils;
 
 public class AddEditServiceFragment extends Fragment implements AddEditServiceContract.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {

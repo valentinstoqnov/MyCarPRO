@@ -18,13 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.detail.DetailVehicleActivity;
 import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.detail.vehicle.DetailVehicleActivity;
+import elsys.mycar.mycarpro.util.AuthenticationUtils;
 
 public class ListVehicleFragment extends Fragment implements ListVehicleContract.View {
 
     public static final String TAG = "ListVehicleFragment";
-
+    private AuthenticationUtils mAuthenticationUtils;
     private RecyclerView recyclerView;
     private ListVehicleContract.Presenter mPresenter;
     private ListVehicleAdapter mAdapter;
@@ -35,11 +36,19 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mAuthenticationUtils = new AuthenticationUtils(getActivity());
         View view = inflater.inflate(R.layout.fragment_list_vehicle, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list_vehicles);
         setUpRecyclerView();
-        mPresenter.start();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAuthenticationUtils.checkUser()) {
+            mPresenter.start();
+        }
     }
 
     @Override

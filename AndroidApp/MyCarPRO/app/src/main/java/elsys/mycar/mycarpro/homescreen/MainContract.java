@@ -11,52 +11,6 @@ public interface MainContract {
 
         void showMessage(String message);
 
-        void setSelectedVehicleId(String vehicleId);
-
-        void showVehicleNames(HashMap<String, String> items);
-
-        void showAddEditVehicleUi();
-
-        void showAddEditServiceUi(String vehicleId);
-
-        void showAddEditInsuranceUi(String vehicleId);
-
-        void showAddEditRefuelingUi(String vehicleId);
-
-        void showVehiclesUi();
-
-        void showActivitiesUi();
-
-        void showStatisticsUi();
-
-        void showProfileUi();
-    }
-
-    interface Presenter extends BasePresenter {
-
-        void openAddEditVehicle();
-
-        void openAddEditService();
-
-        void openAddEditInsurance();
-
-        void openAddEditRefueling();
-
-        void openVehicles();
-
-        void openActivities();
-
-        void openStatistics();
-
-        void openProfile();
-
-        void onSelectedVehicleChanged(int position);
-    }
-
-    interface HomewView extends BaseView<HomePresenter> {
-
-        void showMessage(String message);
-
         void showVehicleItemsInDropdown(HashMap<String, String> items);
 
         void showAddEditVehicleUi();
@@ -76,7 +30,7 @@ public interface MainContract {
         void showProfileUi();
     }
 
-    interface HomePresenter extends BasePresenter {
+    interface Presenter extends BasePresenter {
 
         void openAddEditVehicle();
 

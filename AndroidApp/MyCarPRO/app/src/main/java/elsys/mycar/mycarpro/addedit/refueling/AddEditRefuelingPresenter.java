@@ -1,14 +1,10 @@
 package elsys.mycar.mycarpro.addedit.refueling;
 
-import com.google.common.base.Preconditions;
-
 import java.text.ParseException;
 
 import elsys.mycar.mycarpro.data.Data;
-import elsys.mycar.mycarpro.data.model.Insurance;
 import elsys.mycar.mycarpro.data.model.Refueling;
 import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
-import elsys.mycar.mycarpro.data.repository.activities.insurance.InsuranceRepository;
 import elsys.mycar.mycarpro.data.repository.activities.refueling.RefuelingRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DateUtils;

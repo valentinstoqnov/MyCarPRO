@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.api.VehicleApi;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VehicleRepositoryImpl implements VehicleRepository {

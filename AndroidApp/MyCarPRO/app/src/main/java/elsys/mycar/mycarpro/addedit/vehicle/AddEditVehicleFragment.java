@@ -2,7 +2,6 @@ package elsys.mycar.mycarpro.addedit.vehicle;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -32,17 +31,16 @@ import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.addedit.vehicle.fueltank.AddEditFuelTankDialog;
 import elsys.mycar.mycarpro.addedit.vehicle.fueltank.AddEditFuelTankPresenter;
 import elsys.mycar.mycarpro.addedit.vehicle.fueltank.FuelTankCallback;
-import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.DatePickerUtils;
 import me.priyesh.chroma.ChromaDialog;
 import me.priyesh.chroma.ColorMode;
 import me.priyesh.chroma.ColorSelectListener;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static elsys.mycar.mycarpro.util.TextInputUtils.setTextToTil;
-import static elsys.mycar.mycarpro.util.TextInputUtils.getTextFromTil;
 import static elsys.mycar.mycarpro.util.TextInputUtils.getTextFromAutoComplete;
+import static elsys.mycar.mycarpro.util.TextInputUtils.getTextFromTil;
 import static elsys.mycar.mycarpro.util.TextInputUtils.setTextToAutoComplete;
+import static elsys.mycar.mycarpro.util.TextInputUtils.setTextToTil;
 
 public class AddEditVehicleFragment extends Fragment implements AddEditVehicleContract.View, DatePickerDialog.OnDateSetListener{
 
@@ -216,6 +214,21 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     public void setColor(int color) {
         mVehicleColor = color;
         changeColorOfDrawables(btnColor.getCompoundDrawables());
+    }
+
+    @Override
+    public void setOdometer(String odometer) {
+        setTextToTil(tilOdometer, odometer);
+    }
+
+    @Override
+    public void setHorsePower(String horsePower) {
+        setTextToTil(tilHorsePower, horsePower);
+    }
+
+    @Override
+    public void setNote(String note) {
+        setTextToTil(tilNotes, note);
     }
 
     @Override

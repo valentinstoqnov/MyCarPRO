@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.data.model.Service;
-import elsys.mycar.mycarpro.list.idk.IDKFragment;
+import elsys.mycar.mycarpro.list.base.BaseActivitiesFragment;
 
-public class ListServicesFragment extends IDKFragment<Service> {
+public class ListServicesFragment extends BaseActivitiesFragment<Service> {
 
     @Override
     public void showDetailItemUi(String itemId) {

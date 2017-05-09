@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.data.model.Refueling;
-import elsys.mycar.mycarpro.list.idk.IDKFragment;
+import elsys.mycar.mycarpro.list.base.BaseActivitiesFragment;
 
-public class ListRefuelingsFragment extends IDKFragment<Refueling> {
+public class ListRefuelingsFragment extends BaseActivitiesFragment<Refueling> {
 
     @Override
     public void showDetailItemUi(String itemId) {

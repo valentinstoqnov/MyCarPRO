@@ -1,8 +1,10 @@
 package elsys.mycar.mycarpro.data.repository.activities.refueling;
 
+import java.util.UUID;
+
 import elsys.mycar.mycarpro.data.api.RefuelingApi;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.data.model.Refueling;
+import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
 import elsys.mycar.mycarpro.util.ActivitiesRepositoryUtils;
 import retrofit2.Call;
 
@@ -18,6 +20,7 @@ public class RefuelingRepositoryImpl implements RefuelingRepository {
 
     @Override
     public void saveRefueling(String vehicleId, final Refueling refueling, OnSaveOrUpdateCallback<Refueling> callback) {
+        //refueling.setId(UUID.randomUUID().toString());
         Call<Refueling> call = mRefuelingApi.saveRefueling(vehicleId, refueling);
         call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(callback));
     }

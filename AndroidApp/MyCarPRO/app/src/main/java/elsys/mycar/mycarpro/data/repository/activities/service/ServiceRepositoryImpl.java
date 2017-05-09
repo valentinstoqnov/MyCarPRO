@@ -1,10 +1,10 @@
 package elsys.mycar.mycarpro.data.repository.activities.service;
 
 import elsys.mycar.mycarpro.data.api.ServiceApi;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
-import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.data.model.Service;
 import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.ActivitiesRepositoryUtils;
 import elsys.mycar.mycarpro.util.ProviderUtils;
 import retrofit2.Call;

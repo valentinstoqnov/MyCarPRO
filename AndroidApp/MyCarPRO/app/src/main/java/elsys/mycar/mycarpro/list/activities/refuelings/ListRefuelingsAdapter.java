@@ -2,9 +2,9 @@ package elsys.mycar.mycarpro.list.activities.refuelings;
 
 import java.util.List;
 
+import elsys.mycar.mycarpro.data.model.Refueling;
 import elsys.mycar.mycarpro.list.activities.recyclerview.BaseRecyclerViewAdapter;
 import elsys.mycar.mycarpro.list.activities.recyclerview.ItemViewHolder;
-import elsys.mycar.mycarpro.data.model.Refueling;
 import elsys.mycar.mycarpro.util.PriceUtils;
 
 public class ListRefuelingsAdapter extends BaseRecyclerViewAdapter<Refueling> {
