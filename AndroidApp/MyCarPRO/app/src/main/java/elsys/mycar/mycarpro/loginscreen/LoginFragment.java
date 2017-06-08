@@ -37,6 +37,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     @BindView(R.id.til_login_username) TextInputLayout tilUsername;
     @BindView(R.id.til_login_password) TextInputLayout tilPassword;
     @BindString(R.string.signing_in) String signingIn;
+    @BindString(R.string.login_greeting) String loginGreeting;
 
     private LoginContract.Presenter mPresenter;
     private Unbinder mUnbinder;
@@ -124,15 +125,20 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void showLoginFailed() {
-        Toast.makeText(getContext(), "Login failed, are you registered?", Toast.LENGTH_LONG).show();
+    public void showLoginSucceeded(String email) {
+        String message = String.format(loginGreeting, email);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void loggedIn(String token, String username, String firstName, String lastName, String email) {
-        new AuthenticationUtils(getActivity()).saveUser(token, username, firstName, lastName, email);
+    public void continueToTheApp() {
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    @Override
+    public void showLoginFailed() {
+        Toast.makeText(getContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
     }
 }

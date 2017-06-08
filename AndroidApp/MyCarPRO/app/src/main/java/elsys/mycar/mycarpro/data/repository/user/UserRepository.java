@@ -11,7 +11,7 @@ public interface UserRepository {
 
     interface OnUserSignCallback {
 
-        void onSuccess(User user);
+        void onSuccess(String email);
 
         void onFailure();
     }

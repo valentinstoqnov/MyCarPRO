@@ -1,6 +1,5 @@
 package elsys.mycar.mycarpro.loginscreen;
 
-import elsys.mycar.mycarpro.data.model.User;
 import elsys.mycar.mycarpro.data.repository.user.UserRepository;
 import elsys.mycar.mycarpro.util.StringUtils;
 
@@ -17,21 +16,19 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     @Override
-    public void start() {
-
-    }
+    public void start() {}
 
     @Override
     public void login(String username, String password) {
         mView.showProgress();
-
         if (StringUtils.checkNotNullOrEmpty(username)) {
             if (StringUtils.checkNotNullOrEmpty(password)) {
-                mUserRepository.loginUser(username, password, new UserRepository.OnUserLoggedInCallback() {
+                mUserRepository.loginUser(username, password, new UserRepository.OnUserSignCallback() {
                     @Override
-                    public void onSuccess(String token, User user) {
+                    public void onSuccess(String email) {
                         mView.hideProgress();
-                        mView.loggedIn(token, user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail());
+                        mView.showLoginSucceeded(email);
+                        mView.continueToTheApp();
                     }
 
                     @Override

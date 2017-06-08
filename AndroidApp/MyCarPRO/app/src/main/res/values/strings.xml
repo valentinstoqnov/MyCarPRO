@@ -70,13 +70,15 @@
     <string name="gas_station_name">Gas station name</string>
 
     <string name="not_signed_in">You are signed out!</string>
+    <string name="login_failed">Login failed, do you have an account?</string>
+    <string name="login_greeting" formatted="false">Welcome back, %s</string>
 
     <string name="date_price_placeholder" formatted="false">%s | Cost: %s%s</string>
     <string name="no_items_found">No items found, please add something !</string>
     <string name="no_vehicle_found">No such vehicle, it might have been deleted !</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="already_a_member_login">Alread a member? Sign in</string>
+    <string name="already_a_member_login">Already a member? Sign in</string>
     <string name="username">Username</string>
     <string name="new_fuel_tank">New fuel tank</string>
     <string name="capacity">Capacity</string>

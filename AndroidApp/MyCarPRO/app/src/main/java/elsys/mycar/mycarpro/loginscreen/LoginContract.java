@@ -20,7 +20,9 @@ public interface LoginContract {
 
         void hideProgress();
 
-        void loggedIn(String token, String username, String firstName, String lastName, String email);
+        void showLoginSucceeded(String email);
+
+        void continueToTheApp();
 
     }
 
