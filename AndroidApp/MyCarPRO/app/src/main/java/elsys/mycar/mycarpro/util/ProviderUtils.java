@@ -50,7 +50,7 @@ public class ProviderUtils {
     }
 
     public static UserRepositoryImpl getUserRepository() {
-        return new UserRepositoryImpl(getUserApi(getRetrofit("")));
+       return new UserRepositoryImpl(getUserApi(getRetrofit("")));
     }
 
     public static SharedPreferences getTokenSharedPreferences(String name, Activity activity) {

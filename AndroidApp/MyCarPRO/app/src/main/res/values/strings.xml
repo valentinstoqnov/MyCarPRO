@@ -69,9 +69,15 @@
     <string name="service_type">Service type</string>
     <string name="gas_station_name">Gas station name</string>
 
+
+
     <string name="not_signed_in">You are signed out!</string>
     <string name="login_failed">Login failed, do you have an account?</string>
     <string name="login_greeting" formatted="false">Welcome back, %s</string>
+    <string name="register_greeting" formatted="false">Welcome to MyCar, %s!</string>
+    <string name="register_failed">Unfortunately, the authentication failed</string>
+
+
 
     <string name="date_price_placeholder" formatted="false">%s | Cost: %s%s</string>
     <string name="no_items_found">No items found, please add something !</string>

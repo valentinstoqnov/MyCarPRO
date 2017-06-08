@@ -1,6 +1,5 @@
 package elsys.mycar.mycarpro.registerscreen;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.loginscreen.LoginActivity;
 import elsys.mycar.mycarpro.util.TextInputUtils;
 
@@ -36,6 +36,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View{
     @BindView(R.id.til_register_password) TextInputLayout tilPassword;
 
     @BindString(R.string.authenticating) String authenticating;
+    @BindString(R.string.register_greeting) String registerGreeting;
 
     private ProgressDialog mProgressDialog;
     private Unbinder mUnbinder;
@@ -123,15 +124,19 @@ public class RegisterFragment extends Fragment implements RegisterContract.View{
 
     @Override
     public void showRegisterFailed() {
-        Toast.makeText(getContext(), "Registration failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.register_failed, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void registered(String username) {
-        Toast.makeText(getContext(), "Registered!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent();
-        intent.putExtra(REGISTER_RESULT_USERNAME, username);
-        getActivity().setResult(Activity.RESULT_OK, intent);
+    public void showRegisterSucceeded(String email) {
+        String message = String.format(registerGreeting, email);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void continueToTheApp() {
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        startActivity(intent);
         getActivity().finish();
     }
 }

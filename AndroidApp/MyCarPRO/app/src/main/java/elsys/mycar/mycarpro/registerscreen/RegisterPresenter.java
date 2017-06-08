@@ -28,11 +28,12 @@ public class RegisterPresenter implements RegisterContract.Presenter{
         User user = new User(username, firstName, lastName, email, password);
 
         if (validate(user)) {
-            mUserRepository.saveUser(user, new UserRepository.OnUserSavedCallback() {
+            mUserRepository.saveUser(user, new UserRepository.OnUserSignCallback() {
                 @Override
-                public void onSuccess(User user) {
+                public void onSuccess(String email) {
                     mView.hideAuthenticating();
-                    mView.registered(user.getUsername());
+                    mView.showRegisterSucceeded(email);
+                    mView.continueToTheApp();
                 }
 
                 @Override

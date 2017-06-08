@@ -24,7 +24,9 @@ public interface RegisterContract {
 
         void showRegisterFailed();
 
-        void registered(String username);
+        void showRegisterSucceeded(String email);
+
+        void continueToTheApp();
     }
 
     interface Presenter extends BasePresenter {
