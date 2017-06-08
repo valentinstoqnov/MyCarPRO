@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.data.repository.user;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import elsys.mycar.mycarpro.data.api.UserApi;
 import elsys.mycar.mycarpro.data.model.SimpleUser;
 import elsys.mycar.mycarpro.data.model.User;

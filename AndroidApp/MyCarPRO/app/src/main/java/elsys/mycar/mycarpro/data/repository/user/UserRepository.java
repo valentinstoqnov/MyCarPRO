@@ -4,20 +4,14 @@ import elsys.mycar.mycarpro.data.model.User;
 
 public interface UserRepository {
 
-    void saveUser(User user, OnUserSavedCallback callback);
+    void saveUser(User user, OnUserSignCallback callback);
 
-    void loginUser(String username, String password, OnUserLoggedInCallback callback);
+    void loginUser(String username, String password, OnUserSignCallback callback);
 
-    interface OnUserSavedCallback {
+
+    interface OnUserSignCallback {
 
         void onSuccess(User user);
-
-        void onFailure();
-    }
-
-    interface OnUserLoggedInCallback {
-
-        void onSuccess(String token, User user);
 
         void onFailure();
     }

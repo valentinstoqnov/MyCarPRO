@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.common.base.Preconditions;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -31,7 +36,6 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
     @BindView(R.id.til_login_username) TextInputLayout tilUsername;
     @BindView(R.id.til_login_password) TextInputLayout tilPassword;
-
     @BindString(R.string.signing_in) String signingIn;
 
     private LoginContract.Presenter mPresenter;

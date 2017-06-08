@@ -1,7 +1,12 @@
 package elsys.mycar.mycarpro.loginscreen;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.util.FragmentManagingUtils;
@@ -28,5 +33,4 @@ public class LoginActivity extends AppCompatActivity {
 
         loginFragment.setPresenter(loginPresenter);
     }
-
 }

@@ -33,6 +33,7 @@ import elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceActivity;
 import elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity;
 import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
+import elsys.mycar.mycarpro.base.FirebaseAuthBaseActivity;
 import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
@@ -43,7 +44,7 @@ import elsys.mycar.mycarpro.util.AuthenticationUtils;
 import elsys.mycar.mycarpro.util.FragmentManagingUtils;
 import elsys.mycar.mycarpro.util.ProviderUtils;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends FirebaseAuthBaseActivity implements MainContract.View {
 
     public static final String VEHICLE_ID = "VEHICLE_ID";
     public static final int REQUEST_CODE_NEW_VEHICLE = 1232;
