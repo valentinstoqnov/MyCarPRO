@@ -144,16 +144,11 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
         return String.format(Locale.US, FUEL_TANK_FORMAT, fuelType, capacity, df.format(consumption));
     }
 
-    //@Override
-    public void onSuccess(Vehicle item) {
-        mView.showMessage(item.getName() + " successfully saved!");
-        mView.hideProgress();
-        mView.exit();
-    }
-
     @Override
     public void onSuccess(String name) {
-
+        mView.showMessage(name + " successfully saved!");
+        mView.hideProgress();
+        mView.exit();
     }
 
     @Override

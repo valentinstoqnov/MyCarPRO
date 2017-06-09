@@ -9,6 +9,7 @@ import com.google.common.base.Preconditions;
 
 import butterknife.ButterKnife;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 
@@ -23,7 +24,7 @@ public class AddEditVehicleActivity extends AppCompatActivity {
         String vehicleId = getIntent().getStringExtra(MainActivity.VEHICLE_ID);
 
         AddEditVehicleFragment addEditVehicleFragment = AddEditVehicleFragment.newInstance();
-        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(vehicleId, null, addEditVehicleFragment, true);
+        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(vehicleId, new VehicleRepositoryImpl(), addEditVehicleFragment, true);
         addEditVehicleFragment.setPresenter(addEditVehiclePresenter);
 
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),

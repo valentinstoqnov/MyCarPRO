@@ -68,8 +68,6 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,8 +75,8 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
         ButterKnife.bind(this);
 
         mSpinnerAdapter = new VehiclesSpinnerAdapter(this, R.layout.vehicles_spinner_item, new ArrayList<>(0));
-        //MainPresenter mainPresenter = new MainPresenter(, this);
-        //setPresenter(mainPresenter);
+        MainPresenter mainPresenter = new MainPresenter(new VehicleRepositoryImpl(), this);
+        setPresenter(mainPresenter);
         fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
 
         fabMenu.setClosedOnTouchOutside(true);
@@ -89,9 +87,7 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
     @Override
     protected void onResume() {
         super.onResume();
-        /*if (mAuthenticationUtils.checkUser()) {
-            mPresenter.start();
-        }*/
+        mPresenter.start();
     }
 
     @Override
@@ -202,34 +198,30 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
     }
 
     private void setUpBottomBar() {
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
-                int primaryColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
-                int primaryDarkColor = activitiesDarkTabColor;
+        bottomBar.setOnTabSelectListener(tabId -> {
+            int primaryColor = bottomBar.getTabWithId(tabId).getBarColorWhenSelected();
+            int primaryDarkColor = activitiesDarkTabColor;
 
-                switch (tabId) {
-                    case R.id.tab_vehicles:
-                        mPresenter.openVehicles();
-                        primaryDarkColor = vehicleDarkTabColor;
-                        break;
-                    case R.id.tab_activities:
-                        mPresenter.openActivities();
-                        break;
-                    case R.id.tab_statistics:
-                        mPresenter.openStatistics();
-                        primaryDarkColor = statisticsDarkTabColor;
-                        break;
-                    case R.id.tab_user_profile:
-                        mPresenter.openProfile();
-                        primaryDarkColor = profileDarkTabColor;
-                        break;
-                }
-
-                setUiColor(primaryDarkColor, primaryColor);
-                switchUiComponents(tabId);
+            switch (tabId) {
+                case R.id.tab_vehicles:
+                    mPresenter.openVehicles();
+                    primaryDarkColor = vehicleDarkTabColor;
+                    break;
+                case R.id.tab_activities:
+                    mPresenter.openActivities();
+                    break;
+                case R.id.tab_statistics:
+                    mPresenter.openStatistics();
+                    primaryDarkColor = statisticsDarkTabColor;
+                    break;
+                case R.id.tab_user_profile:
+                    mPresenter.openProfile();
+                    primaryDarkColor = profileDarkTabColor;
+                    break;
             }
-            //     }
+
+            setUiColor(primaryDarkColor, primaryColor);
+            switchUiComponents(tabId);
         });
     }
 
