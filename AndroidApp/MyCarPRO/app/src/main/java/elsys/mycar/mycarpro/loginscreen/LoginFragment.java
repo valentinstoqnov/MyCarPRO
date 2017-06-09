@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,11 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.common.base.Preconditions;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -27,14 +22,13 @@ import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.registerscreen.RegisterActivity;
 import elsys.mycar.mycarpro.registerscreen.RegisterFragment;
-import elsys.mycar.mycarpro.util.AuthenticationUtils;
 import elsys.mycar.mycarpro.util.TextInputUtils;
 
 public class LoginFragment extends Fragment implements LoginContract.View {
 
     public static final String TAG = "LoginFragment";
 
-    @BindView(R.id.til_login_username) TextInputLayout tilUsername;
+    @BindView(R.id.til_login_email) TextInputLayout tilEmail;
     @BindView(R.id.til_login_password) TextInputLayout tilPassword;
     @BindString(R.string.signing_in) String signingIn;
     @BindString(R.string.login_greeting) String loginGreeting;
@@ -70,10 +64,10 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
     @OnClick(R.id.btn_login)
     public void onLoginButtonClick() {
-        String username = TextInputUtils.getTextFromTil(tilUsername);
+        String email = TextInputUtils.getTextFromTil(tilEmail);
         String password = TextInputUtils.getTextFromTil(tilPassword);
 
-        mPresenter.login(username, password);
+        mPresenter.login(email, password);
     }
 
     @OnClick(R.id.tv_login_to_register)
@@ -88,7 +82,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         if (requestCode == REGISTER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             String email = data.getStringExtra(RegisterFragment.REGISTER_RESULT_USERNAME);
             if (email != null) {
-                TextInputUtils.setTextToTil(tilUsername, email);
+                TextInputUtils.setTextToTil(tilEmail, email);
             }
             Toast.makeText(getContext(), "Now enter your credentials to continue", Toast.LENGTH_LONG).show();
         }
@@ -100,13 +94,13 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void setUsername(String username) {
-        TextInputUtils.setTextToTil(tilUsername, username);
+    public void setEmail(String email) {
+        TextInputUtils.setTextToTil(tilEmail, email);
     }
 
     @Override
-    public void showUsernameError(String error) {
-        tilUsername.setError(error);
+    public void showEmailError(String error) {
+        tilEmail.setError(error);
     }
 
     @Override

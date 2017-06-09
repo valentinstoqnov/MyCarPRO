@@ -4,14 +4,14 @@ import java.text.ParseException;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.model.Insurance;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
+import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 import elsys.mycar.mycarpro.data.repository.activities.insurance.InsuranceRepository;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.PriceUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 
-public class AddEditInsurancePresenter implements AddEditInsuranceContract.Presenter, OnSaveOrUpdateCallback<Insurance> {
+public class AddEditInsurancePresenter implements AddEditInsuranceContract.Presenter, OnSaveUpdateDeleteCallback {
 
     private String mVehicleId;
     private String mInsuranceId;
@@ -108,11 +108,16 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
         return mVehicleId == null;
     }
 
-    @Override
+    //@Override
     public void onSuccess(Insurance item) {
         mView.showMessage("Insurance successfully saved!");
         mView.hideProgress();
         mView.exit();
+    }
+
+    @Override
+    public void onSuccess(String name) {
+
     }
 
     @Override

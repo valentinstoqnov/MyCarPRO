@@ -7,17 +7,12 @@ import android.support.v7.widget.Toolbar;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
-import elsys.mycar.mycarpro.util.AuthenticationUtils;
-import elsys.mycar.mycarpro.util.ProviderUtils;
 
 public class AddEditServiceActivity extends AppCompatActivity {
-
-    private AuthenticationUtils mAuthenticationUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuthenticationUtils = new AuthenticationUtils(this);
         setContentView(R.layout.activity_add_edit_service);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -30,17 +25,9 @@ public class AddEditServiceActivity extends AppCompatActivity {
         }
 
         String vehicleId = getIntent().getStringExtra(MainActivity.VEHICLE_ID);
-        System.out.println("add edit service vehicle id = " + vehicleId);
 
-        String token = mAuthenticationUtils.getToken();
-        AddEditServicePresenter addEditServicePresenter = new AddEditServicePresenter(vehicleId, null, ProviderUtils.getServiceRepository(token), ProviderUtils.getVehicleRepository(token), addEditServiceFragment, true);
+        AddEditServicePresenter addEditServicePresenter = new AddEditServicePresenter(vehicleId, null, null, null, addEditServiceFragment, true);
 
         addEditServiceFragment.setPresenter(addEditServicePresenter);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mAuthenticationUtils.checkUser();
     }
 }

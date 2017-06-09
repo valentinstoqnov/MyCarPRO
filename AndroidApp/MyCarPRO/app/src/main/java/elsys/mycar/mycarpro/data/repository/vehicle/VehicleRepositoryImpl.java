@@ -1,161 +1,87 @@
 package elsys.mycar.mycarpro.data.repository.vehicle;
 
-import java.io.IOException;
-import java.util.List;
+import android.util.Log;
 
-import elsys.mycar.mycarpro.data.api.VehicleApi;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.data.model.Vehicle;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
-import retrofit2.Call;
-import retrofit2.Response;
+import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 
 public class VehicleRepositoryImpl implements VehicleRepository {
 
-    private VehicleApi mVehicleApi;
+    private static final String TAG = "VehicleRepositoryImpl";
 
-    public VehicleRepositoryImpl(VehicleApi mVehicleApi) {
-        this.mVehicleApi = mVehicleApi;
+    private DatabaseReference mDatabase;
+
+    public VehicleRepositoryImpl() {
+        this.mDatabase = FirebaseDatabase.getInstance().getReference(Constants.VEHICLE);
     }
 
     @Override
-    public void saveVehicle(Vehicle vehicle, final OnSaveOrUpdateCallback<Vehicle> callback) {
-        Call<Vehicle> call = mVehicleApi.saveVehicle(vehicle);
-        call.enqueue(new retrofit2.Callback<Vehicle>() {
-            @Override
-            public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body());
-                }else {
-                    try {
-                        System.out.println("not successful: " + response.message() + " ,@@@ " + response.errorBody().string());
-                    } catch (IOException | NullPointerException e) {
-                        e.printStackTrace();
+    public void saveVehicle(Vehicle vehicle, OnSaveUpdateDeleteCallback callback) {
+        String id = mDatabase.push().getKey();
+        mDatabase.child(id)
+                .setValue(vehicle)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess(vehicle.getName());
+                    }else {
+                        callback.onFailure();
                     }
-                    callback.onFailure();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Vehicle> call, Throwable t) {
-                callback.onFailure();
-                t.printStackTrace();
-            }
-        });
+                });
     }
 
     @Override
-    public void updateVehicle(String vehicleId, Vehicle vehicle, final OnSaveOrUpdateCallback<Vehicle> callback) {
-        vehicle.setId(vehicleId);
-        Call<Vehicle> call = mVehicleApi.updateVehicle(vehicleId, vehicle);
-        call.enqueue(new retrofit2.Callback<Vehicle>() {
-            @Override
-            public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body());
-                }else {
-                    callback.onFailure();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Vehicle> call, Throwable t) {
-                callback.onFailure();
-                t.printStackTrace();
-            }
-        });
-    }
-
-    @Override
-    public void deleteVehicle(String id, final OnDeleteCallback callback) {
-        Call<String> call = mVehicleApi.deleteVehicle(id);
-        call.enqueue(new retrofit2.Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    callback.onSuccess();
-                }else {
-                    callback.onFailure();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                callback.onFailure();
-                t.printStackTrace();
-            }
-        });
-    }
-
-    @Override
-    public void getVehicleById(final String id, final OnVehicleFetchedCallback callback) {
-        Call<Vehicle> call = mVehicleApi.getVehicleById(id);
-        call.enqueue(new retrofit2.Callback<Vehicle>() {
-            @Override
-            public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body());
-                }else {
-                    callback.onFailure();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Vehicle> call, Throwable t) {
-                t.printStackTrace();
-                callback.onFailure();
-            }
-        });
-        /*Call<List<Vehicle>> call = mVehicleApi.getVehicles();
-        call.enqueue(new retrofit2.Callback<List<Vehicle>>() {
-            @Override
-            public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
-                if (response.isSuccessful()) {
-                    List<Vehicle> vehicles = response.body();
-                    for (Vehicle vehicle : vehicles) {
-                        if (vehicle.getId().equals(id)) {
-                            callback.onSuccess(vehicle);
-                            return;
-                        }
+    public void updateVehicle(String vehicleId, Vehicle vehicle, OnSaveUpdateDeleteCallback callback) {
+        mDatabase.child(vehicleId)
+                .setValue(vehicle)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess(vehicle.getName());
+                    }else {
+                        callback.onFailure();
                     }
-                    callback.onFailure();
-                }else {
-                    callback.onFailure();
-                }
-            }
+                });
+    }
 
-            @Override
-            public void onFailure(Call<List<Vehicle>> call, Throwable t) {
-                t.printStackTrace();
-                callback.onFailure();
-            }
-        });*/
+    @Override
+    public void deleteVehicle(String id, OnSaveUpdateDeleteCallback callback) {
+        mDatabase.child(id)
+                .removeValue()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess(Constants.VEHICLE);
+                    }else {
+                        callback.onFailure();
+                    }
+                });
+    }
+
+    @Override
+    public void getVehicleById(String id, OnVehicleFetchedCallback callback) {
+        mDatabase.child(id)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Vehicle value = dataSnapshot.getValue(Vehicle.class);
+                        callback.onSuccess(value);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, databaseError.getMessage());
+                        callback.onFailure();
+                    }
+                });
     }
 
     @Override
     public void getVehicles(final OnVehiclesFetchedCallback callback) {
-        Call<List<Vehicle>> call = mVehicleApi.getVehicles();
-        call.enqueue(new retrofit2.Callback<List<Vehicle>>() {
-            @Override
-            public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
-                if (response.isSuccessful()) {
-                    List<Vehicle> vehicles = response.body();
-                    callback.onSuccess(vehicles);
-                }else {
-                    try {
-                        System.out.println("not successful: " + response.message());
-                        System.out.println(" ,@@@ " + response.errorBody().string());
-                    } catch (IOException | NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                    callback.onFailure();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Vehicle>> call, Throwable t) {
-                callback.onFailure();
-                t.printStackTrace();
-            }
-        });
     }
 }

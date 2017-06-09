@@ -30,7 +30,6 @@ import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingsFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesFragment;
 import elsys.mycar.mycarpro.list.activities.viewpager.ActivitiesViewPagerAdapter;
 import elsys.mycar.mycarpro.list.base.BaseActivitiesPresenter;
-import elsys.mycar.mycarpro.util.AuthenticationUtils;
 
 public class ActivitiesFragment extends Fragment implements ActivitiesContract.View {
 
@@ -42,7 +41,6 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     private Unbinder mUnbinder;
 
     private ActivitiesContract.Presenter mPresenter;
-    private AuthenticationUtils mAuthenticationUtils;
     private List<BaseActivitiesPresenter> mNestedPresenters;
 
     public static ActivitiesFragment newInstance() {
@@ -51,7 +49,6 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
 
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mAuthenticationUtils = new AuthenticationUtils(getActivity());
         android.view.View view = inflater.inflate(R.layout.fragment_activities, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
@@ -65,9 +62,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     @Override
     public void onResume() {
         super.onResume();
-        if (mAuthenticationUtils.checkUser()) {
-            mPresenter.start();
-        }
+        mPresenter.start();
     }
 
     @Override

@@ -7,17 +7,12 @@ import android.support.v7.widget.Toolbar;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
-import elsys.mycar.mycarpro.util.AuthenticationUtils;
-import elsys.mycar.mycarpro.util.ProviderUtils;
 
 public class AddEditRefuelingActivity extends AppCompatActivity {
-
-    private AuthenticationUtils mAuthenticationUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuthenticationUtils = new AuthenticationUtils(this);
         setContentView(R.layout.activity_add_edit_refueling);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -31,15 +26,8 @@ public class AddEditRefuelingActivity extends AppCompatActivity {
 
         String vehicleId = getIntent().getStringExtra(MainActivity.VEHICLE_ID);
 
-        String token = mAuthenticationUtils.getToken();
-        AddEditRefuelingPresenter addEditRefuelingPresenter = new AddEditRefuelingPresenter(vehicleId, null, ProviderUtils.getRefuelingRepository(token), addEditRefuelingFragment, ProviderUtils.getVehicleRepository(token), true);
+        AddEditRefuelingPresenter addEditRefuelingPresenter = new AddEditRefuelingPresenter(vehicleId, null, null, addEditRefuelingFragment, null, true);
 
         addEditRefuelingFragment.setPresenter(addEditRefuelingPresenter);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mAuthenticationUtils.checkUser();
     }
 }

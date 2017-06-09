@@ -13,7 +13,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.util.AuthenticationUtils;
 
 public class ProfileFragment extends Fragment {
 
@@ -28,7 +27,6 @@ public class ProfileFragment extends Fragment {
     @BindString(R.string.username) String textUsername;
     @BindString(R.string.name) String textName;
 
-    private AuthenticationUtils mAuthenticationUtils;
     private Unbinder mUnbinder;
 
     public static ProfileFragment newInstance() {
@@ -40,16 +38,13 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mUnbinder = ButterKnife.bind(this, view);
-        mAuthenticationUtils = new AuthenticationUtils(getActivity());
-        if (mAuthenticationUtils.checkUser()) {
-            setContent();
-        }
+        setContent();
+
         return view;
     }
 
     @OnClick(R.id.btn_profile_logout)
     public void onLogoutClicked() {
-        mAuthenticationUtils.deleteUser();
     }
 
     @Override
@@ -59,10 +54,10 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setContent() {
-        String username = mAuthenticationUtils.getUsername();
-        String firstName = mAuthenticationUtils.getFirstName();
-        String lastName = mAuthenticationUtils.getLastName();
-        String email = mAuthenticationUtils.getEmail();
+        String username = "";
+        String firstName = "";
+        String lastName = "";
+        String email = "";
 
         tvUsername.setText(String.format(textFormat, textUsername, username));
         tvName.setText(String.format(textFormat, textName, firstName + " " + lastName));

@@ -29,7 +29,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View{
 
     public static final String REGISTER_RESULT_USERNAME = "REGISTER_USERNAME";
 
-    @BindView(R.id.til_register_username) TextInputLayout tilUsername;
     @BindView(R.id.til_register_first_name) TextInputLayout tilFirstName;
     @BindView(R.id.til_register_last_name) TextInputLayout tilLastName;
     @BindView(R.id.til_register_email) TextInputLayout tilEmail;
@@ -73,23 +72,17 @@ public class RegisterFragment extends Fragment implements RegisterContract.View{
 
     @OnClick(R.id.btn_register)
     public void onRegisterButtonClick() {
-        String username = TextInputUtils.getTextFromTil(tilUsername);
         String firstName = TextInputUtils.getTextFromTil(tilFirstName);
         String lastName = TextInputUtils.getTextFromTil(tilLastName);
         String email = TextInputUtils.getTextFromTil(tilEmail);
         String password = TextInputUtils.getTextFromTil(tilPassword);
 
-        mPresenter.register(username, firstName, lastName, email, password);
+        mPresenter.register(firstName, lastName, email, password);
     }
 
     @Override
     public void setPresenter(RegisterContract.Presenter presenter) {
         this.mPresenter = Preconditions.checkNotNull(presenter);
-    }
-
-    @Override
-    public void showUserNameError(String error) {
-        tilUsername.setError(error);
     }
 
     @Override

@@ -2,7 +2,6 @@ package elsys.mycar.mycarpro.base;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -10,9 +9,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import butterknife.BindString;
 import elsys.mycar.mycarpro.R;
-import elsys.mycar.mycarpro.data.model.Insurance;
 import elsys.mycar.mycarpro.loginscreen.LoginActivity;
 
 public class FirebaseAuthBaseActivity extends AppCompatActivity {

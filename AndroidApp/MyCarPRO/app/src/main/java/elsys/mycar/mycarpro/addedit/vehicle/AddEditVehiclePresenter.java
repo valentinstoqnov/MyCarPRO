@@ -8,12 +8,12 @@ import java.util.Locale;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.model.Vehicle;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
+import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 
-public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter, OnSaveOrUpdateCallback<Vehicle> {
+public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter, OnSaveUpdateDeleteCallback {
 
     private static final String FUEL_TANK_FORMAT = "%s%nCap.:%d%nCons.:%s";
 
@@ -144,11 +144,16 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
         return String.format(Locale.US, FUEL_TANK_FORMAT, fuelType, capacity, df.format(consumption));
     }
 
-    @Override
+    //@Override
     public void onSuccess(Vehicle item) {
         mView.showMessage(item.getName() + " successfully saved!");
         mView.hideProgress();
         mView.exit();
+    }
+
+    @Override
+    public void onSuccess(String name) {
+
     }
 
     @Override

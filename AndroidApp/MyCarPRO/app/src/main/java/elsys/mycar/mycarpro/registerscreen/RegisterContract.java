@@ -8,8 +8,6 @@ public interface RegisterContract {
 
     interface View extends BaseView<Presenter> {
 
-        void showUserNameError(String error);
-
         void showFirstNameError(String error);
 
         void showLastNameError(String error);
@@ -31,6 +29,6 @@ public interface RegisterContract {
 
     interface Presenter extends BasePresenter {
 
-        void register(String username, String firstName, String lastName, String email, String password);
+        void register(String firstName, String lastName, String email, String password);
     }
 }

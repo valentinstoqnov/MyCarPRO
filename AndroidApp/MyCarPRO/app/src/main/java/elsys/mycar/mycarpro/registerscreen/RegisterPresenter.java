@@ -1,5 +1,6 @@
 package elsys.mycar.mycarpro.registerscreen;
 
+import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.data.model.User;
 import elsys.mycar.mycarpro.data.repository.user.UserRepository;
 import elsys.mycar.mycarpro.util.StringUtils;
@@ -22,10 +23,10 @@ public class RegisterPresenter implements RegisterContract.Presenter{
     }
 
     @Override
-    public void register(final String username, String firstName, String lastName, String email, String password) {
+    public void register(String firstName, String lastName, String email, String password) {
         mView.showAuthenticating();
 
-        User user = new User(username, firstName, lastName, email, password);
+        User user = new User(firstName, lastName, email, password);
 
         if (validate(user)) {
             mUserRepository.saveUser(user, new UserRepository.OnUserSignCallback() {
@@ -57,17 +58,15 @@ public class RegisterPresenter implements RegisterContract.Presenter{
 
         if (!StringUtils.checkNotNullOrEmpty(user.getPassword())) {
             valid = false;
-            mView.showLastNameError("Invalid password");
+            mView.showPasswordError("Invalid password");
+        }else if (user.getPassword().length() < Constants.REQUIRED_PASSWORD_LENGTH) {
+            valid = false;
+            mView.showPasswordError("Password must have at least " + Constants.REQUIRED_PASSWORD_LENGTH + "characters");
         }
 
         if (!StringUtils.checkNotNullOrEmpty(user.getEmail())) {
             valid = false;
             mView.showEmailError("Invalid email");
-        }
-
-        if (!StringUtils.checkNotNullOrEmpty(user.getUsername())) {
-            valid = false;
-            mView.showPasswordError("Invalid username");
         }
 
         if (!StringUtils.checkNotNullOrEmpty(user.getLastName())) {

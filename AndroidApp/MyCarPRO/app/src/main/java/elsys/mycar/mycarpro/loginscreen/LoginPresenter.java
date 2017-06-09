@@ -19,11 +19,11 @@ public class LoginPresenter implements LoginContract.Presenter{
     public void start() {}
 
     @Override
-    public void login(String username, String password) {
+    public void login(String email, String password) {
         mView.showProgress();
-        if (StringUtils.checkNotNullOrEmpty(username)) {
+        if (StringUtils.checkNotNullOrEmpty(email)) {
             if (StringUtils.checkNotNullOrEmpty(password)) {
-                mUserRepository.loginUser(username, password, new UserRepository.OnUserSignCallback() {
+                mUserRepository.loginUser(email, password, new UserRepository.OnUserSignCallback() {
                     @Override
                     public void onSuccess(String email) {
                         mView.hideProgress();
@@ -42,7 +42,7 @@ public class LoginPresenter implements LoginContract.Presenter{
                 mView.hideProgress();
             }
         }else {
-            mView.showUsernameError("Username not filled in");
+            mView.showEmailError("Username not filled in");
             mView.hideProgress();
         }
     }

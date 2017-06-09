@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.data.repository.user.UserRepositoryImpl;
 import elsys.mycar.mycarpro.util.FragmentManagingUtils;
-import elsys.mycar.mycarpro.util.ProviderUtils;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -28,7 +28,8 @@ public class RegisterActivity extends AppCompatActivity {
             fragmentManagingUtils.showFragment(registerFragment);
         }
 
-        RegisterPresenter registerPresenter = new RegisterPresenter(registerFragment, ProviderUtils.getUserRepository());
+        UserRepositoryImpl userRepository = new UserRepositoryImpl();
+        RegisterPresenter registerPresenter = new RegisterPresenter(registerFragment,userRepository);
         registerFragment.setPresenter(registerPresenter);
     }
 

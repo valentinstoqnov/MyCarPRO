@@ -11,46 +11,32 @@ import butterknife.ButterKnife;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
-import elsys.mycar.mycarpro.util.AuthenticationUtils;
-import elsys.mycar.mycarpro.util.ProviderUtils;
 
 public class AddEditVehicleActivity extends AppCompatActivity {
-
-    private ActionBar mActionBar;
-    private AuthenticationUtils mAuthenticationUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuthenticationUtils = new AuthenticationUtils(this);
-        if (mAuthenticationUtils.checkUser()) {
-            setContentView(R.layout.activity_add_edit_vehicle);
-            setUpToolbar();
+        setContentView(R.layout.activity_add_edit_vehicle);
+        setUpToolbar();
 
-            String vehicleId = getIntent().getStringExtra(MainActivity.VEHICLE_ID);
+        String vehicleId = getIntent().getStringExtra(MainActivity.VEHICLE_ID);
 
-            AddEditVehicleFragment addEditVehicleFragment = AddEditVehicleFragment.newInstance();
-            AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(vehicleId, ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), addEditVehicleFragment, true);
-            addEditVehicleFragment.setPresenter(addEditVehiclePresenter);
+        AddEditVehicleFragment addEditVehicleFragment = AddEditVehicleFragment.newInstance();
+        AddEditVehiclePresenter addEditVehiclePresenter = new AddEditVehiclePresenter(vehicleId, null, addEditVehicleFragment, true);
+        addEditVehicleFragment.setPresenter(addEditVehiclePresenter);
 
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-                    addEditVehicleFragment,
-                    R.id.frame_layout_add_vehicle);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mAuthenticationUtils.checkUser();
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                addEditVehicleFragment,
+                R.id.frame_layout_add_vehicle);
     }
 
     private void setUpToolbar() {
         Toolbar toolbar = ButterKnife.findById(this, R.id.toolbar);
         setSupportActionBar(toolbar);
-        mActionBar = Preconditions.checkNotNull(getSupportActionBar());
-        mActionBar.setDisplayHomeAsUpEnabled(true);
-        mActionBar.setDisplayShowHomeEnabled(true);
+        ActionBar actionBar = Preconditions.checkNotNull(getSupportActionBar());
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
     }
 
     @Override

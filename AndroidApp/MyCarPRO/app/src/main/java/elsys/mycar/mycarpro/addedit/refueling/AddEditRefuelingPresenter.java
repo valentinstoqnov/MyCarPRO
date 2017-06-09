@@ -4,14 +4,14 @@ import java.text.ParseException;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.model.Refueling;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
+import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 import elsys.mycar.mycarpro.data.repository.activities.refueling.RefuelingRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.PriceUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 
-public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Presenter, OnSaveOrUpdateCallback<Refueling> {
+public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Presenter, OnSaveUpdateDeleteCallback {
 
     private String mVehicleId;
     private String mRefuelingId;
@@ -113,11 +113,16 @@ public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Prese
         mRefuelingRepository.updateRefueling(mVehicleId, refueling.getId(), refueling, this);
     }
 
-    @Override
+    //@Override
     public void onSuccess(Refueling item) {
         mView.showMessage("Refueling successfully saved!");
         mView.hideProgress();
         mView.exit();
+    }
+
+    @Override
+    public void onSuccess(String name) {
+
     }
 
     @Override

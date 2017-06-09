@@ -6,7 +6,7 @@ public interface UserRepository {
 
     void saveUser(User user, OnUserSignCallback callback);
 
-    void loginUser(String username, String password, OnUserSignCallback callback);
+    void loginUser(String email, String password, OnUserSignCallback callback);
 
 
     interface OnUserSignCallback {

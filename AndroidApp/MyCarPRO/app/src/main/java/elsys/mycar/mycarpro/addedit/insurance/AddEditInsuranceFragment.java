@@ -53,29 +53,19 @@ public class AddEditInsuranceFragment extends Fragment implements AddEditInsuran
         View view = inflater.inflate(R.layout.fragment_add_edit_insurance, container, false);
         mUnbinder = ButterKnife.bind(this, view);
 
-        btnDate.setOnClickListener(new View.OnClickListener() {
+        btnDate.setOnClickListener(v -> DatePickerUtils.showDatePicker(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View v) {
-                DatePickerUtils.showDatePicker(getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        mPresenter.onDatePicked(year, month, dayOfMonth, false);
-                    }
-                });
+            public void onDateSet(DatePicker view1, int year, int month, int dayOfMonth) {
+                mPresenter.onDatePicked(year, month, dayOfMonth, false);
             }
-        });
+        }));
 
-        btnExpirationDate.setOnClickListener(new View.OnClickListener() {
+        btnExpirationDate.setOnClickListener(v -> DatePickerUtils.showDatePicker(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View v) {
-                DatePickerUtils.showDatePicker(getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        mPresenter.onDatePicked(year, month, dayOfMonth, true);
-                    }
-                });
+            public void onDateSet(DatePicker view12, int year, int month, int dayOfMonth) {
+                mPresenter.onDatePicked(year, month, dayOfMonth, true);
             }
-        });
+        }));
 
         return view;
     }
@@ -96,18 +86,15 @@ public class AddEditInsuranceFragment extends Fragment implements AddEditInsuran
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_insurance);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String companyName = getTextFromAutoComplete(tilCompanyName);
-                String price = getTextFromTil(tilPrice);
-                String odometer = getTextFromTil(tilOdometer);
-                String date = btnDate.getText().toString();
-                String expirationDate = btnExpirationDate.getText().toString();
-                String note = getTextFromTil(tilNote);
+        mFab.setOnClickListener(v -> {
+            String companyName = getTextFromAutoComplete(tilCompanyName);
+            String price = getTextFromTil(tilPrice);
+            String odometer = getTextFromTil(tilOdometer);
+            String date = btnDate.getText().toString();
+            String expirationDate = btnExpirationDate.getText().toString();
+            String note = getTextFromTil(tilNote);
 
-                mPresenter.saveInsurance(companyName, price, odometer, date, expirationDate, note);
-            }
+            mPresenter.saveInsurance(companyName, price, odometer, date, expirationDate, note);
         });
     }
 

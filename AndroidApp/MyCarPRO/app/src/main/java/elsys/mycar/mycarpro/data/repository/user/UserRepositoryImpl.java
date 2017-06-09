@@ -1,20 +1,25 @@
 package elsys.mycar.mycarpro.data.repository.user;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.data.model.User;
 
 public class UserRepositoryImpl implements UserRepository {
 
+    private static final String TAG = "UserRepositoryImpl";
+
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mFirebaseDatabase;
 
-    public UserRepositoryImpl(FirebaseAuth mFirebaseAuth, DatabaseReference mFirebaseDatabase) {
-        this.mFirebaseAuth = mFirebaseAuth;
-        this.mFirebaseDatabase = mFirebaseDatabase;
+    public UserRepositoryImpl() {
+        this.mFirebaseAuth = FirebaseAuth.getInstance();
+        this.mFirebaseDatabase = FirebaseDatabase.getInstance().getReference(Constants.USER);
     }
 
     @Override
@@ -27,6 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
                        saveUserInFirebaseDatabase(user, callback);
                    }else {
                         callback.onFailure();
+                        Log.e(TAG, "saveUser: ", task.getException());
                    }
                 });
     }
@@ -39,6 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
                         callback.onSuccess(email);
                     }else {
                         callback.onFailure();
+                        Log.e(TAG, "loginUser: ", task.getException());
                     }
                 });
     }

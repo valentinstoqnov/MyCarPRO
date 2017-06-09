@@ -3,15 +3,15 @@ package elsys.mycar.mycarpro.data.repository.vehicle;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.model.Vehicle;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
+import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 
 public interface VehicleRepository {
 
-    void saveVehicle(Vehicle vehicle, OnSaveOrUpdateCallback<Vehicle> callback);
+    void saveVehicle(Vehicle vehicle, OnSaveUpdateDeleteCallback callback);
 
-    void updateVehicle(String vehicleId, Vehicle vehicle, OnSaveOrUpdateCallback<Vehicle> callback);
+    void updateVehicle(String vehicleId, Vehicle vehicle, OnSaveUpdateDeleteCallback callback);
 
-    void deleteVehicle(String id, OnDeleteCallback callback);
+    void deleteVehicle(String id, OnSaveUpdateDeleteCallback callback);
 
     void getVehicleById(String id, OnVehicleFetchedCallback callback);
 

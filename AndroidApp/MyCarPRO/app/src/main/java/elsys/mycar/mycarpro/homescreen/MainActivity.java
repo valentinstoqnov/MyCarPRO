@@ -1,6 +1,7 @@
 package elsys.mycar.mycarpro.homescreen;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.widget.Spinner;
@@ -34,15 +34,15 @@ import elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity;
 import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
 import elsys.mycar.mycarpro.base.FirebaseAuthBaseActivity;
+import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
+import elsys.mycar.mycarpro.loginscreen.LoginActivity;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
-import elsys.mycar.mycarpro.util.AuthenticationUtils;
 import elsys.mycar.mycarpro.util.FragmentManagingUtils;
-import elsys.mycar.mycarpro.util.ProviderUtils;
 
 public class MainActivity extends FirebaseAuthBaseActivity implements MainContract.View {
 
@@ -63,42 +63,35 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
 
     private FragmentManagingUtils fragmentManagingUtils;
     private MainContract.Presenter mPresenter;
-    private AuthenticationUtils mAuthenticationUtils;
     private VehiclesSpinnerAdapter mSpinnerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        mAuthenticationUtils = new AuthenticationUtils(this);
+        ButterKnife.bind(this);
 
-        if (mAuthenticationUtils.checkUser()) {
-            setContentView(R.layout.activity_main);
+        mSpinnerAdapter = new VehiclesSpinnerAdapter(this, R.layout.vehicles_spinner_item, new ArrayList<>(0));
+        //MainPresenter mainPresenter = new MainPresenter(, this);
+        //setPresenter(mainPresenter);
+        fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
+        fabMenu.setClosedOnTouchOutside(true);
 
-            ButterKnife.bind(this);
-
-            mSpinnerAdapter = new VehiclesSpinnerAdapter(this, R.layout.vehicles_spinner_item, new ArrayList<String>(0));
-
-            MainPresenter mainPresenter = new MainPresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), this);
-            setPresenter(mainPresenter);
-
-            fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
-
-            fabMenu.setClosedOnTouchOutside(true);
-
-            setUpBottomBar();
-        }
+        setUpBottomBar();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mAuthenticationUtils.checkUser()) {
+        /*if (mAuthenticationUtils.checkUser()) {
             mPresenter.start();
-        }
+        }*/
     }
 
     @Override
@@ -158,7 +151,7 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
         ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
 
         ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(
-                ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), listVehicleFragment
+                new VehicleRepositoryImpl(), listVehicleFragment
         );
 
         listVehicleFragment.setPresenter(listVehiclePresenter);
@@ -168,7 +161,7 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
     public void showActivitiesUi() {
         Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
-        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(getSelectedVehicleId(), activitiesFragment, ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), true);
+        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(getSelectedVehicleId(), activitiesFragment, new VehicleRepositoryImpl(), true);
         activitiesFragment.setPresenter(activitiesPresenter);
        /* Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;

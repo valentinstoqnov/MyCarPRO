@@ -6,14 +6,14 @@ import java.text.ParseException;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.model.Service;
-import elsys.mycar.mycarpro.data.repository.OnSaveOrUpdateCallback;
+import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 import elsys.mycar.mycarpro.data.repository.activities.service.ServiceRepository;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DateUtils;
 import elsys.mycar.mycarpro.util.PriceUtils;
 import elsys.mycar.mycarpro.util.StringUtils;
 
-public class AddEditServicePresenter implements AddEditServiceContract.Presenter, OnSaveOrUpdateCallback<Service> {
+public class AddEditServicePresenter implements AddEditServiceContract.Presenter, OnSaveUpdateDeleteCallback {
 
     private String mVehicleId;
     private String mServiceId;
@@ -111,11 +111,16 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
         return mVehicleId == null;
     }
 
-    @Override
+   // @Override
     public void onSuccess(Service item) {
         mView.showMessage("Service successfully saved!");
         mView.hideProgress();
         mView.exit();
+    }
+
+    @Override
+    public void onSuccess(String name) {
+
     }
 
     @Override

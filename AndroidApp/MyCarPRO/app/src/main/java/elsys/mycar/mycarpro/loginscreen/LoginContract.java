@@ -8,9 +8,9 @@ public interface LoginContract {
 
     interface View extends BaseView<Presenter> {
 
-        void setUsername(String username);
+        void setEmail(String email);
 
-        void showUsernameError(String error);
+        void showEmailError(String error);
 
         void showPasswordError(String error);
 
@@ -28,6 +28,6 @@ public interface LoginContract {
 
     interface Presenter extends BasePresenter {
 
-        void login(String username, String password);
+        void login(String email, String password);
     }
 }
