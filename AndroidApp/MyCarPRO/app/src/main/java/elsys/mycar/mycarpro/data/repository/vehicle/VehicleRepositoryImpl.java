@@ -104,7 +104,5 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                         callback.onFailure();
                     }
                 });
-
-
     }
 }

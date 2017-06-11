@@ -16,6 +16,8 @@ public class Service {
     private long odometer;
     @SerializedName("note")
     private String note;
+    @SerializedName("vehicle_id")
+    private String vehicleId;
 
     public Service(String id, String type, String date, long price, long odometer, String note) {
         this.id = id;
