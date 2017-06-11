@@ -6,10 +6,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.OnItemFetchedCallback;
+import elsys.mycar.mycarpro.data.repository.OnItemsFetchedCallback;
 import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 
 public class VehicleRepositoryImpl implements VehicleRepository {
@@ -50,8 +56,8 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
-    public void deleteVehicle(String id, OnSaveUpdateDeleteCallback callback) {
-        mDatabase.child(id)
+    public void deleteVehicle(String vehicleId, OnSaveUpdateDeleteCallback callback) {
+        mDatabase.child(vehicleId)
                 .removeValue()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -63,8 +69,8 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
-    public void getVehicleById(String id, OnVehicleFetchedCallback callback) {
-        mDatabase.child(id)
+    public void fetchVehicleById(String vehicleId, OnItemFetchedCallback<Vehicle> callback) {
+        mDatabase.child(vehicleId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -81,7 +87,24 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
-    public void getVehicles(final OnVehiclesFetchedCallback callback) {
+    public void fetchVehicles(String userId, OnItemsFetchedCallback<Vehicle> callback) {
+        mDatabase.orderByChild(Constants.USER_ID)
+                .equalTo(userId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        GenericTypeIndicator<List<Vehicle>> typeIndicator = new GenericTypeIndicator<List<Vehicle>>() {};
+                        List<Vehicle> vehicles = dataSnapshot.getValue(typeIndicator);
+                        callback.onSuccess(vehicles);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, databaseError.getMessage());
+                        callback.onFailure();
+                    }
+                });
+
 
     }
 }

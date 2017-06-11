@@ -40,7 +40,7 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
                 mView.setDate(DateUtils.getTextCurrentDate());
             }else {
                 mView.showProgress();
-                mVehicleRepository.getVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
+                mVehicleRepository.fetchVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
                     @Override
                     public void onSuccess(Vehicle vehicle) {
                         populateVehicle(vehicle);

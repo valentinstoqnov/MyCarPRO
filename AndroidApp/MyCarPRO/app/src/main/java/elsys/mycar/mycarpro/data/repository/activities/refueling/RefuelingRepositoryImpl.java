@@ -1,40 +1,34 @@
 package elsys.mycar.mycarpro.data.repository.activities.refueling;
 
-import elsys.mycar.mycarpro.data.api.RefuelingApi;
 import elsys.mycar.mycarpro.data.model.Refueling;
+import elsys.mycar.mycarpro.data.repository.OnItemFetchedCallback;
+import elsys.mycar.mycarpro.data.repository.OnItemsFetchedCallback;
 import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
-import retrofit2.Call;
 
 public class RefuelingRepositoryImpl implements RefuelingRepository {
+
     @Override
-    public void saveRefueling(String vehicleId, Refueling refueling, OnSaveUpdateDeleteCallback callback) {
+    public void saveRefueling(Refueling refueling, OnSaveUpdateDeleteCallback callback) {
 
     }
 
     @Override
-    public void updateRefueling(String vehicleId, String refuelingId, Refueling refueling, OnSaveUpdateDeleteCallback callback) {
+    public void updateRefueling(String refuelingId, Refueling refueling, OnSaveUpdateDeleteCallback callback) {
 
-    }
-
-  /*  private RefuelingApi mRefuelingApi;
-    private String mToken;
-
-    public RefuelingRepositoryImpl(RefuelingApi mRefuelingApi, String mToken) {
-        this.mRefuelingApi = mRefuelingApi;
-        this.mToken = mToken;
     }
 
     @Override
-    public void saveRefueling(String vehicleId, final Refueling refueling, OnSaveUpdateDeleteCallback<Refueling> callback) {
-        //refueling.setId(UUID.randomUUID().toString());
-        Call<Refueling> call = mRefuelingApi.saveRefueling(vehicleId, refueling);
-        call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(callback));
+    public void deleteRefueling(String refuelingId, OnSaveUpdateDeleteCallback callback) {
+
     }
 
     @Override
-    public void updateRefueling(String vehicleId, String refuelingId, Refueling refueling, OnSaveUpdateDeleteCallback<Refueling> callback) {
-        refueling.setId(refuelingId);
-        Call<Refueling> call = mRefuelingApi.updateRefueling(vehicleId, refueling);
-        call.enqueue(ActivitiesRepositoryUtils.provideSaveUpdateCallback4Retrofit(callback));
-    }*/
+    public void fetchRefuelingById(String refuelingId, OnItemFetchedCallback<Refueling> callback) {
+
+    }
+
+    @Override
+    public void fetchRefuelings(String vehicleId, OnItemsFetchedCallback<Refueling> callback) {
+
+    }
 }

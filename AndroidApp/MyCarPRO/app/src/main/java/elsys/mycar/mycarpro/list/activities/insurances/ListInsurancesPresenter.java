@@ -41,7 +41,7 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
            // mView.showNoSuchVehicle();
         }else {
             mView.showProgress();
-            mVehicleRepository.getVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
+            mVehicleRepository.fetchVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
                 @Override
                 public void onSuccess(Vehicle vehicle) {
                     processInsurances(vehicle.getInsurances());

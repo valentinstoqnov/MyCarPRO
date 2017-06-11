@@ -55,7 +55,7 @@ public class DetailVehiclePresenter implements DetailVehicleContract.Presenter, 
     }
 
     private void fetchVehicle() {
-        mVehicleRepository.getVehicleById(mVehicleId, this);
+        mVehicleRepository.fetchVehicleById(mVehicleId, this);
     }
 
     private void populateVehicle(Vehicle vehicle) {

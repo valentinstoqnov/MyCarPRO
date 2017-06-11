@@ -18,6 +18,8 @@ public class Insurance {
     private String expirationDate;
     @SerializedName("note")
     private String note;
+    @SerializedName("vehicle_id")
+    private String vehicleId;
 
     public Insurance() {}
 

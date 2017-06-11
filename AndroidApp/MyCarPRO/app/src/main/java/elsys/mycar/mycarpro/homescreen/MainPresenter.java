@@ -23,7 +23,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void start() {
         //if (mIsDataMissing) {
-            mVehicleRepository.getVehicles(new VehicleRepository.OnVehiclesFetchedCallback() {
+            mVehicleRepository.fetchVehicles(new VehicleRepository.OnVehiclesFetchedCallback() {
                 @Override
                 public void onSuccess(List<Vehicle> vehicles) {
                    // mVehicleIds = DataUtils.getVehicleIds(vehicles);

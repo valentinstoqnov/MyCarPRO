@@ -26,10 +26,9 @@ public class Vehicle {
     private int fuelTankCapacity;
     @SerializedName("fuel_consumption")
     private double fuelConsumption;
-    private List<Insurance> insurances;
-    private List<Service> services;
-    private List<Refueling> refuelings;
     private int color;
+    @SerializedName("user_id")
+    private String userId;
     private String note;
 
     public Vehicle(String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, int color, String note) {
@@ -92,18 +91,6 @@ public class Vehicle {
         this.fuelTankCapacity = fuelTankCapacity;
         this.fuelConsumption = fuelConsumption;
         this.note = note;
-    }
-
-    public void addInsurance(Insurance insurance) {
-        insurances.add(insurance);
-    }
-
-    public void addService(Service service) {
-        services.add(service);
-    }
-
-    public void addRefueling(Refueling refueling) {
-        refuelings.add(refueling);
     }
 
     public String getId() {
@@ -186,28 +173,20 @@ public class Vehicle {
         this.fuelConsumption = fuelConsumption;
     }
 
-    public List<Insurance> getInsurances() {
-        return insurances;
+    public int getColor() {
+        return color;
     }
 
-    public void setInsurances(List<Insurance> insurances) {
-        this.insurances = insurances;
+    public void setColor(int color) {
+        this.color = color;
     }
 
-    public List<Service> getServices() {
-        return services;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setServices(List<Service> services) {
-        this.services = services;
-    }
-
-    public List<Refueling> getRefuelings() {
-        return refuelings;
-    }
-
-    public void setRefuelings(List<Refueling> refuelings) {
-        this.refuelings = refuelings;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getNote() {
@@ -216,14 +195,6 @@ public class Vehicle {
 
     public void setNote(String note) {
         this.note = note;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 }
 

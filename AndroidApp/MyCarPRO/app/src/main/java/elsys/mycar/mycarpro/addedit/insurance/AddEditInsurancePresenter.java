@@ -38,7 +38,7 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
                 if (isNewInsurance()) {
                     mView.setDate(DateUtils.getTextCurrentDate());
                 } else {
-                    //mInsuranceRepository.getInsuranceById();
+                    //mInsuranceRepository.fetchInsuranceById();
                 }
                 mView.addCompanies(Data.getInsuranceCompanies());
             }

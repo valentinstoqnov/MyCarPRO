@@ -51,8 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private void saveUserInFirebaseDatabase(User user, OnUserSignCallback callback) {
-        mFirebaseDatabase.child(Constants.USER)
-                .child(user.getId())
+        mFirebaseDatabase.child(user.getId())
                 .setValue(user)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

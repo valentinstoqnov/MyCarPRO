@@ -18,6 +18,8 @@ public class Refueling {
     private long odometer;
     @SerializedName("note")
     private String note;
+    @SerializedName("vehicle_id")
+    private String vehicleId;
 
     public Refueling(String id, String companyName, String date, double quantity, long price, long odometer, String note) {
         this.id = id;

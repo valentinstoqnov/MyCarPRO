@@ -25,7 +25,7 @@ public class TablePresenter implements TableContract.Presenter, VehicleRepositor
 
     @Override
     public void start() {
-        mVehicleRepository.getVehicles(this);
+        mVehicleRepository.fetchVehicles(this);
     }
 
     @Override

@@ -24,13 +24,13 @@ public class ActivitiesPresenter implements ActivitiesContract.Presenter, Vehicl
     @Override
     public void start() {
         //if (mIsDataMissing) {
-            mVehicleRepository.getVehicleById(mVehicleId, this);
+            mVehicleRepository.fetchVehicleById(mVehicleId, this);
        // }
     }
 
     @Override
     public void onVehicleChanged(String vehicleId) {
-        mVehicleRepository.getVehicleById(vehicleId, this);
+        mVehicleRepository.fetchVehicleById(vehicleId, this);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class ListVehiclePresenter implements ListVehicleContract.Presenter, Vehi
     @Override
     public void start() {
         //if (mIsDataMissing && mView.isActive()) {
-            mVehicleRepository.getVehicles(this);
+            mVehicleRepository.fetchVehicles(this);
         //}
     }
 

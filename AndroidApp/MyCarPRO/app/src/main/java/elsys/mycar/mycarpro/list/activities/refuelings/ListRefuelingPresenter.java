@@ -35,7 +35,7 @@ public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
           //  mView.showNoSuchVehicle();
         }else {
             mView.showProgress();
-            mVehicleRepository.getVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
+            mVehicleRepository.fetchVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
                 @Override
                 public void onSuccess(Vehicle vehicle) {
                     processRefuelings(vehicle.getRefuelings());
