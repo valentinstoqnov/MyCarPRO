@@ -5,9 +5,10 @@ import com.google.common.base.Preconditions;
 import java.util.Locale;
 
 import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.OnItemFetchedCallback;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 
-public class DetailVehiclePresenter implements DetailVehicleContract.Presenter, VehicleRepository.OnVehicleFetchedCallback {
+public class DetailVehiclePresenter implements DetailVehicleContract.Presenter, OnItemFetchedCallback<Vehicle> {
 
     private static final String FUEL_TANK_FORMAT = "Fuel tank: \nType: %s,\nCapacity: %d L,\nConsumption: %f";
 

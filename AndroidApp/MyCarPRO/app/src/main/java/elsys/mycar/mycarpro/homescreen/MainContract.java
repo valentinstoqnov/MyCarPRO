@@ -28,6 +28,8 @@ public interface MainContract {
         void showStatisticsUi();
 
         void showProfileUi();
+
+        String getCurrentUserId();
     }
 
     interface Presenter extends BasePresenter {

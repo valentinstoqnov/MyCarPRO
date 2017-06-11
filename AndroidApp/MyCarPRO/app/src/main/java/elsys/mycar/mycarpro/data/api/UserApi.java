@@ -1,6 +1,5 @@
 package elsys.mycar.mycarpro.data.api;
 
-import elsys.mycar.mycarpro.data.model.SimpleUser;
 import elsys.mycar.mycarpro.data.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -12,5 +11,5 @@ public interface UserApi {
     Call<User> saveUser(@Body User user);
 
     @POST("/users/login")
-    Call<User> loginUser(@Body SimpleUser simpleUser);
+    Call<User> loginUser(@Body User User);
 }

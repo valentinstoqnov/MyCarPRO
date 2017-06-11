@@ -1,15 +1,12 @@
 package elsys.mycar.mycarpro.addedit.vehicle;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +27,10 @@ import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.addedit.vehicle.fueltank.AddEditFuelTankDialog;
 import elsys.mycar.mycarpro.addedit.vehicle.fueltank.AddEditFuelTankPresenter;
-import elsys.mycar.mycarpro.addedit.vehicle.fueltank.FuelTankCallback;
+import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.util.DatePickerUtils;
 import me.priyesh.chroma.ChromaDialog;
 import me.priyesh.chroma.ColorMode;
-import me.priyesh.chroma.ColorSelectListener;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static elsys.mycar.mycarpro.util.TextInputUtils.getTextFromAutoComplete;
@@ -71,46 +67,25 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
 
         mVehicleColor = ResourcesCompat.getColor(getResources(), R.color.colorVehicleTabSelected, null);
 
-        btnManufactureDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerUtils.showDatePicker(getContext(), AddEditVehicleFragment.this);
-            }
+        btnManufactureDate.setOnClickListener(v -> DatePickerUtils.showDatePicker(getContext(), AddEditVehicleFragment.this));
+
+        btnFuelTank.setOnClickListener(v -> {
+            final AddEditFuelTankDialog dialog = new AddEditFuelTankDialog();
+            dialog.setCallback((fuelType, capacity, consumption) -> mPresenter.onFuelTankPicked(fuelType, capacity, consumption));
+            AddEditFuelTankPresenter dialogPresenter = new AddEditFuelTankPresenter(dialog);
+            dialog.setPresenter(dialogPresenter);
+            dialog.show(getChildFragmentManager(), AddEditFuelTankDialog.TAG);
         });
 
-        btnFuelTank.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AddEditFuelTankDialog dialog = new AddEditFuelTankDialog();
-                dialog.setCallback(new FuelTankCallback() {
-                    @Override
-                    public void onEntered(String fuelType, int capacity, double consumption) {
-                        mPresenter.onFuelTankPicked(fuelType, capacity, consumption);
-                    }
-                });
-                AddEditFuelTankPresenter dialogPresenter = new AddEditFuelTankPresenter(dialog);
-                dialog.setPresenter(dialogPresenter);
-                dialog.show(getChildFragmentManager(), AddEditFuelTankDialog.TAG);
-            }
-        });
-
-        btnColor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ChromaDialog.Builder()
-                        .initialColor(mVehicleColor)
-                        .colorMode(ColorMode.RGB) // There's also ARGB and HSV
-                        .onColorSelected(new ColorSelectListener() {
-                            @Override
-                            public void onColorSelected(@ColorInt int i) {
-                                mVehicleColor = i;
-                                changeColorOfDrawables(btnColor.getCompoundDrawables());
-                            }
-                        })
-                        .create()
-                        .show(getChildFragmentManager(), "ChromaDialog");
-            }
-        });
+        btnColor.setOnClickListener(v -> new ChromaDialog.Builder()
+                .initialColor(mVehicleColor)
+                .colorMode(ColorMode.RGB) // There's also ARGB and HSV
+                .onColorSelected(i -> {
+                    mVehicleColor = i;
+                    changeColorOfDrawables(btnColor.getCompoundDrawables());
+                })
+                .create()
+                .show(getChildFragmentManager(), "ChromaDialog"));
 
         return view;
     }
@@ -140,19 +115,17 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
         super.onActivityCreated(savedInstanceState);
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_vehicle);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = getTextFromTil(tilName);
-                String make = getTextFromAutoComplete(tilMake);
-                String model = getTextFromTil(tilModel);
-                String date = btnManufactureDate.getText().toString();
-                String odometer = getTextFromTil(tilOdometer);
-                String horsePower = getTextFromTil(tilHorsePower);
-                String notes = getTextFromTil(tilNotes);
+        fab.setOnClickListener(v -> {
+            String userId = getActivity().getIntent().getStringExtra(Constants.USER_ID);
+            String name = getTextFromTil(tilName);
+            String make = getTextFromAutoComplete(tilMake);
+            String model = getTextFromTil(tilModel);
+            String date = btnManufactureDate.getText().toString();
+            String odometer = getTextFromTil(tilOdometer);
+            String horsePower = getTextFromTil(tilHorsePower);
+            String notes = getTextFromTil(tilNotes);
 
-                mPresenter.saveVehicle(name, make, model, date, horsePower, odometer, mVehicleColor, notes);
-            }
+            mPresenter.saveVehicle(name, make, model, date, horsePower, odometer, mVehicleColor, notes, userId);
         });
     }
 
@@ -172,8 +145,34 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     }
 
     @Override
-    public void showMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    public void showNoSuchVehicle() {
+        Toast.makeText(getContext(), R.string.no_vehicle_found, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showDateError() {
+        Toast.makeText(getContext(), R.string.date_parse_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showEmptyFieldsError() {
+        Toast.makeText(getContext(), R.string.empty_fields_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showPriceOrOdometerParseError() {
+        Toast.makeText(getContext(), R.string.price_odometer_parse_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showVehicleSuccessfullySaved(String name) {
+        String message = String.format(getString(R.string.vehicle_successfully_saved), name);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showVehicleSaveError() {
+        Toast.makeText(getContext(), R.string.vehicle_save_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -239,13 +238,6 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     @Override
     public boolean isActive() {
         return isAdded();
-    }
-
-    @Override
-    public void exit() {
-        FragmentActivity activity = getActivity();
-        activity.setResult(Activity.RESULT_OK);
-        activity.finish();
     }
 
     @Override

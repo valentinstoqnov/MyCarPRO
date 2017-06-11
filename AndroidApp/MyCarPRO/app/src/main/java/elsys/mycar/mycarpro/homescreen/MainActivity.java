@@ -1,11 +1,9 @@
 package elsys.mycar.mycarpro.homescreen;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,7 +17,6 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.common.base.Preconditions;
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +37,6 @@ import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
-import elsys.mycar.mycarpro.loginscreen.LoginActivity;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
 import elsys.mycar.mycarpro.util.FragmentManagingUtils;
@@ -109,6 +105,7 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
     @Override
     public void showAddEditVehicleUi() {
         Intent intent = new Intent(this, AddEditVehicleActivity.class);
+        intent.putExtra(Constants.USER_ID, getCurrentUserId());
         startActivityForResult(intent, REQUEST_CODE_NEW_VEHICLE);
     }
 
@@ -146,7 +143,7 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
         Fragment fragment = fragmentManagingUtils.addOrShowFragment(ListVehicleFragment.TAG);
         ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
 
-        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(
+        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(getCurrentUserId(),
                 new VehicleRepositoryImpl(), listVehicleFragment
         );
 
@@ -173,6 +170,11 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
     @Override
     public void showProfileUi() {
         fragmentManagingUtils.addOrShowFragment(ProfileFragment.TAG);
+    }
+
+    @Override
+    public String getCurrentUserId() {
+        return super.getCurrentUserId();
     }
 
     @OnClick({R.id.fab_main, R.id.fab_main_insurance, R.id.fab_main_refueling, R.id.fab_main_service})

@@ -37,11 +37,11 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
 
    // @Override
     public void loadItems() {
-        if (mVehicleId == null) {
+       /* if (mVehicleId == null) {
            // mView.showNoSuchVehicle();
         }else {
             mView.showProgress();
-            mVehicleRepository.fetchVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
+            mVehicleRepository.fetchVehicleById(mVehicleId, new On);, new VehicleRepository.OnVehicleFetchedCallback() {
                 @Override
                 public void onSuccess(Vehicle vehicle) {
                     processInsurances(vehicle.getInsurances());
@@ -53,7 +53,7 @@ public class ListInsurancesPresenter implements ListInsurancesContract.Presenter
                     mView.hideProgress();
                 }
             });
-        }
+        }*/
     }
 
     @Override

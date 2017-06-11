@@ -2,7 +2,6 @@ package elsys.mycar.mycarpro.base;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -54,5 +53,16 @@ public class FirebaseAuthBaseActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    protected String getCurrentUserId() {
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        if (user == null) {
+            openLoginScreen();
+        }else {
+            return user.getUid();
+        }
+
+        return null;
     }
 }

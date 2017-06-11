@@ -2,8 +2,6 @@ package elsys.mycar.mycarpro.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 import elsys.mycar.mycarpro.data.Constants;
 
 public class Vehicle {

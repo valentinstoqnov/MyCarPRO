@@ -17,13 +17,18 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
-public class TablePresenter implements TableContract.Presenter, VehicleRepository.OnVehiclesFetchedCallback {
+public class TablePresenter implements TableContract.Presenter{
 
     private VehicleRepository mVehicleRepository;
     private TableContract.View mView;
     private String mVehicleId;
 
     @Override
+    public void start() {
+        
+    }
+
+ /*   @Override
     public void start() {
         mVehicleRepository.fetchVehicles(this);
     }
@@ -148,5 +153,5 @@ public class TablePresenter implements TableContract.Presenter, VehicleRepositor
                         mView.showMessage("Couldn't find selected vehicle");
                     }
                 });
-    }
+    }*/
 }

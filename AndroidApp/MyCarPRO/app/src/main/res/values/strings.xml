@@ -90,11 +90,13 @@
     <string name="refueling_save_error">Failed to save refueling</string>
     <string name="service_retrieval_error">Couldn\'t fetch the service, maybe it\'s deleted</string>
     <string name="service_save_error">Failed to save service</string>
+    <string name="vehicle_save_error">Failed to save vehicle</string>
 
     <!--Success-->
     <string name="insurance_successfully_saved" formatted="false">%s insurance successfully saved!</string>
     <string name="refueling_successfully_saved" formatted="false">%s refueling successfully saved!</string>
     <string name="service_successfully_saved" formatted="false">%s service successfully saved!</string>
+    <string name="vehicle_successfully_saved" formatted="false">%s vehicle successfully saved!</string>
 
     <string name="date_price_placeholder" formatted="false">%s | Cost: %s%s</string>
     <string name="title_activity_login">LoginActivity</string>

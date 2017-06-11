@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
+import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 
 public class DetailVehicleFragment extends Fragment implements DetailVehicleContract.View{
@@ -126,7 +127,7 @@ public class DetailVehicleFragment extends Fragment implements DetailVehicleCont
     @Override
     public void showEditVehicleUi(String id) {
         Intent intent = new Intent(getActivity(), AddEditVehicleActivity.class);
-        intent.putExtra(MainActivity.VEHICLE_ID, id);
+        intent.putExtra(Constants.VEHICLE_ID, id);
         startActivity(intent);
     }
 

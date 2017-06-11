@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.data.repository.activities.refueling.RefuelingRepositoryImpl;
-import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 
 public class AddEditRefuelingActivity extends AppCompatActivity {

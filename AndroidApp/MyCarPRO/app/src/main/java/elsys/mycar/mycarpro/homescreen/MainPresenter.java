@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.OnItemsFetchedCallback;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DataUtils;
 
@@ -23,11 +24,10 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void start() {
         //if (mIsDataMissing) {
-            mVehicleRepository.fetchVehicles(new VehicleRepository.OnVehiclesFetchedCallback() {
+           /* mVehicleRepository.fetchVehicles(mView.getCurrentUserId(), new OnItemsFetchedCallback<Vehicle>() {
                 @Override
-                public void onSuccess(List<Vehicle> vehicles) {
-                   // mVehicleIds = DataUtils.getVehicleIds(vehicles);
-                    mView.showVehicleItemsInDropdown(DataUtils.getVehicleIdsAndNames(vehicles));
+                public void onSuccess(List<Vehicle> items) {
+                    mView.showVehicleItemsInDropdown(DataUtils.getVehicleIdsAndNames(items));
                     mIsDataMissing = false;
                 }
 
@@ -35,7 +35,7 @@ public class MainPresenter implements MainContract.Presenter {
                 public void onFailure() {
                     mView.showMessage("Couldn't get your vehicles");
                 }
-            });
+            });*/
        // }
     }
 

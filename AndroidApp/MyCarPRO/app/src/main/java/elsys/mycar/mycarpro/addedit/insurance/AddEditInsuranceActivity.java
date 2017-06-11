@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.data.repository.activities.insurance.InsuranceRepositoryImpl;
-import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 
 public class AddEditInsuranceActivity extends AppCompatActivity {
