@@ -2,23 +2,25 @@ package elsys.mycar.mycarpro.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import elsys.mycar.mycarpro.data.Constants;
+
 public class Refueling {
 
-    @SerializedName("_id")
+    @SerializedName(Constants.ID)
     private String id;
-    @SerializedName("gas_station_name")
+    @SerializedName(Constants.GAS_STATION_NAME)
     private String companyName;
-    @SerializedName("date_time")
+    @SerializedName(Constants.DATE_TIME)
     private String date;
-    @SerializedName("quantity")
+    @SerializedName(Constants.QUANTITY)
     private double quantity;
-    @SerializedName("price")
+    @SerializedName(Constants.PRICE)
     private long price;
-    @SerializedName("odometer")
+    @SerializedName(Constants.ODOMETER)
     private long odometer;
-    @SerializedName("note")
+    @SerializedName(Constants.NOTE)
     private String note;
-    @SerializedName("vehicle_id")
+    @SerializedName(Constants.VEHICLE_ID)
     private String vehicleId;
 
     public Refueling(String id, String companyName, String date, double quantity, long price, long odometer, String note) {

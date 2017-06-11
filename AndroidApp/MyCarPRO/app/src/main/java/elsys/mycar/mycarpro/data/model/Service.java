@@ -2,21 +2,23 @@ package elsys.mycar.mycarpro.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import elsys.mycar.mycarpro.data.Constants;
+
 public class Service {
 
-    @SerializedName("_id")
+    @SerializedName(Constants.ID)
     private String id;
-    @SerializedName("type")
+    @SerializedName(Constants.TYPE)
     private String type;
-    @SerializedName("date_time")
+    @SerializedName(Constants.DATE_TIME)
     private String date;
-    @SerializedName("price")
+    @SerializedName(Constants.PRICE)
     private long price;
-    @SerializedName("odometer")
+    @SerializedName(Constants.ODOMETER)
     private long odometer;
-    @SerializedName("note")
+    @SerializedName(Constants.NOTE)
     private String note;
-    @SerializedName("vehicle_id")
+    @SerializedName(Constants.VEHICLE_ID)
     private String vehicleId;
 
     public Service(String id, String type, String date, long price, long odometer, String note) {

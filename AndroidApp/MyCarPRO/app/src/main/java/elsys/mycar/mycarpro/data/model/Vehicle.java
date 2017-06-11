@@ -4,31 +4,35 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import elsys.mycar.mycarpro.data.Constants;
+
 public class Vehicle {
 
-    @SerializedName("_id")
+    @SerializedName(Constants.ID)
     private String id;
-    @SerializedName("name")
+    @SerializedName(Constants.NAME)
     private String name;
-    @SerializedName("make")
+    @SerializedName(Constants.MAKE)
     private String make;
-    @SerializedName("model")
+    @SerializedName(Constants.MODEL)
     private String model;
-    @SerializedName("manufacture_date")
+    @SerializedName(Constants.MANUFACTURE_DATE)
     private String manufactureDate;
-    @SerializedName("horse_power")
+    @SerializedName(Constants.HORSE_POWER)
     private int horsePower;
-    @SerializedName("odometer")
+    @SerializedName(Constants.ODOMETER)
     private int odometer;
-    @SerializedName("fuel_type")
+    @SerializedName(Constants.FUEL_TYPE)
     private String fuelType;
-    @SerializedName("fuel_tank_capacity")
+    @SerializedName(Constants.FUEL_TANK_CAPACITY)
     private int fuelTankCapacity;
-    @SerializedName("fuel_consumption")
+    @SerializedName(Constants.FUEL_CONSUMPTION)
     private double fuelConsumption;
+    @SerializedName(Constants.COLOR)
     private int color;
-    @SerializedName("user_id")
+    @SerializedName(Constants.USER_ID)
     private String userId;
+    @SerializedName(Constants.NOTE)
     private String note;
 
     public Vehicle(String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, int color, String note) {

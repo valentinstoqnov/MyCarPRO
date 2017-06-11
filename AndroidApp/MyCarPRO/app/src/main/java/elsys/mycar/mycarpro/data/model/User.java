@@ -3,16 +3,19 @@ package elsys.mycar.mycarpro.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import elsys.mycar.mycarpro.data.Constants;
+
 public class User {
 
+    @SerializedName(Constants.ID)
     private String id;
-    @SerializedName("first_name")
+    @SerializedName(Constants.FIRST_NAME)
     private String firstName;
-    @SerializedName("last_name")
+    @SerializedName(Constants.LAST_NAME)
     private String lastName;
-    @SerializedName("email")
+    @SerializedName(Constants.EMAIL)
     private String email;
-    @SerializedName("password")
+    @SerializedName(Constants.PASSWORD)
     private String password;
 
     public User(String firstName, String lastName, String email, String password) {
