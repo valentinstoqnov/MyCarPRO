@@ -56,6 +56,8 @@ public class Constants {
 
     public static final String COLOR = "color";
 
+    public static final String IS_FULL_FUEL_TANK = "is_fuel_tank_full";
+
 
 
     public static final String ID = "id";
@@ -64,6 +66,11 @@ public class Constants {
 
     public static final String VEHICLE_ID = "vehicle_id";
 
+    public static final String INSURANCE_ID = "insurance_id";
+
+    public static final String REFUELING_ID = "refueling_id";
+
+    public static final String SERVICE_ID = "service_id";
 
 
     public static final int REQUIRED_PASSWORD_LENGTH = 6;

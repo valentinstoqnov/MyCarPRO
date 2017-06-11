@@ -35,7 +35,7 @@ public class Vehicle {
     @SerializedName(Constants.NOTE)
     private String note;
 
-    public Vehicle(String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, int color, String note) {
+    public Vehicle(String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, int color, String note, String userId) {
         this.name = name;
         this.make = make;
         this.model = model;
@@ -47,6 +47,7 @@ public class Vehicle {
         this.fuelConsumption = fuelConsumption;
         this.color = color;
         this.note = note;
+        this.userId = userId;
     }
 
     public Vehicle(String name, String make, String model, String manufactureDate, int horsePower, int odometer, String fuelType, int fuelTankCapacity, double fuelConsumption, String note) {

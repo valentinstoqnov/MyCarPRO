@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.data.Constants;
+import elsys.mycar.mycarpro.data.repository.activities.insurance.InsuranceRepositoryImpl;
 import elsys.mycar.mycarpro.homescreen.MainActivity;
 import elsys.mycar.mycarpro.util.ActivityUtils;
 
@@ -24,9 +26,10 @@ public class AddEditInsuranceActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditInsuranceFragment, R.id.frame_layout_add_insurance);
         }
 
-        String vehicleId = getIntent().getStringExtra(MainActivity.VEHICLE_ID);
+        String vehicleId = getIntent().getStringExtra(Constants.VEHICLE_ID);
+        String insuranceId = getIntent().getStringExtra(Constants.INSURANCE_ID);
 
-        AddEditInsurancePresenter addEditInsurancePresenter = new AddEditInsurancePresenter(vehicleId, null, null, null, addEditInsuranceFragment, true);
+        AddEditInsurancePresenter addEditInsurancePresenter = new AddEditInsurancePresenter(vehicleId, insuranceId, new InsuranceRepositoryImpl(), addEditInsuranceFragment, true);
 
         addEditInsuranceFragment.setPresenter(addEditInsurancePresenter);
     }

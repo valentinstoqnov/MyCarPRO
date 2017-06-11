@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.model.Vehicle;
+import elsys.mycar.mycarpro.data.repository.OnItemFetchedCallback;
 import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
 import elsys.mycar.mycarpro.util.DateUtils;
@@ -40,17 +41,19 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
                 mView.setDate(DateUtils.getTextCurrentDate());
             }else {
                 mView.showProgress();
-                mVehicleRepository.fetchVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
+                mVehicleRepository.fetchVehicleById(mVehicleId, new OnItemFetchedCallback<Vehicle>() {
                     @Override
-                    public void onSuccess(Vehicle vehicle) {
-                        populateVehicle(vehicle);
+                    public void onSuccess(Vehicle item) {
+                        if (mIsDataMissing) {
+                            populateVehicle(item);
+                        }
                         mView.hideProgress();
                     }
 
                     @Override
                     public void onFailure() {
-                        mView.showMessage("Failed to find such vehicle");
                         mView.hideProgress();
+                        mView.showNoSuchVehicle();
                     }
                 });
             }
@@ -73,33 +76,32 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
     }
 
     @Override
-    public void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note) {
+    public void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note, String userId) {
+        userId = Preconditions.checkNotNull(userId, "attempt to save vehicle but userId is null");
         mView.showProgress();
         if (StringUtils.checkNotNullOrEmpty(name, make, model, manufactureDate, odometer, horsePower, note, mFuelType)) {
             try {
                 String parsedDate = DateUtils.parseValidTextDateFromText(manufactureDate);
                 int parsedOdometer = Integer.parseInt(odometer);
                 int parsedHorsePower = Integer.parseInt(horsePower);
-
-                Vehicle vehicle = new Vehicle(name, make, model, parsedDate, parsedHorsePower, parsedOdometer, mFuelType, mCapacity, mConsumption, color, note);
+                Vehicle vehicle = new Vehicle(name, make, model, parsedDate, parsedHorsePower, parsedOdometer, mFuelType, mCapacity, mConsumption, color, note, userId);
 
                 if (isNewVehicle()) {
                     createVehicle(vehicle);
                 }else {
                     updateVehicle(vehicle);
                 }
-
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 mView.hideProgress();
-                mView.showMessage("Odometer and horse power must be numeric");
+                mView.showPriceOrOdometerParseError();
             } catch (ParseException | IllegalArgumentException e) {
                 e.printStackTrace();
-                mView.showMessage("Incorrect date");
+                mView.showDateError();
                 mView.hideProgress();
             }
         }else {
-            mView.showMessage("Please, make sure everything is filled!");
+            mView.showEmptyFieldsError();
             mView.hideProgress();
         }
     }
@@ -146,14 +148,13 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
 
     @Override
     public void onSuccess(String name) {
-        mView.showMessage(name + " successfully saved!");
+        mView.showVehicleSuccessfullySaved(name);
         mView.hideProgress();
-        mView.exit();
     }
 
     @Override
     public void onFailure() {
-        mView.showMessage("Something went wrong, please try again");
+        mView.showVehicleSaveError();
         mView.hideProgress();
     }
 }

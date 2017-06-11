@@ -30,12 +30,13 @@ public class Service {
         this.note = note;
     }
 
-    public Service(String type, String date, long price, long odometer, String note) {
+    public Service(String type, String date, long price, long odometer, String note, String vehicleId) {
         this.type = type;
         this.date = date;
         this.price = price;
         this.odometer = odometer;
         this.note = note;
+        this.vehicleId = vehicleId;
     }
 
     public String getId() {

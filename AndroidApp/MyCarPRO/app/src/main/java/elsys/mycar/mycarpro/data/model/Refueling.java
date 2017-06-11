@@ -18,6 +18,8 @@ public class Refueling {
     private long price;
     @SerializedName(Constants.ODOMETER)
     private long odometer;
+    @SerializedName(Constants.IS_FULL_FUEL_TANK)
+    private boolean isFuelTankFull;
     @SerializedName(Constants.NOTE)
     private String note;
     @SerializedName(Constants.VEHICLE_ID)
@@ -33,13 +35,14 @@ public class Refueling {
         this.note = note;
     }
 
-    public Refueling(String companyName, String date, double quantity, long price, long odometer, String note) {
+    public Refueling(String companyName, String date, double quantity, long price, long odometer, String note, String vehicleId) {
         this.companyName = companyName;
         this.date = date;
         this.quantity = quantity;
         this.price = price;
         this.odometer = odometer;
         this.note = note;
+        this.vehicleId = vehicleId;
     }
 
     public String getId() {

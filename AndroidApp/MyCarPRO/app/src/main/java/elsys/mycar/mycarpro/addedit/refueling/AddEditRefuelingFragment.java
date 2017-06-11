@@ -53,19 +53,9 @@ public class AddEditRefuelingFragment extends Fragment implements AddEditRefueli
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_edit_refueling, container, false);
         mUnbinder = ButterKnife.bind(this, view);
-        btnDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerUtils.showDatePicker(getContext(), AddEditRefuelingFragment.this);
-            }
-        });
+        btnDate.setOnClickListener(v -> DatePickerUtils.showDatePicker(getContext(), AddEditRefuelingFragment.this));
 
-        btnTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerUtils.showTimePicker(getContext(), AddEditRefuelingFragment.this);
-            }
-        });
+        btnTime.setOnClickListener(v -> DatePickerUtils.showTimePicker(getContext(), AddEditRefuelingFragment.this));
         return view;
     }
 
@@ -86,19 +76,16 @@ public class AddEditRefuelingFragment extends Fragment implements AddEditRefueli
         super.onActivityCreated(savedInstanceState);
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_refueling);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String companyName = TextInputUtils.getTextFromAutoComplete(tilCompanyName);
-                String price = TextInputUtils.getTextFromTil(tilPrice);
-                String odometer = TextInputUtils.getTextFromTil(tilOdometer);
-                String quantity = TextInputUtils.getTextFromTil(tilQuantity);
-                String note = TextInputUtils.getTextFromTil(tilNote);
-                String date = btnDate.getText().toString();
-                String time = btnTime.getText().toString();
+        fab.setOnClickListener(v -> {
+            String companyName = TextInputUtils.getTextFromAutoComplete(tilCompanyName);
+            String price = TextInputUtils.getTextFromTil(tilPrice);
+            String odometer = TextInputUtils.getTextFromTil(tilOdometer);
+            String quantity = TextInputUtils.getTextFromTil(tilQuantity);
+            String note = TextInputUtils.getTextFromTil(tilNote);
+            String date = btnDate.getText().toString();
+            String time = btnTime.getText().toString();
 
-                mPresenter.saveRefueling(companyName, quantity, price, odometer, date, time, note, aSwitch.isChecked());
-            }
+            mPresenter.saveRefueling(companyName, quantity, price, odometer, date, time, note, aSwitch.isChecked());
         });
     }
 
@@ -118,7 +105,38 @@ public class AddEditRefuelingFragment extends Fragment implements AddEditRefueli
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showNoSuchVehicle() {
+        Toast.makeText(getContext(), R.string.no_vehicle_found, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showRefuelingRetrievalError() {
+        Toast.makeText(getContext(), R.string.refueling_retrieval_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showDateError() {
+        Toast.makeText(getContext(), R.string.date_parse_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showRefuelingSaveError() {
+        Toast.makeText(getContext(), R.string.service_save_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showPriceOrOdometerParseError() {
+        Toast.makeText(getContext(), R.string.price_odometer_parse_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showEmptyFieldsError() {
+        Toast.makeText(getContext(), R.string.empty_fields_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showRefuelingSuccessfullySaved(String name) {
+        String message = String.format(getString(R.string.service_successfully_saved), name);
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -173,11 +191,6 @@ public class AddEditRefuelingFragment extends Fragment implements AddEditRefueli
     }
 
     @Override
-    public void exit() {
-        getActivity().finish();
-    }
-
-    @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         mPresenter.onDatePicked(year, month, dayOfMonth);
     }
@@ -185,5 +198,10 @@ public class AddEditRefuelingFragment extends Fragment implements AddEditRefueli
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         mPresenter.onTimePicked(hourOfDay, minute);
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
     }
 }

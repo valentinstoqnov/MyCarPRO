@@ -1,9 +1,11 @@
 package elsys.mycar.mycarpro.addedit.refueling;
 
 import java.text.ParseException;
+import java.util.Date;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.model.Refueling;
+import elsys.mycar.mycarpro.data.repository.OnItemFetchedCallback;
 import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 import elsys.mycar.mycarpro.data.repository.activities.refueling.RefuelingRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
@@ -17,29 +19,41 @@ public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Prese
     private String mRefuelingId;
     private RefuelingRepositoryImpl mRefuelingRepository;
     private AddEditRefuelingContract.View mView;
-    private VehicleRepository mVehicleRepository;
-    private  boolean mIsDataMissing;
+    private boolean mIsDataMissing;
 
-    public AddEditRefuelingPresenter(String mVehicleId, String mRefuelingId, RefuelingRepositoryImpl mRefuelingRepository, AddEditRefuelingContract.View mView, VehicleRepository mVehicleRepository, boolean mIsDataMissing) {
+    public AddEditRefuelingPresenter(String mVehicleId, String mRefuelingId, RefuelingRepositoryImpl mRefuelingRepository, AddEditRefuelingContract.View mView, boolean mIsDataMissing) {
         this.mVehicleId = mVehicleId;
         this.mRefuelingId = mRefuelingId;
         this.mRefuelingRepository = mRefuelingRepository;
         this.mView = mView;
-        this.mVehicleRepository = mVehicleRepository;
         this.mIsDataMissing = mIsDataMissing;
     }
 
     @Override
     public void start() {
         if (isVehicleNull()) {
-            mView.showMessage("No such vehicle");
+            mView.showNoSuchVehicle();
         }else {
             if (mIsDataMissing) {
                 if (isNewRefueling()) {
                     mView.setDate(DateUtils.getTextCurrentDate());
                     mView.setTime(DateUtils.getTextCurrentTime());
                 }else {
-                    //get refueling by id
+                    mRefuelingRepository.fetchRefuelingById(mRefuelingId, new OnItemFetchedCallback<Refueling>() {
+                        @Override
+                        public void onSuccess(Refueling item) {
+                            if (mIsDataMissing) {
+                                populateRefueling(item);
+                            }
+                            mView.hideProgress();
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            mView.hideProgress();
+                            mView.showRefuelingRetrievalError();
+                        }
+                    });
                 }
                 mView.addGasStations(Data.getGasStationCompanies());
             }
@@ -55,26 +69,23 @@ public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Prese
                 long parsedPrice = PriceUtils.stringToLong(price);
                 double parsedQuantity = Double.parseDouble(quantity);
                 String dateTime = DateUtils.getTextDateTime(date, time);
-                Refueling refueling = new Refueling(companyName, dateTime, parsedQuantity, parsedPrice, parsedOdometer, note);
+                Refueling refueling = new Refueling(companyName, dateTime, parsedQuantity, parsedPrice, parsedOdometer, note, mVehicleId);
 
                 if (isNewRefueling()) {
                     createRefueling(refueling);
                 }else {
                     updateRefueling(refueling);
                 }
-
-                mView.showMessage("Refueling successfully saved!");
-                mView.exit();
             }catch (NumberFormatException e) {
-                mView.showMessage("Price and odometer fields expect numbers only");
+                mView.showPriceOrOdometerParseError();
                 mView.hideProgress();
             }catch (ParseException | IllegalArgumentException e) {
                 e.printStackTrace();
-                mView.showMessage("Incorrect date");
+                mView.showDateError();
                 mView.hideProgress();
             }
         }else {
-            mView.showMessage("Please, make sure everything is filled!");
+            mView.showEmptyFieldsError();
             mView.hideProgress();
         }
     }
@@ -103,31 +114,41 @@ public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Prese
     }
 
     private void createRefueling(Refueling refueling) {
-        mRefuelingRepository.saveRefueling(mVehicleId, refueling, this);
+        mRefuelingRepository.saveRefueling(refueling, this);
     }
 
     private void updateRefueling(Refueling refueling) {
         if (isNewRefueling()) {
             throw new RuntimeException("updateRefueling called but refueling is new");
         }
-        mRefuelingRepository.updateRefueling(mVehicleId, refueling.getId(), refueling, this);
-    }
-
-    //@Override
-    public void onSuccess(Refueling item) {
-        mView.showMessage("Refueling successfully saved!");
-        mView.hideProgress();
-        mView.exit();
+        mRefuelingRepository.updateRefueling(refueling.getId(), refueling, this);
     }
 
     @Override
     public void onSuccess(String name) {
-
+        mView.hideProgress();
+        mView.showRefuelingSuccessfullySaved(name);
     }
 
     @Override
     public void onFailure() {
-        mView.showMessage("Something went wrong, please try again");
         mView.hideProgress();
+        mView.showRefuelingSaveError();
+    }
+
+    private void populateRefueling(Refueling refueling) {
+        if (mView.isActive()) {
+            mView.setCompanyName(refueling.getCompanyName());
+            mView.setPrice(PriceUtils.longToString(refueling.getPrice()));
+            mView.setOdometer(String.valueOf(refueling.getOdometer()));
+            mView.setNote(refueling.getNote());
+            //TODO: FIX ME !!
+            // mView.setDate(refueling.getDate());
+            // mView.setTime(DateUtils);
+            mView.setQuantity(String.valueOf(refueling.getQuantity()));
+            // FIXME: 11.06.17 !!!! add is full fuel tank feature !!!!!
+            mView.setFullFuelTank(false);
+            mIsDataMissing = false;
+        }
     }
 }

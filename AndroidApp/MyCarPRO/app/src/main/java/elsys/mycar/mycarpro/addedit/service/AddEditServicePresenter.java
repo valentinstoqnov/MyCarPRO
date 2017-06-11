@@ -6,6 +6,7 @@ import java.text.ParseException;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.model.Service;
+import elsys.mycar.mycarpro.data.repository.OnItemFetchedCallback;
 import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 import elsys.mycar.mycarpro.data.repository.activities.service.ServiceRepository;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
@@ -18,15 +19,13 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
     private String mVehicleId;
     private String mServiceId;
     private ServiceRepository mServiceRepository;
-    private VehicleRepository mVehicleRepository;
     private AddEditServiceContract.View mView;
     private boolean mIsDataMissing;
 
-    public AddEditServicePresenter(String vehicleId, String serviceId, ServiceRepository serviceRepository, VehicleRepository vehicleRepository, AddEditServiceContract.View view, boolean isDataMissing) {
+    public AddEditServicePresenter(String vehicleId, String serviceId, ServiceRepository serviceRepository, AddEditServiceContract.View view, boolean isDataMissing) {
         mVehicleId = Preconditions.checkNotNull(vehicleId);
         mServiceId = serviceId;
         mServiceRepository = Preconditions.checkNotNull(serviceRepository);
-        mVehicleRepository = Preconditions.checkNotNull(vehicleRepository);
         mView = Preconditions.checkNotNull(view);
         mIsDataMissing = isDataMissing;
     }
@@ -34,14 +33,28 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
     @Override
     public void start() {
         if (isVehicleNull()) {
-            mView.showMessage("No such vehicle");
+            mView.showNoSuchVehicle();
         }else {
             if (mIsDataMissing) {
                 if (isNewService()) {
                     mView.setDate(DateUtils.getTextCurrentDate());
                     mView.setTime(DateUtils.getTextCurrentTime());
                 } else {
-                    //mServiceRepository.getServiceById();
+                    mServiceRepository.fetchServiceById(mServiceId, new OnItemFetchedCallback<Service>() {
+                        @Override
+                        public void onSuccess(Service item) {
+                            if (mIsDataMissing) {
+                                populateService(item);
+                            }
+                            mView.hideProgress();
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            mView.showServiceRetrievalError();
+                            mView.hideProgress();
+                        }
+                    });
                 }
                 mView.showServiceTypes(Data.getServiceTypes());
             }
@@ -55,24 +68,23 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
             try {
                 long parsedOdometer = Long.decode(odometer);
                 long parsedPrice = PriceUtils.stringToLong(price);
-                Service service = new Service(serviceType, DateUtils.getTextDateTime(date, time), parsedPrice, parsedOdometer, note);
+                Service service = new Service(serviceType, DateUtils.getTextDateTime(date, time), parsedPrice, parsedOdometer, note, mVehicleId);
 
                 if (isNewService()) {
                     createService(service);
                 }else {
                     updateService(service);
                 }
-
             }catch (NumberFormatException e) {
-                mView.showMessage("Price and odometer fields expect numbers only");
+                mView.showPriceOrOdometerParseError();
                 mView.hideProgress();
             }catch (ParseException | IllegalArgumentException e) {
                 e.printStackTrace();
-                mView.showMessage("Incorrect date");
+                mView.showDateError();
                 mView.hideProgress();
             }
         }else {
-            mView.showMessage("Please, make sure everything is filled!");
+            mView.showEmptyFieldsError();
             mView.hideProgress();
         }
     }
@@ -93,14 +105,14 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
     }
 
     private void createService(Service service) {
-        mServiceRepository.saveService(mVehicleId, service, this);
+        mServiceRepository.saveService(service, this);
     }
 
     private void updateService(Service service) {
         if (isNewService()) {
             throw new RuntimeException("updateService called but service is new");
         }
-        mServiceRepository.updateService(mVehicleId, mServiceId, service, this);
+        mServiceRepository.updateService(mServiceId, service, this);
     }
 
     private boolean isNewService() {
@@ -111,21 +123,25 @@ public class AddEditServicePresenter implements AddEditServiceContract.Presenter
         return mVehicleId == null;
     }
 
-   // @Override
-    public void onSuccess(Service item) {
-        mView.showMessage("Service successfully saved!");
-        mView.hideProgress();
-        mView.exit();
-    }
-
     @Override
     public void onSuccess(String name) {
-
+        mView.hideProgress();
+        mView.showServiceSuccessfullySaved(name);
     }
 
     @Override
     public void onFailure() {
-        mView.showMessage("Something went wrong, please try again");
         mView.hideProgress();
+        mView.showServiceSaveError();
+    }
+
+    private void populateService(Service item) {
+        if (mView.isActive()) {
+            mView.setType(item.getType());
+            mView.setPrice(PriceUtils.longToString(item.getPrice()));
+            mView.setOdometer(String.valueOf(item.getOdometer()));
+            mView.setNote(item.getNote());
+            mIsDataMissing = false;
+        }
     }
 }

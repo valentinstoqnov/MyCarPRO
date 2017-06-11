@@ -13,7 +13,19 @@ public interface AddEditRefuelingContract {
 
         void hideProgress();
 
-        void showMessage(String message);
+        void showNoSuchVehicle();
+
+        void showRefuelingRetrievalError();
+
+        void showDateError();
+
+        void showRefuelingSaveError();
+
+        void showPriceOrOdometerParseError();
+
+        void showEmptyFieldsError();
+
+        void showRefuelingSuccessfullySaved(String name);
 
         void setDate(String date);
 
@@ -33,7 +45,7 @@ public interface AddEditRefuelingContract {
 
         void addGasStations(List<String> items);
 
-        void exit();
+        boolean isActive();
     }
 
     interface Presenter extends BasePresenter {

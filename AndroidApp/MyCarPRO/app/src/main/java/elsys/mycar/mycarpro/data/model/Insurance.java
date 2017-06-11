@@ -35,13 +35,14 @@ public class Insurance {
         this.note = note;
     }
 
-    public Insurance(String companyName, long price, long odometer, String date, String expirationDate, String note) {
+    public Insurance(String companyName, long price, long odometer, String date, String expirationDate, String note, String vehicleId) {
         this.companyName = companyName;
         this.price = price;
         this.odometer = odometer;
         this.date = date;
         this.expirationDate = expirationDate;
         this.note = note;
+        this.vehicleId = vehicleId;
     }
 
     public String getId() {

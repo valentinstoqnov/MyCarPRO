@@ -51,19 +51,9 @@ public class AddEditServiceFragment extends Fragment implements AddEditServiceCo
         View view = inflater.inflate(R.layout.fragment_add_edit_service, container, false);
         mUnbinder = ButterKnife.bind(this, view);
 
-        btnDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerUtils.showDatePicker(getContext(), AddEditServiceFragment.this);
-            }
-        });
+        btnDate.setOnClickListener(v -> DatePickerUtils.showDatePicker(getContext(), AddEditServiceFragment.this));
 
-        btnTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerUtils.showTimePicker(getContext(), AddEditServiceFragment.this);
-            }
-        });
+        btnTime.setOnClickListener(v -> DatePickerUtils.showTimePicker(getContext(), AddEditServiceFragment.this));
         return view;
     }
 
@@ -72,18 +62,15 @@ public class AddEditServiceFragment extends Fragment implements AddEditServiceCo
         super.onActivityCreated(savedInstanceState);
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_service);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String type = TextInputUtils.getTextFromAutoComplete(tilType);
-                String price = TextInputUtils.getTextFromTil(tilPrice);
-                String odometer = TextInputUtils.getTextFromTil(tilOdometer);
-                String date = btnDate.getText().toString();
-                String time = btnTime.getText().toString();
-                String note = TextInputUtils.getTextFromTil(tilNote);
+        fab.setOnClickListener(v -> {
+            String type = TextInputUtils.getTextFromAutoComplete(tilType);
+            String price = TextInputUtils.getTextFromTil(tilPrice);
+            String odometer = TextInputUtils.getTextFromTil(tilOdometer);
+            String date = btnDate.getText().toString();
+            String time = btnTime.getText().toString();
+            String note = TextInputUtils.getTextFromTil(tilNote);
 
-                mPresenter.saveService(type, price, odometer, date, time, note);
-            }
+            mPresenter.saveService(type, price, odometer, date, time, note);
         });
     }
 
@@ -115,8 +102,39 @@ public class AddEditServiceFragment extends Fragment implements AddEditServiceCo
     }
 
     @Override
-    public void showMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    public void showNoSuchVehicle() {
+        Toast.makeText(getContext(), R.string.no_vehicle_found, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showServiceRetrievalError() {
+        Toast.makeText(getContext(), R.string.service_retrieval_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showDateError() {
+        Toast.makeText(getContext(), R.string.date_parse_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showEmptyFieldsError() {
+        Toast.makeText(getContext(), R.string.empty_fields_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showPriceOrOdometerParseError() {
+        Toast.makeText(getContext(), R.string.price_odometer_parse_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showServiceSuccessfullySaved(String name) {
+        String message = String.format(getString(R.string.service_successfully_saved), name);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showServiceSaveError() {
+        Toast.makeText(getContext(), R.string.service_save_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -156,11 +174,6 @@ public class AddEditServiceFragment extends Fragment implements AddEditServiceCo
         if (autoCompleteTextView != null) {
             autoCompleteTextView.setAdapter(adapter);
         }
-    }
-
-    @Override
-    public void exit() {
-        getActivity().finish();
     }
 
     @Override

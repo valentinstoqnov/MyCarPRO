@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 import elsys.mycar.mycarpro.data.Data;
 import elsys.mycar.mycarpro.data.model.Insurance;
+import elsys.mycar.mycarpro.data.repository.OnItemFetchedCallback;
 import elsys.mycar.mycarpro.data.repository.OnSaveUpdateDeleteCallback;
 import elsys.mycar.mycarpro.data.repository.activities.insurance.InsuranceRepository;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
@@ -16,15 +17,13 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
     private String mVehicleId;
     private String mInsuranceId;
     private InsuranceRepository mInsuranceRepository;
-    private VehicleRepository mVehicleRepository;
     private AddEditInsuranceContract.View mView;
     private boolean mIsDataMissing;
 
-    public AddEditInsurancePresenter(String mVehicleId, String mInsuranceId, InsuranceRepository mInsuranceRepository, VehicleRepository mVehicleRepository, AddEditInsuranceContract.View mView, boolean mIsDataMissing) {
+    public AddEditInsurancePresenter(String mVehicleId, String mInsuranceId, InsuranceRepository mInsuranceRepository, AddEditInsuranceContract.View mView, boolean mIsDataMissing) {
         this.mVehicleId = mVehicleId;
         this.mInsuranceId = mInsuranceId;
         this.mInsuranceRepository = mInsuranceRepository;
-        this.mVehicleRepository = mVehicleRepository;
         this.mView = mView;
         this.mIsDataMissing = mIsDataMissing;
     }
@@ -32,13 +31,28 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
     @Override
     public void start() {
         if (isVehicleNull()) {
-            mView.showMessage("No such vehicle");
+            mView.showNoSuchVehicle();
         }else {
             if (mIsDataMissing) {
                 if (isNewInsurance()) {
                     mView.setDate(DateUtils.getTextCurrentDate());
                 } else {
-                    //mInsuranceRepository.fetchInsuranceById();
+                    mView.showProgress();
+                    mInsuranceRepository.fetchInsuranceById(mInsuranceId, new OnItemFetchedCallback<Insurance>() {
+                        @Override
+                        public void onSuccess(Insurance item) {
+                            if (mIsDataMissing) {
+                                populateInsurance(item);
+                            }
+                            mView.hideProgress();
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            mView.showInsuranceRetrievalError();
+                            mView.hideProgress();
+                        }
+                    });
                 }
                 mView.addCompanies(Data.getInsuranceCompanies());
             }
@@ -52,25 +66,23 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
             try {
                 long parsedOdometer = Long.decode(odometer);
                 long parsedPrice = PriceUtils.stringToLong(price);
-
-                Insurance insurance = new Insurance(companyName, parsedPrice, parsedOdometer, DateUtils.parseValidTextDateFromText(date), DateUtils.parseValidTextDateFromText(expirationDate), note);
+                Insurance insurance = new Insurance(companyName, parsedPrice, parsedOdometer, DateUtils.parseValidTextDateFromText(date), DateUtils.parseValidTextDateFromText(expirationDate), note, mVehicleId);
 
                 if (isNewInsurance()) {
                     createInsurance(insurance);
                 }else {
                     updateInsurance(insurance);
                 }
-
             }catch (NumberFormatException e) {
-                mView.showMessage("Price and odometer fields expect numbers only");
+                mView.showPriceOrOdometerParseError();
                 mView.hideProgress();
             }catch (ParseException | IllegalArgumentException e) {
                 e.printStackTrace();
-                mView.showMessage("Incorrect date");
+                mView.showDateError();
                 mView.hideProgress();
             }
         }else {
-            mView.showMessage("Please, make sure everything is filled!");
+            mView.showEmptyFieldsError();
             mView.hideProgress();
         }
     }
@@ -90,14 +102,14 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
     }
 
     private void createInsurance(Insurance insurance) {
-        mInsuranceRepository.saveInsurance(mVehicleId, insurance, this);
+        mInsuranceRepository.saveInsurance(insurance, this);
     }
 
     private void updateInsurance(Insurance insurance) {
         if (isNewInsurance()) {
             throw new RuntimeException("updateService called but service is new");
         }
-        mInsuranceRepository.updateInsurance(mVehicleId, mInsuranceId, insurance, this);
+        mInsuranceRepository.updateInsurance(mInsuranceId, insurance, this);
     }
 
     private boolean isNewInsurance() {
@@ -108,21 +120,27 @@ public class AddEditInsurancePresenter implements AddEditInsuranceContract.Prese
         return mVehicleId == null;
     }
 
-    //@Override
-    public void onSuccess(Insurance item) {
-        mView.showMessage("Insurance successfully saved!");
-        mView.hideProgress();
-        mView.exit();
-    }
-
     @Override
     public void onSuccess(String name) {
-
+        mView.hideProgress();
+        mView.showInsuranceSuccessfullySaved(name);
     }
 
     @Override
     public void onFailure() {
-        mView.showMessage("Something went wrong, please try again");
         mView.hideProgress();
+        mView.showInsuranceSaveError();
+    }
+
+    private void populateInsurance(Insurance insurance) {
+        if (mView.isActive()) {
+            mView.setCompanyName(insurance.getCompanyName());
+            mView.setPrice(PriceUtils.longToString(insurance.getPrice()));
+            mView.setOdometer(String.valueOf(insurance.getOdometer()));
+            mView.setNote(insurance.getNote());
+            mView.setDate(insurance.getDate());
+            mView.setExpirationDate(insurance.getExpirationDate());
+            mIsDataMissing = false;
+        }
     }
 }

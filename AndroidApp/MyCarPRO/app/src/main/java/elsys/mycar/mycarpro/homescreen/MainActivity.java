@@ -34,6 +34,7 @@ import elsys.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity;
 import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
 import elsys.mycar.mycarpro.base.FirebaseAuthBaseActivity;
+import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
@@ -46,7 +47,6 @@ import elsys.mycar.mycarpro.util.FragmentManagingUtils;
 
 public class MainActivity extends FirebaseAuthBaseActivity implements MainContract.View {
 
-    public static final String VEHICLE_ID = "VEHICLE_ID";
     public static final int REQUEST_CODE_NEW_VEHICLE = 1232;
 
     @BindView(R.id.bottom_bar_main) BottomBar bottomBar;
@@ -123,21 +123,21 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
     @Override
     public void showAddEditServiceUi(String vehicleId) {
         Intent intent = new Intent(this, AddEditServiceActivity.class);
-        intent.putExtra(VEHICLE_ID, vehicleId);
+        intent.putExtra(Constants.VEHICLE_ID, vehicleId);
         startActivity(intent);
     }
 
     @Override
     public void showAddEditInsuranceUi(String vehicleId) {
         Intent intent = new Intent(this, AddEditInsuranceActivity.class);
-        intent.putExtra(VEHICLE_ID, vehicleId);
+        intent.putExtra(Constants.VEHICLE_ID, vehicleId);
         startActivity(intent);
     }
 
     @Override
     public void showAddEditRefuelingUi(String vehicleId) {
         Intent intent = new Intent(this, AddEditRefuelingActivity.class);
-        intent.putExtra(VEHICLE_ID, vehicleId);
+        intent.putExtra(Constants.VEHICLE_ID, vehicleId);
         startActivity(intent);
     }
 

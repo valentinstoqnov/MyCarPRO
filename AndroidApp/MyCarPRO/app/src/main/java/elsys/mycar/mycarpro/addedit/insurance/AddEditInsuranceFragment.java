@@ -53,19 +53,9 @@ public class AddEditInsuranceFragment extends Fragment implements AddEditInsuran
         View view = inflater.inflate(R.layout.fragment_add_edit_insurance, container, false);
         mUnbinder = ButterKnife.bind(this, view);
 
-        btnDate.setOnClickListener(v -> DatePickerUtils.showDatePicker(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view1, int year, int month, int dayOfMonth) {
-                mPresenter.onDatePicked(year, month, dayOfMonth, false);
-            }
-        }));
+        btnDate.setOnClickListener(v -> DatePickerUtils.showDatePicker(getContext(), (view1, year, month, dayOfMonth) -> mPresenter.onDatePicked(year, month, dayOfMonth, false)));
 
-        btnExpirationDate.setOnClickListener(v -> DatePickerUtils.showDatePicker(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view12, int year, int month, int dayOfMonth) {
-                mPresenter.onDatePicked(year, month, dayOfMonth, true);
-            }
-        }));
+        btnExpirationDate.setOnClickListener(v -> DatePickerUtils.showDatePicker(getContext(), (view12, year, month, dayOfMonth) -> mPresenter.onDatePicked(year, month, dayOfMonth, true)));
 
         return view;
     }
@@ -114,8 +104,39 @@ public class AddEditInsuranceFragment extends Fragment implements AddEditInsuran
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showNoSuchVehicle() {
+        Toast.makeText(getContext(), R.string.no_vehicle_found, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showInsuranceRetrievalError() {
+        Toast.makeText(getContext(), R.string.insurance_retrieval_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showDateError() {
+        Toast.makeText(getContext(), R.string.date_parse_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showEmptyFieldsError() {
+        Toast.makeText(getContext(), R.string.empty_fields_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showPriceOrOdometerParseError() {
+        Toast.makeText(getContext(), R.string.price_odometer_parse_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showInsuranceSuccessfullySaved(String name) {
+        String message = String.format(getString(R.string.insurance_successfully_saved), name);
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showInsuranceSaveError() {
+        Toast.makeText(getContext(), R.string.insurance_save_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -158,7 +179,7 @@ public class AddEditInsuranceFragment extends Fragment implements AddEditInsuran
     }
 
     @Override
-    public void exit() {
-        getActivity().finish();
+    public boolean isActive() {
+        return isAdded();
     }
 }

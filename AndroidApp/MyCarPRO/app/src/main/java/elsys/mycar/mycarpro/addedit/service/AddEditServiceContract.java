@@ -13,7 +13,19 @@ public interface AddEditServiceContract {
 
         void hideProgress();
 
-        void showMessage(String message);
+        void showNoSuchVehicle();
+
+        void showServiceRetrievalError();
+
+        void showDateError();
+
+        void showEmptyFieldsError();
+
+        void showPriceOrOdometerParseError();
+
+        void showServiceSuccessfullySaved(String name);
+
+        void showServiceSaveError();
 
         void setDate(String date);
 
@@ -28,8 +40,6 @@ public interface AddEditServiceContract {
         void setNote(String note);
 
         void showServiceTypes(List<String> items);
-
-        void exit();
 
         boolean isActive();
     }

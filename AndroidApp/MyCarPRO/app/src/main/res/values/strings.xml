@@ -70,7 +70,7 @@
     <string name="gas_station_name">Gas station name</string>
 
 
-
+    <!--Sign in, sign up-->
     <string name="not_signed_in">You are signed out!</string>
     <string name="login_failed">Login failed, do you have an account?</string>
     <string name="login_greeting" formatted="false">Welcome back, %s</string>
@@ -78,10 +78,25 @@
     <string name="register_failed">Unfortunately, the authentication failed</string>
 
 
+    <!--Errors !-->
+    <string name="no_items_found">No items found, please add something</string>
+    <string name="no_vehicle_found">No such vehicle, it might have been deleted</string>
+    <string name="date_parse_error">Invalid date</string>
+    <string name="empty_fields_error">Make sure everything is filled in</string>
+    <string name="price_odometer_parse_error">Price or odometer must be numeric</string>
+    <string name="insurance_retrieval_error">Couldn\'t fetch the insurance, maybe it\'s deleted</string>
+    <string name="insurance_save_error">Failed to save insurance</string>
+    <string name="refueling_retrieval_error">Couldn\'t fetch the refueling, maybe it\'s deleted</string>
+    <string name="refueling_save_error">Failed to save refueling</string>
+    <string name="service_retrieval_error">Couldn\'t fetch the service, maybe it\'s deleted</string>
+    <string name="service_save_error">Failed to save service</string>
+
+    <!--Success-->
+    <string name="insurance_successfully_saved" formatted="false">%s insurance successfully saved!</string>
+    <string name="refueling_successfully_saved" formatted="false">%s refueling successfully saved!</string>
+    <string name="service_successfully_saved" formatted="false">%s service successfully saved!</string>
 
     <string name="date_price_placeholder" formatted="false">%s | Cost: %s%s</string>
-    <string name="no_items_found">No items found, please add something !</string>
-    <string name="no_vehicle_found">No such vehicle, it might have been deleted !</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="already_a_member_login">Already a member? Sign in</string>

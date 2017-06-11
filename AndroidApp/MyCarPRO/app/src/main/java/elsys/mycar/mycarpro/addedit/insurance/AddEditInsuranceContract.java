@@ -13,7 +13,19 @@ public interface AddEditInsuranceContract {
 
         void hideProgress();
 
-        void showMessage(String message);
+        void showNoSuchVehicle();
+
+        void showInsuranceRetrievalError();
+
+        void showDateError();
+
+        void showEmptyFieldsError();
+
+        void showPriceOrOdometerParseError();
+
+        void showInsuranceSuccessfullySaved(String name);
+
+        void showInsuranceSaveError();
 
         void setCompanyName(String companyName);
 
@@ -29,7 +41,7 @@ public interface AddEditInsuranceContract {
 
         void addCompanies(List<String> items);
 
-        void exit();
+        boolean isActive();
     }
 
     interface Presenter extends BasePresenter {

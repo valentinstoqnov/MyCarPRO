@@ -13,9 +13,17 @@ public interface AddEditVehicleContract {
 
         void hideProgress();
 
-        void showMessage(String message);
+        void showNoSuchVehicle();
 
-        void exit();
+        void showDateError();
+
+        void showEmptyFieldsError();
+
+        void showPriceOrOdometerParseError();
+
+        void showVehicleSuccessfullySaved(String name);
+
+        void showVehicleSaveError();
 
         void setName(String name);
 
@@ -48,7 +56,7 @@ public interface AddEditVehicleContract {
 
         void onFuelTankPicked(String fuelType, int fuelTankCapacity, double fuelConsumption);
 
-        void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note);
+        void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note, String userId);
 
         boolean isDataMissing();
     }
