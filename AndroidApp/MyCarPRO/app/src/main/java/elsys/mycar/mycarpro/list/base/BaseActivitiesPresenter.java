@@ -26,6 +26,21 @@ public class BaseActivitiesPresenter<T> implements ListActivitiesContract.Presen
 
     @Override
     public void openItemDetails(T item) {
+
+    }
+
+    @Override
+    public void swapDataSet(List<T> items) {
+
+    }
+
+    @Override
+    public boolean isDataMissing() {
+        return false;
+    }
+/*
+    @Override
+    public void openItemDetails(T item) {
         item = Preconditions.checkNotNull(item, "cannot open details for null item");
 
         if (item instanceof Service) {
@@ -62,5 +77,5 @@ public class BaseActivitiesPresenter<T> implements ListActivitiesContract.Presen
             mView.showItems(items);
             mIsDataMissing = false;
         }
-    }
+    }*/
 }

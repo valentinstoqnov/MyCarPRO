@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -49,7 +50,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
 
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        android.view.View view = inflater.inflate(R.layout.fragment_activities, container, false);
+        View view = inflater.inflate(R.layout.fragment_activities, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -75,7 +76,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
 
             mNestedPresenters = new ArrayList<>(3);
 
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           /* spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
                     String vehicleId = ((VehiclesSpinnerAdapter) spinnerAdapter).getVehicleIdAtPosition(position);
@@ -86,7 +87,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
                 public void onNothingSelected(AdapterView<?> parent) {
 
                 }
-            });
+            });*/
 
             setUpViewPager();
 
@@ -134,7 +135,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
                 tab.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
                 int tabPosition = tab.getPosition();
 
-                if (mNestedPresenters.get(tabPosition).isDataMissing()) {
+                /*if (mNestedPresenters.get(tabPosition).isDataMissing()) {
                     switch (tabPosition) {
                         case 0:
                             mPresenter.provideServices();
@@ -146,7 +147,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
                             mPresenter.provideRefuelings();
                             break;
                     }
-                }
+                }*/
             }
 
             @Override
@@ -186,7 +187,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         s.add(new Service("asgasdbsfd", "asdaaw123qeqdsdsa", "asdsd", 213, 2132, "asdsda"));
         System.out.println("services size = " + services.size());
         services.addAll(s);
-        mNestedPresenters.get(0).swapDataSet(services);
+     //   mNestedPresenters.get(0).swapDataSet(services);
     }
 
     @Override
@@ -201,7 +202,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         i.add(new Insurance("assdfd", "asdaasdddawqe", 1323, 312, "asdasda", "1232asda", "asdasda"));
         i.add(new Insurance("ahhsd", "asdadaawdwqe", 1232, 312, "asdasda", "1232asda", "asdasda"));
         insurances.addAll(i);
-        mNestedPresenters.get(1).swapDataSet(insurances);
+      //  mNestedPresenters.get(1).swapDataSet(insurances);
     }
 
     @Override
@@ -216,6 +217,6 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         r.add(new Refueling("ascvxd", "sadasdsad", "daasdsd", 2.1, 23, 23, "asda"));
         r.add(new Refueling("assdfd", "sadasdsad", "daasdsd", 2.1, 23, 23, "asda"));
         refuelings.addAll(r);
-        mNestedPresenters.get(2).swapDataSet(refuelings);
+      //  mNestedPresenters.get(2).swapDataSet(refuelings);
     }
 }
