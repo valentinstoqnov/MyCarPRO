@@ -14,7 +14,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ProfileContract.View{
 
     public static final String TAG = "ProfileFragment";
 
@@ -62,5 +62,40 @@ public class ProfileFragment extends Fragment {
         tvUsername.setText(String.format(textFormat, textUsername, username));
         tvName.setText(String.format(textFormat, textName, firstName + " " + lastName));
         tvEmail.setText(String.format(textFormat, textEmail, email));
+    }
+
+    @Override
+    public void setPresenter(ProfileContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showFailedToFindSuchUser() {
+
+    }
+
+    @Override
+    public void setEmail(String email) {
+
+    }
+
+    @Override
+    public void setFirstName(String firstName) {
+
+    }
+
+    @Override
+    public void setLastName(String lastName) {
+
     }
 }

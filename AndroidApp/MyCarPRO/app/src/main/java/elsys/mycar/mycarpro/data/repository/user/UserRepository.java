@@ -11,6 +11,8 @@ public interface UserRepository {
 
     void fetchUserById(String id, OnItemFetchedCallback<User> callback);
 
+    void signOutCurrentUser();
+
     interface OnUserSignCallback {
 
         void onSuccess(String email);

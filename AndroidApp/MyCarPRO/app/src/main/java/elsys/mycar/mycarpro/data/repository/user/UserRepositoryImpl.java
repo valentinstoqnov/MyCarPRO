@@ -71,6 +71,11 @@ public class UserRepositoryImpl implements UserRepository {
         });
     }
 
+    @Override
+    public void signOutCurrentUser() {
+        mFirebaseAuth.signOut();
+    }
+
     private void saveUserInFirebaseDatabase(User user, OnUserSignCallback callback) {
         mFirebaseDatabase.child(user.getId())
                 .setValue(user)
