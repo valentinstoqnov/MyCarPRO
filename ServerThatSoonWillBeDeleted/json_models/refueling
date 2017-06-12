@@ -1,0 +1,10 @@
+{
+  "gas_station_name": String,
+  "quantity": double,
+  "price": long,
+  "odometer": long,
+  "note": String,
+  "date_time": String
+  
+  //maybe "is_full": boolean
+}
