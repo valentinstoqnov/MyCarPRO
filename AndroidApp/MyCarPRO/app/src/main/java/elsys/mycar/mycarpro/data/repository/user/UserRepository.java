@@ -1,6 +1,7 @@
 package elsys.mycar.mycarpro.data.repository.user;
 
 import elsys.mycar.mycarpro.data.model.User;
+import elsys.mycar.mycarpro.data.repository.OnItemFetchedCallback;
 
 public interface UserRepository {
 
@@ -8,6 +9,7 @@ public interface UserRepository {
 
     void loginUser(String email, String password, OnUserSignCallback callback);
 
+    void fetchUserById(String id, OnItemFetchedCallback<User> callback);
 
     interface OnUserSignCallback {
 
