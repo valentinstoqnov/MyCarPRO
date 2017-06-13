@@ -32,12 +32,14 @@ import elsys.mycar.mycarpro.addedit.service.AddEditServiceActivity;
 import elsys.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity;
 import elsys.mycar.mycarpro.base.FirebaseAuthBaseActivity;
 import elsys.mycar.mycarpro.data.Constants;
+import elsys.mycar.mycarpro.data.repository.user.UserRepositoryImpl;
 import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepositoryImpl;
 import elsys.mycar.mycarpro.list.activities.ActivitiesFragment;
 import elsys.mycar.mycarpro.list.activities.ActivitiesPresenter;
 import elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment;
 import elsys.mycar.mycarpro.list.vehicles.ListVehiclePresenter;
 import elsys.mycar.mycarpro.profile.ProfileFragment;
+import elsys.mycar.mycarpro.profile.ProfilePresenter;
 import elsys.mycar.mycarpro.statistics.StatisticsFragment;
 import elsys.mycar.mycarpro.util.FragmentManagingUtils;
 
@@ -169,7 +171,10 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
 
     @Override
     public void showProfileUi() {
-        fragmentManagingUtils.addOrShowFragment(ProfileFragment.TAG);
+        Fragment fragment = fragmentManagingUtils.addOrShowFragment(ProfileFragment.TAG);
+        ProfileFragment profileFragment = (ProfileFragment) fragment;
+        ProfilePresenter profilePresenter = new ProfilePresenter(getCurrentUserId(), profileFragment, new UserRepositoryImpl(), true);
+        profileFragment.setPresenter(profilePresenter);
     }
 
     @Override

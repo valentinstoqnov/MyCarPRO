@@ -18,12 +18,18 @@ public interface ProfileContract {
         void setFirstName(String firstName);
 
         void setLastName(String lastName);
+
+        void showSettingsUi();
+
+        void showEditProfileUi(String id);
     }
 
     interface Presenter extends BasePresenter {
 
-        void signOutCurrentUser();
+        void openSettings();
 
-        void editAccount(String userId);
+        void openEditProfile();
+
+        void signOutCurrentUser();
     }
 }

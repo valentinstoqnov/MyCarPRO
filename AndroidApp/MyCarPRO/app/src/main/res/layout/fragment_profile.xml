@@ -3,43 +3,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#BCAAA4"
-    android:gravity="bottom|center_horizontal"
-    android:padding="16dp"
     tools:context="elsys.mycar.mycarpro.profile.ProfileFragment">
 
+    <ProgressBar
+        android:id="@+id/pb_profile"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
 
-    <ImageView
+    <ImageView android:layout_gravity="center"
+        android:layout_marginTop="32dp"
         android:scaleType="fitXY"
         android:id="@+id/img_view_profile"
         android:src="@drawable/ic_person"
         android:layout_width="100dp"
         android:layout_height="100dp" />
 
-    <TextView android:text="@string/sign_out"
-        android:id="@+id/tv_profile_username"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    <TextView android:id="@+id/tv_profile_first_name"
+        android:layout_gravity="center"
+        tools:text="Valentin"
+        android:textSize="36sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp" />
 
-    <TextView android:text="@string/sign_out"
-        android:id="@+id/tv_profile_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    <TextView android:id="@+id/tv_profile_last_name"
+        android:layout_gravity="center"
+        tools:text="Stoyanov"
+        android:textSize="36sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp" />
 
-    <TextView android:text="@string/sign_out"
-        android:id="@+id/tv_profile_email"
+    <TextView android:id="@+id/tv_profile_email"
+        android:layout_gravity="center"
+        tools:text="valentinstoqnov98@gmail.com"
+        android:drawableLeft="@drawable/ic_email"
+        android:drawablePadding="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:layout_marginTop="8dp" />
 
-    <Button
+<!--    <Button
         android:id="@+id/btn_profile_logout"
         android:layout_marginBottom="60dp"
         android:textColor="@android:color/white"
@@ -47,5 +55,5 @@
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sign_out"/>
+        android:text="@string/sign_out"/>-->
 </LinearLayout>

@@ -60,7 +60,11 @@ public class UserRepositoryImpl implements UserRepository {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User value = dataSnapshot.getValue(User.class);
-                callback.onSuccess(value);
+                if (value != null) {
+                    callback.onSuccess(value);
+                }else {
+                    callback.onFailure();
+                }
             }
 
             @Override
