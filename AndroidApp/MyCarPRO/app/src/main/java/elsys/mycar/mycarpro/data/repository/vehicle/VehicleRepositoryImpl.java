@@ -9,6 +9,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.Constants;
@@ -96,10 +98,11 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        GenericTypeIndicator<List<Vehicle>> typeIndicator = new GenericTypeIndicator<List<Vehicle>>() {};
-                        List<Vehicle> vehicles = dataSnapshot.getValue(typeIndicator);
+                        GenericTypeIndicator<HashMap<String, Vehicle>> typeIndicator = new GenericTypeIndicator<HashMap<String, Vehicle>>() {};
+                        List<Vehicle> vehicles = new ArrayList<>(dataSnapshot.getValue(typeIndicator).values());
                         if (vehicles == null) {
                             callback.onFailure();
+                            Log.e(TAG, "onDataChange: VEHICLES ARE NULL SO IT IS FAILURE" + dataSnapshot.toString());
                         }else {
                             callback.onSuccess(vehicles);
                         }

@@ -144,11 +144,7 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
     public void showVehiclesUi() {
         Fragment fragment = fragmentManagingUtils.addOrShowFragment(ListVehicleFragment.TAG);
         ListVehicleFragment listVehicleFragment = (ListVehicleFragment) fragment;
-
-        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(getCurrentUserId(),
-                new VehicleRepositoryImpl(), listVehicleFragment
-        );
-
+        ListVehiclePresenter listVehiclePresenter = new ListVehiclePresenter(getCurrentUserId(), new VehicleRepositoryImpl(), listVehicleFragment, true);
         listVehicleFragment.setPresenter(listVehiclePresenter);
     }
 

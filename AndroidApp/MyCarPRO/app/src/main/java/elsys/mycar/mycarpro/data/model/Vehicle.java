@@ -96,6 +96,8 @@ public class Vehicle {
         this.note = note;
     }
 
+    public Vehicle() {}
+
     public String getId() {
         return id;
     }
