@@ -31,5 +31,7 @@ public interface ProfileContract {
         void openEditProfile();
 
         void signOutCurrentUser();
+
+        boolean isDataMissing();
     }
 }

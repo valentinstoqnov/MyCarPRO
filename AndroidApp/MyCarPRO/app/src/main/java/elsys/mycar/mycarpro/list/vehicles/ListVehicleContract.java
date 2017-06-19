@@ -12,7 +12,11 @@ public interface ListVehicleContract {
 
         void showVehicles(List<Vehicle> vehicles);
 
-        void showMessage(String message);
+        void showProgress();
+
+        void hideProgress();
+
+        void showVehiclesFetchError();
 
         void showDetailVehicleUi(String vehicleId);
 
@@ -22,6 +26,8 @@ public interface ListVehicleContract {
     interface Presenter extends BasePresenter {
 
         void openVehicleDetails(Vehicle vehicle);
+
+        boolean isDataMissing();
     }
 
     interface Adapter {

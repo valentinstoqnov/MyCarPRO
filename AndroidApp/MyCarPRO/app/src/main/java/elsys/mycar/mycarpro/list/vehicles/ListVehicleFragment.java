@@ -74,16 +74,23 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
     }
 
     @Override
-    public void showMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    public void showProgress() {
+        // TODO: 19.06.17
+    }
+
+    @Override
+    public void hideProgress() {
+        // TODO: 19.06.17  
+    }
+
+    @Override
+    public void showVehiclesFetchError() {
+        Toast.makeText(getContext(), R.string.vehicles_retrieval_error, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showDetailVehicleUi(String vehicleId) {
         Intent intent = new Intent(getContext(), DetailVehicleActivity.class);
-        if (vehicleId == null) {
-            System.out.println("list vehicle id = null");
-        }
         intent.putExtra(DetailVehicleActivity.DETAIL_VEHICLE_ID, vehicleId);
         startActivity(intent);
     }

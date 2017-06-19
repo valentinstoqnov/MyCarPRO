@@ -74,7 +74,11 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Vehicle value = dataSnapshot.getValue(Vehicle.class);
-                        callback.onSuccess(value);
+                        if (value == null) {
+                            callback.onFailure();
+                        }else {
+                            callback.onSuccess(value);
+                        }
                     }
 
                     @Override
@@ -94,7 +98,11 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         GenericTypeIndicator<List<Vehicle>> typeIndicator = new GenericTypeIndicator<List<Vehicle>>() {};
                         List<Vehicle> vehicles = dataSnapshot.getValue(typeIndicator);
-                        callback.onSuccess(vehicles);
+                        if (vehicles == null) {
+                            callback.onFailure();
+                        }else {
+                            callback.onSuccess(vehicles);
+                        }
                     }
 
                     @Override

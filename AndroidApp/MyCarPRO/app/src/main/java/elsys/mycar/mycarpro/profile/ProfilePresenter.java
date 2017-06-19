@@ -10,40 +10,35 @@ import elsys.mycar.mycarpro.data.repository.user.UserRepository;
 
 public class ProfilePresenter implements ProfileContract.Presenter{
 
-    private String userId;
+    private String mUserId;
     private ProfileContract.View mView;
     private UserRepository mUserRepository;
     private boolean mIsDataMissing;
 
-    public ProfilePresenter(String userId, ProfileContract.View mView, UserRepository mUserRepository, boolean mIsDataMissing) {
-        this.userId = userId;
-        this.mView = Preconditions.checkNotNull(mView);
-        this.mUserRepository = Preconditions.checkNotNull(mUserRepository);
-        this.mIsDataMissing = mIsDataMissing;
+    public ProfilePresenter(String userId, ProfileContract.View view, UserRepository userRepository, boolean isDataMissing) {
+        this.mUserId = Preconditions.checkNotNull(userId);
+        this.mView = Preconditions.checkNotNull(view);
+        this.mUserRepository = Preconditions.checkNotNull(userRepository);
+        this.mIsDataMissing = isDataMissing;
     }
 
     @Override
     public void start() {
         if (mIsDataMissing) {
-            if (userId != null) {
-                mView.showProgress();
-                mUserRepository.fetchUserById(userId, new OnItemFetchedCallback<User>() {
-                    @Override
-                    public void onSuccess(User item) {
-                        populateUser(item);
-                        mView.hideProgress();
-                    }
+            mView.showProgress();
+            mUserRepository.fetchUserById(mUserId, new OnItemFetchedCallback<User>() {
+                @Override
+                public void onSuccess(User item) {
+                    populateUser(item);
+                    mView.hideProgress();
+                }
 
-                    @Override
-                    public void onFailure() {
-                        mView.hideProgress();
-                        mView.showFailedToFindSuchUser();
-                    }
-                });
-            }else {
-                Log.d("ProfilePresenter:", "User id is null");
-                mView.showFailedToFindSuchUser();
-            }
+                @Override
+                public void onFailure() {
+                    mView.hideProgress();
+                    mView.showFailedToFindSuchUser();
+                }
+            });
         }
     }
 
@@ -54,12 +49,17 @@ public class ProfilePresenter implements ProfileContract.Presenter{
 
     @Override
     public void openEditProfile() {
-        mView.showEditProfileUi(userId);
+        mView.showEditProfileUi(mUserId);
     }
 
     @Override
     public void signOutCurrentUser() {
         mUserRepository.signOutCurrentUser();
+    }
+
+    @Override
+    public boolean isDataMissing() {
+        return mIsDataMissing;
     }
 
     private void populateUser(User user) {
