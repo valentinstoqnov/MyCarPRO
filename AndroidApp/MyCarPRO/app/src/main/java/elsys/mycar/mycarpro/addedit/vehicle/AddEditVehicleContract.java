@@ -56,7 +56,7 @@ public interface AddEditVehicleContract {
 
         void onFuelTankPicked(String fuelType, int fuelTankCapacity, double fuelConsumption);
 
-        void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note, String userId);
+        void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note);
 
         boolean isDataMissing();
     }

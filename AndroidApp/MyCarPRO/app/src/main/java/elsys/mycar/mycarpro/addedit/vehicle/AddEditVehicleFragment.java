@@ -116,7 +116,6 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_vehicle);
 
         fab.setOnClickListener(v -> {
-            String userId = getActivity().getIntent().getStringExtra(Constants.USER_ID);
             String name = getTextFromTil(tilName);
             String make = getTextFromAutoComplete(tilMake);
             String model = getTextFromTil(tilModel);
@@ -125,7 +124,7 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
             String horsePower = getTextFromTil(tilHorsePower);
             String notes = getTextFromTil(tilNotes);
 
-            mPresenter.saveVehicle(name, make, model, date, horsePower, odometer, mVehicleColor, notes, userId);
+            mPresenter.saveVehicle(name, make, model, date, horsePower, odometer, mVehicleColor, notes);
         });
     }
 

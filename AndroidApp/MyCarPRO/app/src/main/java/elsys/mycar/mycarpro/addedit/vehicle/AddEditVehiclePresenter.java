@@ -18,6 +18,7 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
 
     private static final String FUEL_TANK_FORMAT = "%s%nCap.:%d%nCons.:%s";
 
+    private String mUserId;
     private String mVehicleId;
     private VehicleRepository mVehicleRepository;
     private AddEditVehicleContract.View mView;
@@ -27,11 +28,12 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
     private int mCapacity;
     private double mConsumption;
 
-    public AddEditVehiclePresenter(String mVehicleId, VehicleRepository mVehicleRepository, AddEditVehicleContract.View mView, boolean mIsDataMissing) {
-        this.mVehicleId = mVehicleId;
-        this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
-        this.mView = Preconditions.checkNotNull(mView);
-        this.mIsDataMissing = mIsDataMissing;
+    public AddEditVehiclePresenter(String userId, String vehicleId, VehicleRepository vehicleRepository, AddEditVehicleContract.View view, boolean isDataMissing) {
+        mUserId = Preconditions.checkNotNull(userId, "userId cannot be null");
+        mVehicleId = vehicleId;
+        mVehicleRepository = Preconditions.checkNotNull(vehicleRepository, "vehicle repository cannot be null");
+        mView = Preconditions.checkNotNull(view, "view cannot be null");
+        mIsDataMissing = isDataMissing;
     }
 
     @Override
@@ -76,15 +78,14 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
     }
 
     @Override
-    public void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note, String userId) {
-        userId = Preconditions.checkNotNull(userId, "attempt to save vehicle but userId is null");
+    public void saveVehicle(String name, String make, String model, String manufactureDate, String horsePower, String odometer, int color, String note) {
         mView.showProgress();
         if (StringUtils.checkNotNullOrEmpty(name, make, model, manufactureDate, odometer, horsePower, note, mFuelType)) {
             try {
                 String parsedDate = DateUtils.parseValidTextDateFromText(manufactureDate);
                 int parsedOdometer = Integer.parseInt(odometer);
                 int parsedHorsePower = Integer.parseInt(horsePower);
-                Vehicle vehicle = new Vehicle(name, make, model, parsedDate, parsedHorsePower, parsedOdometer, mFuelType, mCapacity, mConsumption, color, note, userId);
+                Vehicle vehicle = new Vehicle(name, make, model, parsedDate, parsedHorsePower, parsedOdometer, mFuelType, mCapacity, mConsumption, color, note, mUserId);
 
                 if (isNewVehicle()) {
                     createVehicle(vehicle);
@@ -117,7 +118,7 @@ public class AddEditVehiclePresenter implements AddEditVehicleContract.Presenter
 
     private void updateVehicle(Vehicle vehicle) {
         if (isNewVehicle()) {
-            throw new RuntimeException("updateVehicle(Vehicle vehicle) was called but vehicle is new");
+            throw new RuntimeException("updateVehicle was called but vehicle is new");
         }
         mVehicleRepository.updateVehicle(mVehicleId, vehicle, this);
     }

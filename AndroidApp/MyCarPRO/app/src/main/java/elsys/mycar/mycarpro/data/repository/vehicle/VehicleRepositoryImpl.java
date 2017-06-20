@@ -46,6 +46,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
     @Override
     public void updateVehicle(String vehicleId, Vehicle vehicle, OnSaveUpdateDeleteCallback callback) {
+        vehicle.setId(vehicleId);
         mDatabase.child(vehicleId)
                 .setValue(vehicle)
                 .addOnCompleteListener(task -> {
