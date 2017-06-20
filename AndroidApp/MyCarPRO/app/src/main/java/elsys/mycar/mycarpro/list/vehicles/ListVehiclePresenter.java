@@ -32,6 +32,9 @@ public class ListVehiclePresenter implements ListVehicleContract.Presenter {
                 @Override
                 public void onSuccess(List<Vehicle> items) {
                     mView.showVehicles(items);
+                    if (items.isEmpty()) {
+                        mView.showNoVehiclesFound();
+                    }
                     mView.hideProgress();
                 }
 

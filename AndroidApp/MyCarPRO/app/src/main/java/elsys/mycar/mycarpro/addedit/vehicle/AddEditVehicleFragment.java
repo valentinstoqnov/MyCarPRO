@@ -168,6 +168,7 @@ public class AddEditVehicleFragment extends Fragment implements AddEditVehicleCo
     public void showVehicleSuccessfullySaved(String name) {
         String message = String.format(getString(R.string.vehicle_successfully_saved), name);
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 
     @Override

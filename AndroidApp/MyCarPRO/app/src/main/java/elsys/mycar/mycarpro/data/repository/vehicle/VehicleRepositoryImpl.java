@@ -32,6 +32,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     @Override
     public void saveVehicle(Vehicle vehicle, OnSaveUpdateDeleteCallback callback) {
         String id = mDatabase.push().getKey();
+        vehicle.setId(id);
         mDatabase.child(id)
                 .setValue(vehicle)
                 .addOnCompleteListener(task -> {
@@ -99,13 +100,12 @@ public class VehicleRepositoryImpl implements VehicleRepository {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         GenericTypeIndicator<HashMap<String, Vehicle>> typeIndicator = new GenericTypeIndicator<HashMap<String, Vehicle>>() {};
-                        List<Vehicle> vehicles = new ArrayList<>(dataSnapshot.getValue(typeIndicator).values());
-                        if (vehicles == null) {
-                            callback.onFailure();
-                            Log.e(TAG, "onDataChange: VEHICLES ARE NULL SO IT IS FAILURE" + dataSnapshot.toString());
-                        }else {
-                            callback.onSuccess(vehicles);
+                        HashMap<String, Vehicle> dataSnapshotValue = dataSnapshot.getValue(typeIndicator);
+                        List<Vehicle> vehicles = new ArrayList<>();
+                        if (dataSnapshotValue != null) {
+                            vehicles.addAll(dataSnapshotValue.values());
                         }
+                        callback.onSuccess(vehicles);
                     }
 
                     @Override

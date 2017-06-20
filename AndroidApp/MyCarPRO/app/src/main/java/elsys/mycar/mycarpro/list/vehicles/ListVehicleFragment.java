@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -17,16 +19,24 @@ import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.data.model.Vehicle;
 import elsys.mycar.mycarpro.detail.vehicle.DetailVehicleActivity;
 
 public class ListVehicleFragment extends Fragment implements ListVehicleContract.View {
 
     public static final String TAG = "ListVehicleFragment";
-    private RecyclerView recyclerView;
+
+    @BindView(R.id.tv_no_vehicles_added) protected TextView tvNoVehiclesAdded;
+    @BindView(R.id.rv_list_vehicles) protected RecyclerView recyclerView;
+
     private ListVehicleContract.Presenter mPresenter;
     private ListVehicleAdapter mAdapter;
+    private Unbinder mUnbinder;
 
     public static ListVehicleFragment newInstance() {
         return new ListVehicleFragment();
@@ -35,9 +45,15 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_vehicle, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_list_vehicles);
+        mUnbinder = ButterKnife.bind(this, view);
         setUpRecyclerView();
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 
     @Override
@@ -70,6 +86,8 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
 
     @Override
     public void showVehicles(List<Vehicle> vehicles) {
+        tvNoVehiclesAdded.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
         mAdapter.addVehicles(vehicles);
     }
 
@@ -85,14 +103,22 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
 
     @Override
     public void showVehiclesFetchError() {
+        recyclerView.setVisibility(View.GONE);
+        tvNoVehiclesAdded.setVisibility(View.GONE);
         Toast.makeText(getContext(), R.string.vehicles_retrieval_error, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showDetailVehicleUi(String vehicleId) {
         Intent intent = new Intent(getContext(), DetailVehicleActivity.class);
-        intent.putExtra(DetailVehicleActivity.DETAIL_VEHICLE_ID, vehicleId);
+        intent.putExtra(Constants.VEHICLE_ID, vehicleId);
         startActivity(intent);
+    }
+
+    @Override
+    public void showNoVehiclesFound() {
+        recyclerView.setVisibility(View.GONE);
+        tvNoVehiclesAdded.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -102,9 +128,7 @@ public class ListVehicleFragment extends Fragment implements ListVehicleContract
 
     private void setUpRecyclerView() {
         String format = getString(R.string.card_vehicle_info_placeholder);
-
         mAdapter = new ListVehicleAdapter(new ArrayList<>(0), vehicle -> mPresenter.openVehicleDetails(vehicle), format);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter);
     }

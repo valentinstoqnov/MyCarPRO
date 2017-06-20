@@ -12,6 +12,8 @@ public interface ListVehicleContract {
 
         void showVehicles(List<Vehicle> vehicles);
 
+        void showNoVehiclesFound();
+
         void showProgress();
 
         void hideProgress();

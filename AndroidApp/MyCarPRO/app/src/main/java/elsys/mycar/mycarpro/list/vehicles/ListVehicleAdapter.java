@@ -54,14 +54,9 @@ public class ListVehicleAdapter extends RecyclerView.Adapter<ListVehicleAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Vehicle vehicle = mVehicles.get(position);
+        Vehicle vehicle = mVehicles.get(position);
         holder.setContent(vehicle, mVehicleInfoFormat);
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               mListener.onItemViewClick(vehicle);
-            }
-        });
+        holder.cardView.setOnClickListener(v -> mListener.onItemViewClick(vehicle));
     }
 
     @Override

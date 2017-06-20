@@ -100,6 +100,9 @@
     <string name="service_successfully_saved" formatted="false">%s service successfully saved!</string>
     <string name="vehicle_successfully_saved" formatted="false">%s vehicle successfully saved!</string>
 
+    <!--No items added-->
+    <string name="no_vehicles_added">No vehicles found, please add a new one</string>
+
     <string name="date_price_placeholder" formatted="false">%s | Cost: %s%s</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
@@ -107,7 +110,7 @@
     <string name="username">Username</string>
     <string name="new_fuel_tank">New fuel tank</string>
     <string name="capacity">Capacity</string>
-    <string name="consumption">consumption</string>
+    <string name="consumption">Consumption</string>
     <string name="ok">Ok</string>
     <string name="sign_out">Sign out</string>
     <string name="card_vehicle_info_placeholder" formatted="false">%s %s, manufactured in %s and current odometer value is %s %s</string>

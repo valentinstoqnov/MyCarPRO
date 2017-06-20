@@ -5,7 +5,22 @@
     tools:context="elsys.mycar.mycarpro.list.vehicles.ListVehicleFragment">
 
     <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/rv_list_vehicles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <TextView
+        android:visibility="visible"
+        android:id="@+id/tv_no_vehicles_added"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:padding="32dp"
+        android:textAlignment="center"
+        android:drawablePadding="16dp"
+        android:drawableTop="@drawable/ic_dissatisfied"
+        android:textSize="20sp"
+        android:text="@string/no_vehicles_added"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </FrameLayout>
