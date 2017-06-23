@@ -130,6 +130,7 @@ public class AddEditServiceFragment extends Fragment implements AddEditServiceCo
     public void showServiceSuccessfullySaved(String name) {
         String message = String.format(getString(R.string.service_successfully_saved), name);
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 
     @Override

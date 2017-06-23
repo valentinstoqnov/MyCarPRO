@@ -130,6 +130,7 @@ public class AddEditInsuranceFragment extends Fragment implements AddEditInsuran
     public void showInsuranceSuccessfullySaved(String name) {
         String message = String.format(getString(R.string.insurance_successfully_saved), name);
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 
     @Override

@@ -138,6 +138,7 @@ public class AddEditRefuelingFragment extends Fragment implements AddEditRefueli
     public void showRefuelingSuccessfullySaved(String name) {
         String message = String.format(getString(R.string.service_successfully_saved), name);
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 
     @Override

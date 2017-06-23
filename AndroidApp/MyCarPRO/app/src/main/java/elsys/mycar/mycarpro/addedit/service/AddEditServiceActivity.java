@@ -18,6 +18,8 @@ public class AddEditServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_service);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         AddEditServiceFragment addEditServiceFragment = (AddEditServiceFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_add_service);
 
@@ -33,5 +35,11 @@ public class AddEditServiceActivity extends AppCompatActivity {
         AddEditServicePresenter addEditServicePresenter = new AddEditServicePresenter(vehicleId, serviceId, new ServiceRepositoryImpl(), addEditServiceFragment, true);
 
         addEditServiceFragment.setPresenter(addEditServicePresenter);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
