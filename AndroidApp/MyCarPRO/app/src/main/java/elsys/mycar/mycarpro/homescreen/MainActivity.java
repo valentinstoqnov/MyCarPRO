@@ -74,7 +74,7 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
 
         mSpinnerAdapter = new VehiclesSpinnerAdapter(this, R.layout.vehicles_spinner_item, new ArrayList<>(0));
         spinner.setAdapter(mSpinnerAdapter);
-        MainPresenter mainPresenter = new MainPresenter(new VehicleRepositoryImpl(), this);
+        MainPresenter mainPresenter = new MainPresenter(getCurrentUserId(), new VehicleRepositoryImpl(), this);
         setPresenter(mainPresenter);
         fragmentManagingUtils = new FragmentManagingUtils(getSupportFragmentManager(), R.id.frame_layout_main_content);
 
@@ -198,7 +198,7 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
 
     private String getSelectedVehicleId() {
         int position = spinner.getSelectedItemPosition();
-        return position > 0 ? mSpinnerAdapter.getVehicleIdAtPosition(position) : null;
+        return position >= 0 ? mSpinnerAdapter.getVehicleIdAtPosition(position) : null;
     }
 
     private void setUpBottomBar() {
