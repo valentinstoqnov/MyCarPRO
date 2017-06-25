@@ -141,8 +141,8 @@ public class AddEditRefuelingPresenter implements AddEditRefuelingContract.Prese
             mView.setOdometer(String.valueOf(refueling.getOdometer()));
             mView.setNote(refueling.getNote());
             //TODO: FIX ME !!
-            // mView.setDate(refueling.getDate());
-            // mView.setTime(DateUtils);
+            // view.setDate(refueling.getDate());
+            // view.setTime(DateUtils);
             mView.setQuantity(String.valueOf(refueling.getQuantity()));
             // FIXME: 11.06.17 !!!! add is full fuel tank feature !!!!!
             mView.setFullFuelTank(false);

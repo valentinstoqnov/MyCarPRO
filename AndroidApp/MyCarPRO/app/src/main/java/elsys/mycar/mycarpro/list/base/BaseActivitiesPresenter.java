@@ -4,63 +4,26 @@ import com.google.common.base.Preconditions;
 
 import java.util.List;
 
-import elsys.mycar.mycarpro.data.model.Insurance;
-import elsys.mycar.mycarpro.data.model.Refueling;
-import elsys.mycar.mycarpro.data.model.Service;
-import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
+import elsys.mycar.mycarpro.data.repository.OnItemsFetchedCallback;
 
-public class BaseActivitiesPresenter<T> implements ListActivitiesContract.Presenter<T> {
+public abstract class BaseActivitiesPresenter<T> implements BaseActivitiesContract.Presenter<T>, OnItemsFetchedCallback<T> {
 
-    private ListActivitiesContract.View<ListActivitiesContract.Presenter<T>, T> mView;
+    private String mVehicleId;
     private boolean mIsDataMissing;
+    protected BaseActivitiesContract.View<T> view;
+    protected abstract void fetchItems(String vehicleId);
 
-    public BaseActivitiesPresenter(ListActivitiesContract.View<ListActivitiesContract.Presenter<T>, T> mView, boolean mIsDataMissing) {
-        this.mView = mView;
-        this.mIsDataMissing = mIsDataMissing;
+    public BaseActivitiesPresenter(String vehicleId, BaseActivitiesContract.View<T> view, boolean isDataMissing) {
+        this.mVehicleId = Preconditions.checkNotNull(vehicleId, "Vehicle id cannot be null");
+        this.view = Preconditions.checkNotNull(view, "BaseActivitiesContract.View cannot be null");
+        this.mIsDataMissing = isDataMissing;
     }
 
     @Override
     public void start() {
-
-    }
-
-    @Override
-    public void openItemDetails(T item) {
-
-    }
-
-    @Override
-    public void swapDataSet(List<T> items) {
-
-    }
-
-    @Override
-    public boolean isDataMissing() {
-        return false;
-    }
-/*
-    @Override
-    public void openItemDetails(T item) {
-        item = Preconditions.checkNotNull(item, "cannot open details for null item");
-
-        if (item instanceof Service) {
-            mView.showDetailItemUi(((Service) item).getId());
-        }else if (item instanceof Insurance) {
-            mView.showDetailItemUi(((Insurance) item).getId());
-        }else if (item instanceof Refueling) {
-            mView.showDetailItemUi(((Refueling) item).getId());
-        }else {
-            throw new RuntimeException("cannot open item details for item that differs from Service, Insurance, Refueling");
-        }
-    }
-
-    @Override
-    public void swapDataSet(List<T> items) {
-        System.out.print("!!!!!! !!!! !!! idk items size = " + items.size());
-        if (mView.isActive()) {
-            processDataSet(items);
-        }else {
-            mIsDataMissing = true;
+        if (mIsDataMissing) {
+            view.showProgress();
+            fetchItems(mVehicleId);
         }
     }
 
@@ -69,13 +32,20 @@ public class BaseActivitiesPresenter<T> implements ListActivitiesContract.Presen
         return mIsDataMissing;
     }
 
-    private void processDataSet(List<T> items) {
-        if (items == null || items.isEmpty()) {
-            mView.showNoItemsFound();
-            mIsDataMissing = true;
-        }else {
-            mView.showItems(items);
-            mIsDataMissing = false;
+    @Override
+    public void onSuccess(List<T> items) {
+        view.showItems(items);
+        if (items.isEmpty()) {
+            view.showNoItemsFound();
         }
-    }*/
+        mIsDataMissing = false;
+        view.hideProgress();
+    }
+
+    @Override
+    public void onFailure() {
+        view.hideProgress();
+        view.showItemsFetchError();
+        mIsDataMissing = true;
+    }
 }

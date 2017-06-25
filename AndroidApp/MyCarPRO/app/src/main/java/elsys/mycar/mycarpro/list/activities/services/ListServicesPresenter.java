@@ -1,31 +1,29 @@
 package elsys.mycar.mycarpro.list.activities.services;
 
-import java.util.List;
+import com.google.common.base.Preconditions;
 
 import elsys.mycar.mycarpro.data.model.Service;
+import elsys.mycar.mycarpro.data.repository.activities.service.ServiceRepository;
+import elsys.mycar.mycarpro.list.base.BaseActivitiesContract;
+import elsys.mycar.mycarpro.list.base.BaseActivitiesPresenter;
 
-public class ListServicesPresenter implements ListServicesContract.Presenter {
+public class ListServicesPresenter extends BaseActivitiesPresenter<Service> {
 
-    private ListServicesContract.View mView;
-    private boolean mIsDataMissing;
+    private ServiceRepository mServiceRepository;
+
+    public ListServicesPresenter(String vehicleId, BaseActivitiesContract.View<Service> view, ServiceRepository serviceRepository, boolean isDataMissing) {
+        super(vehicleId, view, isDataMissing);
+        this.mServiceRepository = Preconditions.checkNotNull(serviceRepository, "ServiceRepository cannot be null");
+    }
 
     @Override
-    public void start() {
-
+    protected void fetchItems(String vehicleId) {
+        mServiceRepository.fetchServices(vehicleId, this);
     }
 
     @Override
     public void openItemDetails(Service item) {
-
-    }
-
-    @Override
-    public void swapDataSet(List<Service> items) {
-
-    }
-
-    @Override
-    public boolean isDataMissing() {
-        return mIsDataMissing;
+        item = Preconditions.checkNotNull(item, "Cannot open service details on a null object reference");
+        view.showDetailsItemUi(item.getId());
     }
 }

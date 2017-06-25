@@ -35,13 +35,13 @@ public class TablePresenter implements TableContract.Presenter{
 
     @Override
     public void onSuccess(List<Vehicle> vehicles) {
-        mView.setTotalVehicles(String.valueOf(vehicles.size()));
+        view.setTotalVehicles(String.valueOf(vehicles.size()));
         findVehicleWithId(vehicles);
     }
 
     @Override
     public void onFailure() {
-        mView.showMessage("Couldn't fetch your vehicles");
+        view.showMessage("Couldn't fetch your vehicles");
     }
 
     private void onVehicleFound(Vehicle vehicle) {
@@ -56,9 +56,9 @@ public class TablePresenter implements TableContract.Presenter{
         List<Insurance> insurances = vehicle.getInsurances();
         List<Refueling> refuelings = vehicle.getRefuelings();
 
-        mView.setTotalServices(String.valueOf(services.size()));
-        mView.setTotalInsurances(String.valueOf(insurances.size()));
-        mView.setTotalRefuelings(String.valueOf(refuelings.size()));
+        view.setTotalServices(String.valueOf(services.size()));
+        view.setTotalInsurances(String.valueOf(insurances.size()));
+        view.setTotalRefuelings(String.valueOf(refuelings.size()));
 
         Observable.fromIterable(services)
             .subscribeOn(Schedulers.newThread())
@@ -73,12 +73,12 @@ public class TablePresenter implements TableContract.Presenter{
             .subscribe(new Consumer<Long>() {
                 @Override
                 public void accept(@NonNull Long aLong) throws Exception {
-                    mView.setServiceExpenses(PriceUtils.longToString(aLong));
+                    view.setServiceExpenses(PriceUtils.longToString(aLong));
                 }
             }, new Consumer<Throwable>() {
                 @Override
                 public void accept(@NonNull Throwable throwable) throws Exception {
-                    mView.showMessage("Couldn't calculate service expenses");
+                    view.showMessage("Couldn't calculate service expenses");
                     throwable.printStackTrace();
                 }
             });
@@ -96,12 +96,12 @@ public class TablePresenter implements TableContract.Presenter{
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(@NonNull Long aLong) throws Exception {
-                        mView.setInsurnaceExpenses(PriceUtils.longToString(aLong));
+                        view.setInsurnaceExpenses(PriceUtils.longToString(aLong));
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        mView.showMessage("Couldn't calculate insurance expenses");
+                        view.showMessage("Couldn't calculate insurance expenses");
                         throwable.printStackTrace();
                     }
                 });
@@ -119,12 +119,12 @@ public class TablePresenter implements TableContract.Presenter{
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(@NonNull Long aLong) throws Exception {
-                        mView.setRefuelingExpenses(PriceUtils.longToString(aLong));
+                        view.setRefuelingExpenses(PriceUtils.longToString(aLong));
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        mView.showMessage("Couldn't calculate refueling expenses");
+                        view.showMessage("Couldn't calculate refueling expenses");
                         throwable.printStackTrace();
                     }
                 });
@@ -150,7 +150,7 @@ public class TablePresenter implements TableContract.Presenter{
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
                         throwable.printStackTrace();
-                        mView.showMessage("Couldn't find selected vehicle");
+                        view.showMessage("Couldn't find selected vehicle");
                     }
                 });
     }*/

@@ -2,18 +2,22 @@ package elsys.mycar.mycarpro.list.activities.insurances;
 
 import java.util.List;
 
+import elsys.mycar.mycarpro.base.BasePresenter;
 import elsys.mycar.mycarpro.data.model.Insurance;
 import elsys.mycar.mycarpro.list.activities.ListActivitiesContract;
 
 public interface ListInsurancesContract {
 
-    interface View extends ListActivitiesContract.View<Presenter, Presenter> {
+/*    interface View extends ListActivitiesContract.View<Presenter, Presenter> {
 
         void showInsurances(List<Insurance> items);
+
     }
 
-    interface Presenter extends ListActivitiesContract.Presenter {
+    interface Presenter extends BasePresenter {
 
         void openInsuranceDetails(Insurance insurance);
-    }
+
+        boolean isDataMissing();
+    }*/
 }

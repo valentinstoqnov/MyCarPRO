@@ -12,14 +12,12 @@ public class ActivitiesPresenter implements ActivitiesContract.Presenter, OnItem
     private Vehicle mVehicle;
     private String mVehicleId;
     private ActivitiesContract.View mView;
-    private VehicleRepositoryImpl mVehicleRepository;
     private boolean mIsDataMissing;
 
-    public ActivitiesPresenter(String mVehicleId, ActivitiesContract.View mView, VehicleRepositoryImpl mVehicleRepository, boolean mIsDataMissing) {
-        this.mVehicleId = mVehicleId;
-        this.mView = Preconditions.checkNotNull(mView, "view cannot be null");
-        this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository, "vehicle repository cannot be null");
-        this.mIsDataMissing = mIsDataMissing;
+    public ActivitiesPresenter(String vehicleId, ActivitiesContract.View view, VehicleRepositoryImpl vehicleRepository, boolean isDataMissing) {
+        this.mVehicleId = vehicleId;
+        this.mView = Preconditions.checkNotNull(view, "view cannot be null");
+        this.mIsDataMissing = isDataMissing;
     }
 
     @Override
@@ -56,66 +54,4 @@ public class ActivitiesPresenter implements ActivitiesContract.Presenter, OnItem
     public void provideRefuelings() {
 
     }
-/*
-    @Override
-    public void start() {
-        //if (mIsDataMissing) {
-           // mVehicleRepository.fetchVehicleById(mVehicleId, this);
-       // }
-    }
-
-    @Override
-    public void onVehicleChanged(String vehicleId) {
-      //  mVehicleRepository.fetchVehicleById(vehicleId, this);
-    }
-
-    @Override
-    public void provideServices() {
-        if (mVehicle != null) {
-           // mView.showServices(mVehicle.getServices());
-        }else {
-            onFailure();
-        }
-    }
-
-    @Override
-    public void provideInsurances() {
-        if (mVehicle != null) {
-           // mView.showInsurances(mVehicle.getInsurances());
-        }else {
-            onFailure();
-        }
-    }
-
-    @Override
-    public void provideRefuelings() {
-        if (mVehicle != null) {
-          //  mView.showRefueling(mVehicle.getRefuelings());
-        }else {
-            onFailure();
-        }
-    }
-
-    @Override
-    public void onSuccess(Vehicle vehicle) {
-        mVehicle = vehicle;
-        mIsDataMissing = false;
-        provideActivities();
-    }
-
-    @Override
-    public void onFailure() {
-        mIsDataMissing= true;
-        mView.showMessage("Could't find such vehicle");
-    }
-
-    private void provideActivities() {
-        if (mVehicle != null) {
-            *//*mView.showServices(mVehicle.getServices());
-            mView.showInsurances(mVehicle.getInsurances());
-            mView.showRefueling(mVehicle.getRefuelings());*//*
-        }else {
-            onFailure();
-        }
-    }*/
 }

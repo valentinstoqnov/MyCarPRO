@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.list.activities.refuelings;
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import elsys.mycar.mycarpro.R;
@@ -9,12 +11,12 @@ import elsys.mycar.mycarpro.list.base.BaseActivitiesFragment;
 public class ListRefuelingsFragment extends BaseActivitiesFragment<Refueling> {
 
     @Override
-    public void showDetailItemUi(String itemId) {
-        showMessage("detail item " + itemId);
+    protected void initRecyclerViewAdapter() {
+        recyclerViewAdapter = new ListRefuelingsAdapter(new ArrayList<>(0), R.drawable.ic_insurance);
     }
 
     @Override
-    protected void initRecyclerViewAdapter() {
-        recyclerViewAdapter = new ListRefuelingsAdapter(new ArrayList<Refueling>(0), R.drawable.ic_insurance);
+    public void showDetailsItemUi(String itemId) {
+        Toast.makeText(getContext(), "detail item " + itemId, Toast.LENGTH_SHORT).show();
     }
 }

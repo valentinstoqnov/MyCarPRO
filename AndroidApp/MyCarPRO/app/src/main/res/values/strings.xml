@@ -93,6 +93,7 @@
     <string name="service_save_error">Failed to save service</string>
     <string name="vehicle_save_error">Failed to save vehicle</string>
     <string name="no_such_user">Couldn\'t find such user</string>
+    <string name="items_retrieval_error">Fetching failed</string>
 
     <!--Success-->
     <string name="insurance_successfully_saved" formatted="false">%s insurance successfully saved!</string>

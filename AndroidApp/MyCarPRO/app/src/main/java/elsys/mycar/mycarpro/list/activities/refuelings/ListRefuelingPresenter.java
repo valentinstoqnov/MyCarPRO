@@ -2,87 +2,28 @@ package elsys.mycar.mycarpro.list.activities.refuelings;
 
 import com.google.common.base.Preconditions;
 
-import java.util.List;
-
 import elsys.mycar.mycarpro.data.model.Refueling;
-import elsys.mycar.mycarpro.data.repository.vehicle.VehicleRepository;
+import elsys.mycar.mycarpro.data.repository.activities.refueling.RefuelingRepository;
+import elsys.mycar.mycarpro.list.base.BaseActivitiesContract;
+import elsys.mycar.mycarpro.list.base.BaseActivitiesPresenter;
 
-public class ListRefuelingPresenter implements ListRefuelingsContract.Presenter{
+public class ListRefuelingPresenter extends BaseActivitiesPresenter<Refueling> {
 
-    private String mVehicleId;
-    private VehicleRepository mVehicleRepository;
-    private ListRefuelingsContract.View mView;
-    private boolean mIsDataMissing;
+    private RefuelingRepository mRefuelingRepository;
 
-    public ListRefuelingPresenter(String mVehicleId, VehicleRepository mVehicleRepository, ListRefuelingsContract.View mView, boolean mIsDataMissing) {
-        this.mVehicleId = mVehicleId;
-        this.mVehicleRepository = Preconditions.checkNotNull(mVehicleRepository);
-        this.mView = Preconditions.checkNotNull(mView);
-        this.mIsDataMissing = mIsDataMissing;
-    }
-
-
-    @Override
-    public void start() {
-        if (mIsDataMissing && mView.isActive()) {
-           // loadItems();
-        }
-    }
-/*
-    @Override
-    public void loadItems() {
-        if (mVehicleId == null) {
-          //  mView.showNoSuchVehicle();
-        }else {
-            mView.showProgress();
-            mVehicleRepository.fetchVehicleById(mVehicleId, new VehicleRepository.OnVehicleFetchedCallback() {
-                @Override
-                public void onSuccess(Vehicle vehicle) {
-                    processRefuelings(vehicle.getRefuelings());
-                }
-
-                @Override
-                public void onFailure() {
-                    mView.showMessage("Something went wrong...");
-                    mView.hideProgress();
-                }
-            });
-        }
+    public ListRefuelingPresenter(String vehicleId, BaseActivitiesContract.View<Refueling> view, RefuelingRepository refuelingRepository, boolean isDataMissing) {
+        super(vehicleId, view, isDataMissing);
+        this.mRefuelingRepository = refuelingRepository;
     }
 
     @Override
-    public void onVehicleChanged(String vehicleId) {
-        mVehicleId = vehicleId;
-        mIsDataMissing = true;
-    }*/
-
-    @Override
-    public void openRefuelingDetails(Refueling refueling) {
-        mView.showDetailItemUi(Preconditions.checkNotNull(refueling).getId());
+    protected void fetchItems(String vehicleId) {
+        mRefuelingRepository.fetchRefuelings(vehicleId, this);
     }
 
     @Override
-    public void openItemDetails(Object item) {
-
-    }
-
-    @Override
-    public void swapDataSet(List items) {
-
-    }
-
-    @Override
-    public boolean isDataMissing() {
-        return mIsDataMissing;
-    }
-
-    private void processRefuelings(List<Refueling> refuelings) {
-        if (refuelings == null || refuelings.isEmpty()) {
-            mView.showNoItemsFound();
-        }else {
-            mView.showRefuelings(refuelings);
-            mIsDataMissing = false;
-        }
-        mView.hideProgress();
+    public void openItemDetails(Refueling item) {
+        item = Preconditions.checkNotNull(item, "Cannot open refueling details on a null object reference");
+        view.showDetailsItemUi(item.getId());
     }
 }

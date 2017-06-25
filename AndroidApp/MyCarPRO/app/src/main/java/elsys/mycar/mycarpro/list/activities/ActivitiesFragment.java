@@ -25,10 +25,16 @@ import elsys.mycar.mycarpro.R;
 import elsys.mycar.mycarpro.data.model.Insurance;
 import elsys.mycar.mycarpro.data.model.Refueling;
 import elsys.mycar.mycarpro.data.model.Service;
+import elsys.mycar.mycarpro.data.repository.activities.insurance.InsuranceRepositoryImpl;
+import elsys.mycar.mycarpro.data.repository.activities.refueling.RefuelingRepositoryImpl;
+import elsys.mycar.mycarpro.data.repository.activities.service.ServiceRepositoryImpl;
 import elsys.mycar.mycarpro.homescreen.VehiclesSpinnerAdapter;
 import elsys.mycar.mycarpro.list.activities.insurances.ListInsurancesFragment;
+import elsys.mycar.mycarpro.list.activities.insurances.ListInsurancesPresenter;
+import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingPresenter;
 import elsys.mycar.mycarpro.list.activities.refuelings.ListRefuelingsFragment;
 import elsys.mycar.mycarpro.list.activities.services.ListServicesFragment;
+import elsys.mycar.mycarpro.list.activities.services.ListServicesPresenter;
 import elsys.mycar.mycarpro.list.activities.viewpager.ActivitiesViewPagerAdapter;
 import elsys.mycar.mycarpro.list.base.BaseActivitiesPresenter;
 
@@ -76,7 +82,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
 
             mNestedPresenters = new ArrayList<>(3);
 
-           /* spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
                     String vehicleId = ((VehiclesSpinnerAdapter) spinnerAdapter).getVehicleIdAtPosition(position);
@@ -87,7 +93,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
                 public void onNothingSelected(AdapterView<?> parent) {
 
                 }
-            });*/
+            });
 
             setUpViewPager();
 
@@ -102,19 +108,19 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         ActivitiesViewPagerAdapter adapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
 
         ListServicesFragment listServicesFragment = new ListServicesFragment();
-        BaseActivitiesPresenter<Service> servicePresenter = new BaseActivitiesPresenter<>(listServicesFragment, true);
+        ListServicesPresenter servicePresenter = new ListServicesPresenter("", listServicesFragment, new ServiceRepositoryImpl(), true);
         listServicesFragment.setPresenter(servicePresenter);
         mNestedPresenters.add(servicePresenter);
         adapter.addFragment(listServicesFragment);
 
         ListInsurancesFragment listInsurancesFragment = new ListInsurancesFragment();
-        BaseActivitiesPresenter<Insurance> insurancePresenter = new BaseActivitiesPresenter<>(listInsurancesFragment, true);
+        ListInsurancesPresenter insurancePresenter = new ListInsurancesPresenter("", listInsurancesFragment, new InsuranceRepositoryImpl(), true);
         listInsurancesFragment.setPresenter(insurancePresenter);
         mNestedPresenters.add(insurancePresenter);
         adapter.addFragment(listInsurancesFragment);
 
         ListRefuelingsFragment listRefuelingsFragment = new ListRefuelingsFragment();
-        BaseActivitiesPresenter<Refueling> refuelingPresenter = new BaseActivitiesPresenter<>(listRefuelingsFragment, true);
+        ListRefuelingPresenter refuelingPresenter = new ListRefuelingPresenter("", listRefuelingsFragment, new RefuelingRepositoryImpl(), true);
         listRefuelingsFragment.setPresenter(refuelingPresenter);
         mNestedPresenters.add(refuelingPresenter);
         adapter.addFragment(listRefuelingsFragment);
@@ -135,7 +141,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
                 tab.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
                 int tabPosition = tab.getPosition();
 
-                /*if (mNestedPresenters.get(tabPosition).isDataMissing()) {
+                if (mNestedPresenters.get(tabPosition).isDataMissing()) {
                     switch (tabPosition) {
                         case 0:
                             mPresenter.provideServices();
@@ -147,7 +153,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
                             mPresenter.provideRefuelings();
                             break;
                     }
-                }*/
+                }
             }
 
             @Override
@@ -175,7 +181,43 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
 
     @Override
     public void showServices(List<Service> services) {
-        List<Service> s = new ArrayList<>();
+
+    }
+
+    @Override
+    public void showInsurances(List<Insurance> insurances) {
+
+    }
+
+    @Override
+    public void showRefueling(List<Refueling> refuelings) {
+
+    }
+
+}
+/*   List<Refueling> r = new ArrayList<>();
+        r.add(new Refueling("asd", "sadsad", "dasd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("asdasda", "sadasdsad", "daergsd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("asdqwre", "sadasdsad", "dagersd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("asasdd", "sadasdsad", "dasasdd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("ashrfgd", "saasddsad", "dsadasd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("aswerd", "sasdadsad", "dasadsd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("ascvxd", "sadasdsad", "daasdsd", 2.1, 23, 23, "asda"));
+        r.add(new Refueling("assdfd", "sadasdsad", "daasdsd", 2.1, 23, 23, "asda"));
+        refuelings.addAll(r);*/
+
+/*   List<Insurance> i = new ArrayList<>();
+        i.add(new Insurance("asd", "asdadawqe", 123, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("asasdasdasdd", "asdadasdawqe", 1232, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("agergsd", "asdadaawdaswqe", 1223, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("aasdaxassd", "asdadawdawqe", 1323, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("afsdsd", "asdadaawdwqe", 123, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("a342sd", "asdawaddawqe", 1223, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("assdfd", "asdaasdddawqe", 1323, 312, "asdasda", "1232asda", "asdasda"));
+        i.add(new Insurance("ahhsd", "asdadaawdwqe", 1232, 312, "asdasda", "1232asda", "asdasda"));
+        insurances.addAll(i);*/
+
+ /*List<Service> s = new ArrayList<>();
         s.add(new Service("asd", "asdadsdsa", "asdsd", 213, 2132, "asdsda"));
         s.add(new Service("asasdd", "asdaasdasddsdsa", "asdsd", 213, 2132, "asdsda"));
         s.add(new Service("asgsfd", "asdaawqe2qdsdsa", "asdsd", 213, 2132, "asdsda"));
@@ -186,37 +228,4 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         s.add(new Service("asaasdasdd", "asdaasd12asddsdsa", "asdsd", 213, 2132, "asdsda"));
         s.add(new Service("asgasdbsfd", "asdaaw123qeqdsdsa", "asdsd", 213, 2132, "asdsda"));
         System.out.println("services size = " + services.size());
-        services.addAll(s);
-     //   mNestedPresenters.get(0).swapDataSet(services);
-    }
-
-    @Override
-    public void showInsurances(List<Insurance> insurances) {
-        List<Insurance> i = new ArrayList<>();
-        i.add(new Insurance("asd", "asdadawqe", 123, 312, "asdasda", "1232asda", "asdasda"));
-        i.add(new Insurance("asasdasdasdd", "asdadasdawqe", 1232, 312, "asdasda", "1232asda", "asdasda"));
-        i.add(new Insurance("agergsd", "asdadaawdaswqe", 1223, 312, "asdasda", "1232asda", "asdasda"));
-        i.add(new Insurance("aasdaxassd", "asdadawdawqe", 1323, 312, "asdasda", "1232asda", "asdasda"));
-        i.add(new Insurance("afsdsd", "asdadaawdwqe", 123, 312, "asdasda", "1232asda", "asdasda"));
-        i.add(new Insurance("a342sd", "asdawaddawqe", 1223, 312, "asdasda", "1232asda", "asdasda"));
-        i.add(new Insurance("assdfd", "asdaasdddawqe", 1323, 312, "asdasda", "1232asda", "asdasda"));
-        i.add(new Insurance("ahhsd", "asdadaawdwqe", 1232, 312, "asdasda", "1232asda", "asdasda"));
-        insurances.addAll(i);
-      //  mNestedPresenters.get(1).swapDataSet(insurances);
-    }
-
-    @Override
-    public void showRefueling(List<Refueling> refuelings) {
-        List<Refueling> r = new ArrayList<>();
-        r.add(new Refueling("asd", "sadsad", "dasd", 2.1, 23, 23, "asda"));
-        r.add(new Refueling("asdasda", "sadasdsad", "daergsd", 2.1, 23, 23, "asda"));
-        r.add(new Refueling("asdqwre", "sadasdsad", "dagersd", 2.1, 23, 23, "asda"));
-        r.add(new Refueling("asasdd", "sadasdsad", "dasasdd", 2.1, 23, 23, "asda"));
-        r.add(new Refueling("ashrfgd", "saasddsad", "dsadasd", 2.1, 23, 23, "asda"));
-        r.add(new Refueling("aswerd", "sasdadsad", "dasadsd", 2.1, 23, 23, "asda"));
-        r.add(new Refueling("ascvxd", "sadasdsad", "daasdsd", 2.1, 23, 23, "asda"));
-        r.add(new Refueling("assdfd", "sadasdsad", "daasdsd", 2.1, 23, 23, "asda"));
-        refuelings.addAll(r);
-      //  mNestedPresenters.get(2).swapDataSet(refuelings);
-    }
-}
+        services.addAll(s);*/
