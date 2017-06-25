@@ -7,7 +7,7 @@ import elsys.mycar.mycarpro.base.BaseView;
 
 public interface ListActivitiesContract {
 
-/*    interface View<P, E> extends BaseView<P> {
+    interface View<P, E> extends BaseView<P> {
 
         void showDetailItemUi(String itemId);
 
@@ -31,5 +31,5 @@ public interface ListActivitiesContract {
         void swapDataSet(List<T> items);
 
         boolean isDataMissing();
-    }*/
+    }
 }

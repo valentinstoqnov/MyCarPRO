@@ -9,6 +9,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Ref;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.Constants;
@@ -30,6 +33,7 @@ public class RefuelingRepositoryImpl implements RefuelingRepository {
     @Override
     public void saveRefueling(Refueling refueling, OnSaveUpdateDeleteCallback callback) {
         String id = mDatabase.push().getKey();
+        refueling.setId(id);
         mDatabase.child(id)
                 .setValue(refueling)
                 .addOnCompleteListener(task -> {
@@ -43,6 +47,7 @@ public class RefuelingRepositoryImpl implements RefuelingRepository {
 
     @Override
     public void updateRefueling(String refuelingId, Refueling refueling, OnSaveUpdateDeleteCallback callback) {
+        refueling.setId(refuelingId);
         mDatabase.child(refuelingId)
                 .setValue(refueling)
                 .addOnCompleteListener(task -> {
@@ -74,7 +79,11 @@ public class RefuelingRepositoryImpl implements RefuelingRepository {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Refueling value = dataSnapshot.getValue(Refueling.class);
-                        callback.onSuccess(value);
+                        if (value == null) {
+                            callback.onFailure();
+                        }else {
+                            callback.onSuccess(value);
+                        }
                     }
 
                     @Override
@@ -92,8 +101,12 @@ public class RefuelingRepositoryImpl implements RefuelingRepository {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        GenericTypeIndicator<List<Refueling>> typeIndicator = new GenericTypeIndicator<List<Refueling>>() {};
-                        List<Refueling> refuelings = dataSnapshot.getValue(typeIndicator);
+                        GenericTypeIndicator<HashMap<String, Refueling>> typeIndicator = new GenericTypeIndicator<HashMap<String, Refueling>>() {};
+                        HashMap<String, Refueling> dataSnapshotValue = dataSnapshot.getValue(typeIndicator);
+                        List<Refueling> refuelings = new ArrayList<>();
+                        if (dataSnapshotValue != null) {
+                            refuelings.addAll(dataSnapshotValue.values());
+                        }
                         callback.onSuccess(refuelings);
                     }
 

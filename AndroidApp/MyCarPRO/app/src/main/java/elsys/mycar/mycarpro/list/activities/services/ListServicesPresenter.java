@@ -1,5 +1,7 @@
 package elsys.mycar.mycarpro.list.activities.services;
 
+import android.util.Log;
+
 import com.google.common.base.Preconditions;
 
 import elsys.mycar.mycarpro.data.model.Service;
@@ -18,6 +20,7 @@ public class ListServicesPresenter extends BaseActivitiesPresenter<Service> {
 
     @Override
     protected void fetchItems(String vehicleId) {
+        Log.d("fetchItems: ", "vehicle id = " + vehicleId);
         mServiceRepository.fetchServices(vehicleId, this);
     }
 

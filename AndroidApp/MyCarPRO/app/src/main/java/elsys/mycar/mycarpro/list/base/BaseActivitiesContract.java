@@ -26,6 +26,8 @@ public interface BaseActivitiesContract {
 
     interface Presenter<T> extends BasePresenter {
 
+        void onVehicleChange(String vehicleId);
+
         void openItemDetails(T item);
 
         boolean isDataMissing();

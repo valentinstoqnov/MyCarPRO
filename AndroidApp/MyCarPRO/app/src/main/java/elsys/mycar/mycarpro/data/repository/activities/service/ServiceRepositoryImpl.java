@@ -9,6 +9,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.Constants;
@@ -30,6 +32,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     @Override
     public void saveService(Service service, OnSaveUpdateDeleteCallback callback) {
         String id = mDatabase.push().getKey();
+        service.setId(id);
         mDatabase.child(id)
                 .setValue(service)
                 .addOnCompleteListener(task -> {
@@ -43,6 +46,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
     @Override
     public void updateService(String serviceId, Service service, OnSaveUpdateDeleteCallback callback) {
+        service.setId(serviceId);
         mDatabase.child(serviceId)
                 .setValue(service)
                 .addOnCompleteListener(task -> {
@@ -74,7 +78,11 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Service value = dataSnapshot.getValue(Service.class);
-                        callback.onSuccess(value);
+                        if (value == null) {
+                            callback.onFailure();
+                        }else {
+                            callback.onSuccess(value);
+                        }
                     }
 
                     @Override
@@ -92,8 +100,13 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        GenericTypeIndicator<List<Service>> typeIndicator = new GenericTypeIndicator<List<Service>>() {};
-                        List<Service> services = dataSnapshot.getValue(typeIndicator);
+                        Log.d(TAG, dataSnapshot.toString());
+                        GenericTypeIndicator<HashMap<String, Service>> typeIndicator = new GenericTypeIndicator<HashMap<String, Service>>() {};
+                        HashMap<String, Service> dataSnapshotValue = dataSnapshot.getValue(typeIndicator);
+                        List<Service> services = new ArrayList<>();
+                        if (dataSnapshotValue != null) {
+                            services.addAll(dataSnapshotValue.values());
+                        }
                         callback.onSuccess(services);
                     }
 

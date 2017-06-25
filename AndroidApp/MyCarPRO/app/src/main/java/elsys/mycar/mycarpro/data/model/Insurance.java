@@ -25,16 +25,6 @@ public class Insurance {
 
     public Insurance() {}
 
-    public Insurance(String id, String companyName, long price, long odometer, String date, String expirationDate, String note) {
-        this.id = id;
-        this.companyName = companyName;
-        this.price = price;
-        this.odometer = odometer;
-        this.date = date;
-        this.expirationDate = expirationDate;
-        this.note = note;
-    }
-
     public Insurance(String companyName, long price, long odometer, String date, String expirationDate, String note, String vehicleId) {
         this.companyName = companyName;
         this.price = price;
@@ -99,5 +89,13 @@ public class Insurance {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
     }
 }

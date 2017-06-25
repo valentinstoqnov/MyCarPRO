@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import elsys.mycar.mycarpro.R;
+import elsys.mycar.mycarpro.data.Constants;
 import elsys.mycar.mycarpro.data.model.Insurance;
 import elsys.mycar.mycarpro.data.model.Refueling;
 import elsys.mycar.mycarpro.data.model.Service;
@@ -47,8 +48,22 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     private TabLayout mTabLayout;
     private Unbinder mUnbinder;
 
-    private ActivitiesContract.Presenter mPresenter;
+    private String mVehicleId;
+
+    public void setVehicleId(String vehicleId) {
+        mVehicleId = vehicleId;
+    }
+
+   // private ActivitiesContract.Presenter mPresenter;
     private List<BaseActivitiesPresenter> mNestedPresenters;
+
+   /* public static ActivitiesFragment newInstance(String vehicleId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.VEHICLE_ID, vehicleId);
+        ActivitiesFragment activitiesFragment = new ActivitiesFragment();
+        activitiesFragment.setArguments(bundle);
+        return activitiesFragment;
+    }*/
 
     public static ActivitiesFragment newInstance() {
         return new ActivitiesFragment();
@@ -63,13 +78,13 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
 
     @Override
     public void setPresenter(ActivitiesContract.Presenter presenter) {
-        mPresenter = presenter;
+       // mPresenter = presenter;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+       // mPresenter.start();
     }
 
     @Override
@@ -86,7 +101,9 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
                 @Override
                 public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
                     String vehicleId = ((VehiclesSpinnerAdapter) spinnerAdapter).getVehicleIdAtPosition(position);
-                    mPresenter.onVehicleChanged(vehicleId);
+                    for (BaseActivitiesPresenter presenter : mNestedPresenters) {
+                        presenter.onVehicleChange(vehicleId);
+                    }
                 }
 
                 @Override
@@ -107,20 +124,23 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
     private void setUpViewPager() {
         ActivitiesViewPagerAdapter adapter = new ActivitiesViewPagerAdapter(getChildFragmentManager());
 
+        String vehicleId = mVehicleId;
+                //getArguments().getString(Constants.VEHICLE_ID);
+
         ListServicesFragment listServicesFragment = new ListServicesFragment();
-        ListServicesPresenter servicePresenter = new ListServicesPresenter("", listServicesFragment, new ServiceRepositoryImpl(), true);
+        ListServicesPresenter servicePresenter = new ListServicesPresenter(vehicleId, listServicesFragment, new ServiceRepositoryImpl(), true);
         listServicesFragment.setPresenter(servicePresenter);
         mNestedPresenters.add(servicePresenter);
         adapter.addFragment(listServicesFragment);
 
         ListInsurancesFragment listInsurancesFragment = new ListInsurancesFragment();
-        ListInsurancesPresenter insurancePresenter = new ListInsurancesPresenter("", listInsurancesFragment, new InsuranceRepositoryImpl(), true);
+        ListInsurancesPresenter insurancePresenter = new ListInsurancesPresenter(vehicleId, listInsurancesFragment, new InsuranceRepositoryImpl(), true);
         listInsurancesFragment.setPresenter(insurancePresenter);
         mNestedPresenters.add(insurancePresenter);
         adapter.addFragment(listInsurancesFragment);
 
         ListRefuelingsFragment listRefuelingsFragment = new ListRefuelingsFragment();
-        ListRefuelingPresenter refuelingPresenter = new ListRefuelingPresenter("", listRefuelingsFragment, new RefuelingRepositoryImpl(), true);
+        ListRefuelingPresenter refuelingPresenter = new ListRefuelingPresenter(vehicleId, listRefuelingsFragment, new RefuelingRepositoryImpl(), true);
         listRefuelingsFragment.setPresenter(refuelingPresenter);
         mNestedPresenters.add(refuelingPresenter);
         adapter.addFragment(listRefuelingsFragment);
@@ -139,20 +159,9 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 tab.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-                int tabPosition = tab.getPosition();
-
-                if (mNestedPresenters.get(tabPosition).isDataMissing()) {
-                    switch (tabPosition) {
-                        case 0:
-                            mPresenter.provideServices();
-                            break;
-                        case 1:
-                            mPresenter.provideInsurances();
-                            break;
-                        case 2:
-                            mPresenter.provideRefuelings();
-                            break;
-                    }
+                BaseActivitiesPresenter currentPresenter = mNestedPresenters.get(tab.getPosition());
+                if (currentPresenter.isDataMissing()) {
+                    currentPresenter.start();
                 }
             }
 

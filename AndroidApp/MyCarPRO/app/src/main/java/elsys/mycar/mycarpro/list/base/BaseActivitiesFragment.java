@@ -73,6 +73,12 @@ public abstract class BaseActivitiesFragment<T> extends Fragment implements Base
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
     public void showItems(List<T> items) {
         recyclerViewAdapter.replaceData(items);
     }

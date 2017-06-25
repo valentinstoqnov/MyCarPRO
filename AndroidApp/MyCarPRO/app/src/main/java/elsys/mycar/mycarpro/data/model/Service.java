@@ -21,14 +21,7 @@ public class Service {
     @SerializedName(Constants.VEHICLE_ID)
     private String vehicleId;
 
-    public Service(String id, String type, String date, long price, long odometer, String note) {
-        this.id = id;
-        this.type = type;
-        this.date = date;
-        this.price = price;
-        this.odometer = odometer;
-        this.note = note;
-    }
+    public Service() {}
 
     public Service(String type, String date, long price, long odometer, String note, String vehicleId) {
         this.type = type;
@@ -85,5 +78,13 @@ public class Service {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
     }
 }

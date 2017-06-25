@@ -9,6 +9,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import elsys.mycar.mycarpro.data.Constants;
@@ -30,6 +32,7 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
     @Override
     public void saveInsurance(Insurance insurance, OnSaveUpdateDeleteCallback callback) {
         String id = mDatabase.push().getKey();
+        insurance.setId(id);
         mDatabase.child(id)
                 .setValue(insurance)
                 .addOnCompleteListener(task -> {
@@ -43,6 +46,7 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
 
     @Override
     public void updateInsurance(String insuranceId, Insurance insurance, OnSaveUpdateDeleteCallback callback) {
+        insurance.setId(insuranceId);
         mDatabase.child(insuranceId)
                 .setValue(insurance)
                 .addOnCompleteListener(task -> {
@@ -74,7 +78,11 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Insurance value = dataSnapshot.getValue(Insurance.class);
-                        callback.onSuccess(value);
+                        if (value == null) {
+                            callback.onFailure();
+                        }else {
+                            callback.onSuccess(value);
+                        }
                     }
 
                     @Override
@@ -92,8 +100,12 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        GenericTypeIndicator<List<Insurance>> typeIndicator = new GenericTypeIndicator<List<Insurance>>() {};
-                        List<Insurance> insurances = dataSnapshot.getValue(typeIndicator);
+                        GenericTypeIndicator<HashMap<String, Insurance>> typeIndicator = new GenericTypeIndicator<HashMap<String, Insurance>>() {};
+                        HashMap<String, Insurance> dataSnapshotValue = dataSnapshot.getValue(typeIndicator);
+                        List<Insurance> insurances = new ArrayList<>();
+                        if (dataSnapshotValue != null) {
+                            insurances.addAll(dataSnapshotValue.values());
+                        }
                         callback.onSuccess(insurances);
                     }
 

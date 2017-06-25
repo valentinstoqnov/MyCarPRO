@@ -25,15 +25,7 @@ public class Refueling {
     @SerializedName(Constants.VEHICLE_ID)
     private String vehicleId;
 
-    public Refueling(String id, String companyName, String date, double quantity, long price, long odometer, String note) {
-        this.id = id;
-        this.companyName = companyName;
-        this.date = date;
-        this.quantity = quantity;
-        this.price = price;
-        this.odometer = odometer;
-        this.note = note;
-    }
+    public Refueling() {}
 
     public Refueling(String companyName, String date, double quantity, long price, long odometer, String note, String vehicleId) {
         this.companyName = companyName;
@@ -93,11 +85,27 @@ public class Refueling {
         this.odometer = odometer;
     }
 
+    public boolean isFuelTankFull() {
+        return isFuelTankFull;
+    }
+
+    public void setFuelTankFull(boolean fuelTankFull) {
+        isFuelTankFull = fuelTankFull;
+    }
+
     public String getNote() {
         return note;
     }
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
     }
 }

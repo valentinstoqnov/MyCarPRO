@@ -150,10 +150,14 @@ public class MainActivity extends FirebaseAuthBaseActivity implements MainContra
 
     @Override
     public void showActivitiesUi() {
+        /*Bundle bundle = new Bundle();
+        bundle.putString(Constants.VEHICLE_ID, getSelectedVehicleId());*/
         Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
-        ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(getSelectedVehicleId(), activitiesFragment, new VehicleRepositoryImpl(), true);
-        activitiesFragment.setPresenter(activitiesPresenter);
+        activitiesFragment.setVehicleId(getSelectedVehicleId());
+        // activitiesFragment.setArguments(bundle);
+        //ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(getSelectedVehicleId(), activitiesFragment, new VehicleRepositoryImpl(), true);
+        //activitiesFragment.setPresenter(activitiesPresenter);
        /* Fragment fragment = fragmentManagingUtils.addOrShowFragment(ActivitiesFragment.TAG);
         ActivitiesFragment activitiesFragment = (ActivitiesFragment) fragment;
         ActivitiesPresenter activitiesPresenter = new ActivitiesPresenter(ProviderUtils.getVehicleRepository(mAuthenticationUtils.getToken()), activitiesFragment);
