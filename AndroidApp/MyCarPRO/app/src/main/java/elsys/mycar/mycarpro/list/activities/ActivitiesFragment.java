@@ -104,6 +104,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
                     for (BaseActivitiesPresenter presenter : mNestedPresenters) {
                         presenter.onVehicleChange(vehicleId);
                     }
+                    mNestedPresenters.get(mTabLayout.getSelectedTabPosition()).start();
                 }
 
                 @Override
@@ -146,6 +147,7 @@ public class ActivitiesFragment extends Fragment implements ActivitiesContract.V
         adapter.addFragment(listRefuelingsFragment);
 
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     private void setUpTabLayout() {

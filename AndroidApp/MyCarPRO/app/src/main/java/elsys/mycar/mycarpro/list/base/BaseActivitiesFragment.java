@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public abstract class BaseActivitiesFragment<T> extends Fragment implements Base
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d("onCreateView", "creating..................");
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         setUpRecyclerView();
@@ -46,6 +48,7 @@ public abstract class BaseActivitiesFragment<T> extends Fragment implements Base
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Log.d("onActivityCreated: ", "creating/////////////////////");
         super.onActivityCreated(savedInstanceState);
         final FloatingActionMenu fabMenu = (FloatingActionMenu) getActivity().findViewById(R.id.fab_menu_main);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -59,6 +62,7 @@ public abstract class BaseActivitiesFragment<T> extends Fragment implements Base
                 }
             }
         });
+
     }
 
     @Override
@@ -74,6 +78,7 @@ public abstract class BaseActivitiesFragment<T> extends Fragment implements Base
 
     @Override
     public void onResume() {
+        Log.d("onResume: ", "resuming..............");
         super.onResume();
         mPresenter.start();
     }
