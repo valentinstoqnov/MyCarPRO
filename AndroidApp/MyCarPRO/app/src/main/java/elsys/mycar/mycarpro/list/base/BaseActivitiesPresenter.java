@@ -31,6 +31,7 @@ public abstract class BaseActivitiesPresenter<T> implements BaseActivitiesContra
     public void onVehicleChange(String vehicleId) {
         mVehicleId = Preconditions.checkNotNull(vehicleId, "Vehicle id cannot be null");
         mIsDataMissing = true;
+        start();
     }
 
     @Override
