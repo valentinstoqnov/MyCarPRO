@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#9E9E9E"
-    tools:context="elsys.mycar.mycarpro.registerscreen.RegisterActivity">
+    tools:context="vstoyanov.mycar.mycarpro.registerscreen.RegisterActivity">
 
     <TextView
         android:layout_marginTop="32dp"

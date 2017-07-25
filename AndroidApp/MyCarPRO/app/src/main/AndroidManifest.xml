@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="elsys.mycar.mycarpro">
+    package="vstoyanov.mycar.mycarpro">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".app.MyApplication"
+        android:name="vstoyanov.mycar.mycarpro.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".homescreen.MainActivity"
+            android:name="vstoyanov.mycar.mycarpro.homescreen.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,31 +23,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".addedit.vehicle.AddEditVehicleActivity"
+            android:name="vstoyanov.mycar.mycarpro.addedit.vehicle.AddEditVehicleActivity"
             android:label="@string/title_activity_add_edit_vehicle"
             android:theme="@style/AppThemeVehicle" />
         <activity
-            android:name=".detail.vehicle.DetailVehicleActivity"
+            android:name="vstoyanov.mycar.mycarpro.detail.vehicle.DetailVehicleActivity"
             android:label="@string/title_activity_detail_vehicle"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".addedit.service.AddEditServiceActivity"
+            android:name="vstoyanov.mycar.mycarpro.addedit.service.AddEditServiceActivity"
             android:label="@string/title_activity_add_edit_service"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".addedit.refueling.AddEditRefuelingActivity"
+            android:name="vstoyanov.mycar.mycarpro.addedit.refueling.AddEditRefuelingActivity"
             android:label="@string/title_activity_add_edit_refueling"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".addedit.insurance.AddEditInsuranceActivity"
+            android:name="vstoyanov.mycar.mycarpro.addedit.insurance.AddEditInsuranceActivity"
             android:label="@string/title_activity_add_edit_insurance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".loginscreen.LoginActivity"
+            android:name="vstoyanov.mycar.mycarpro.loginscreen.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppThemeLoginRegister" />
         <activity
-            android:name=".registerscreen.RegisterActivity"
+            android:name="vstoyanov.mycar.mycarpro.registerscreen.RegisterActivity"
             android:label="@string/title_activity_register"
             android:theme="@style/AppThemeLoginRegister" />
     </application>

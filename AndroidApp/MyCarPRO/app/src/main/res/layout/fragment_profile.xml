@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#BCAAA4"
-    tools:context="elsys.mycar.mycarpro.profile.ProfileFragment">
+    tools:context="vstoyanov.mycar.mycarpro.profile.ProfileFragment">
 
     <ProgressBar
         android:id="@+id/pb_profile"

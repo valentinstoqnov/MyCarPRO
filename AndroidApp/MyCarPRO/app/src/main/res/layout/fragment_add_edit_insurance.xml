@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="elsys.mycar.mycarpro.addedit.insurance.AddEditInsuranceFragment"
+    tools:context="vstoyanov.mycar.mycarpro.addedit.insurance.AddEditInsuranceFragment"
     tools:showIn="@layout/activity_add_edit_insurance">
 
     <android.support.constraint.ConstraintLayout

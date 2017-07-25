@@ -7,7 +7,7 @@
     android:paddingStart="32dp"
     android:paddingEnd="32dp"
     android:layout_height="match_parent"
-    tools:context="elsys.mycar.mycarpro.loginscreen.LoginFragment"
+    tools:context="vstoyanov.mycar.mycarpro.loginscreen.LoginFragment"
     tools:showIn="@layout/activity_login">
 
     <android.support.constraint.ConstraintLayout
